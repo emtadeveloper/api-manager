@@ -1,0 +1,4 @@
+export enum RestType {
+  EXTERNALAPI = "EXTERNALAPI",
+  DATABASEDIRECT = "DATABASEDIRECT",
+}
