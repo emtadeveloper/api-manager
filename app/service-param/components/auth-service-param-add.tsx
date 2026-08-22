@@ -1,5 +1,5 @@
 "use client";
-import { PARAMTYPE } from "@/utils/param-type.enum";
+import { PARAMTYPE } from "@/types/enums/param-type.enum";
 import { DeleteFilled, PlusCircleFilled } from "@ant-design/icons";
 import { Button, Form, Input, Radio } from "antd";
 const AuthServiceParamAdd = () => {
@@ -14,14 +14,8 @@ const AuthServiceParamAdd = () => {
             </Button>
             <div className="flex flex-wrap   ">
               {fields.map((field) => (
-                <div
-                  key={field.key}
-                  className=" border border-blue-300 m-1 px-4 w-2/12  rounded-xl  grow "
-                >
-                  <DeleteFilled
-                    className="w-full   bg-red-50  rounded-2xl"
-                    onClick={() => remove(field.name)}
-                  />
+                <div key={field.key} className=" border border-blue-300 m-1 px-4 w-2/12  rounded-xl  grow ">
+                  <DeleteFilled className="w-full   bg-red-50  rounded-2xl" onClick={() => remove(field.name)} />
                   <Form.Item name={[field.name, "paramName"]}>
                     <Input placeholder="نام پارامتر" />
                   </Form.Item>

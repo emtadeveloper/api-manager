@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { RestAuthServiceParamDto } from "./rest_auth_service_param.dto";
-import { AuthType } from "@/utils/auth-type.enum";
+import { AuthType } from "@/types/enums/auth-type.enum";
 
 export const RestAuthServiceSettingDto = z.object({
   authServiceUrl: z.string("این فیلد الزامی است"),
@@ -12,6 +12,4 @@ export const RestAuthServiceSettingDto = z.object({
   restAuthServiceParam: z.array(RestAuthServiceParamDto),
 });
 
-export type RestAuthServiceSettingDto = z.infer<
-  typeof RestAuthServiceSettingDto
->;
+export type RestAuthServiceSettingDto = z.infer<typeof RestAuthServiceSettingDto>;

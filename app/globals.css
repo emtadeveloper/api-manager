@@ -1,67 +1,251 @@
 @import "tailwindcss";
-body {
-  color: white;
-  background-color: #020121;
-}
-.ant-steps-item-title {
-  font-size: 0.8rem !important;
-  color: white !important;
-}
-.ant-steps-item-icon {
-  background-color: rgba(255, 166, 0, 0.525) !important;
-}
-aside {
-  border: 1 solid rgb(82, 82, 82);
-  border-bottom: 0;
-  border-top: 0;
-  border-right: 0;
-}
-.version {
-  border: 1 solid rgb(82, 82, 82);
-}
-header {
-  border: 1 solid rgb(82, 82, 82);
-  border-left: 0;
-  border-right: 0;
+
+/* =========================================================
+   Tailwind v4 Theme
+   ========================================================= */
+
+@theme {
+  /* Brand colors */
+  --color-brand-50: #fff8eb;
+  --color-brand-100: #ffedc2;
+  --color-brand-200: #ffda85;
+  --color-brand-300: #ffc247;
+  --color-brand-400: #ffa600;
+  --color-brand-500: #f59e0b;
+  --color-brand-600: #d97706;
+  --color-brand-700: #a95101;
+  --color-brand-800: #733600;
+  --color-brand-900: #452000;
+
+  /* Application colors */
+  --color-app-background: #020121;
+  --color-app-surface: #0a092d;
+  --color-app-surface-light: #12103c;
+  --color-app-surface-orange: #211401;
+
+  --color-app-border: #525252;
+  --color-app-border-light: #6b6b6b;
+
+  --color-app-text: #ffffff;
+  --color-app-text-muted: #b7b7c5;
+  --color-app-text-subtle: #88889a;
+
+  /* Status colors */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #38bdf8;
+
+  /* Typography */
+  --font-sans: var(--font-yekan), Tahoma, Arial, sans-serif;
 }
 
-button {
-  margin-inline: 2px;
-}
-main {
-  background: rgba(2, 1, 33, 0.84) 83%;
-  /* background: radial-gradient(
-    circle,
-    rgba(148, 79, 0, 0.75) 0%,
-    rgba(2, 1, 33, 0.84) 83%,
-    rgba(2, 1, 33, 1) 100%
-  ); */
+/* =========================================================
+   CSS Variables
+   ========================================================= */
+
+:root {
+  color-scheme: dark;
+
+  --app-background: #020121;
+  --app-background-rgb: 2, 1, 33;
+
+  --app-surface: #0a092d;
+  --app-surface-light: #12103c;
+  --app-surface-orange: #211401;
+
+  --app-primary: #f59e0b;
+  --app-primary-light: #ffa600;
+  --app-primary-dark: #a95101;
+
+  --app-border: #525252;
+  --app-border-light: #6b6b6b;
+  --app-border-transparent: rgba(82, 82, 82, 0.55);
+
+  --app-text: #ffffff;
+  --app-text-muted: #b7b7c5;
+  --app-text-subtle: #88889a;
+
+  --app-radius-sm: 6px;
+  --app-radius-md: 10px;
+  --app-radius-lg: 16px;
+  --app-radius-xl: 20px;
+
+  --app-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --app-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.28);
+  --app-shadow-orange: 0 0 24px rgba(245, 158, 11, 0.12);
 }
 
-section {
-  border: 1px solid gray;
-  border-radius: 20px;
-  padding: 10px;
+/* =========================================================
+   Base
+   ========================================================= */
 
-  background: #8d4c01;
-  background: radial-gradient(
-    circle,
-    rgb(154, 82, 1) 0%,
-    rgba(33, 20, 1, 0.84) 83%,
-    rgba(2, 1, 33, 1) 100%
-  );
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    min-height: 100%;
+    background-color: var(--app-background);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--app-text);
+    background:
+      radial-gradient(circle at top right, rgba(154, 82, 1, 0.12) 0%, rgba(2, 1, 33, 0) 32%), var(--app-background);
+    font-family: var(--font-yekan), Tahoma, Arial, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  ::selection {
+    color: var(--app-background);
+    background-color: var(--app-primary-light);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--app-primary);
+    outline-offset: 2px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  svg {
+    max-width: 100%;
+  }
 }
 
-.ant-table-pagination {
-  position: sticky;
-  bottom: 0;
-  background: white;
-  z-index: 10;
-  margin: 0 !important;
-  padding: 12px 16px;
-  border-top: 1px solid #f0f0f0;
+/* =========================================================
+   Layout
+   ========================================================= */
+
+@layer components {
+  header {
+    border-block: 1px solid var(--app-border);
+    background-color: rgba(2, 1, 33, 0.86);
+    backdrop-filter: blur(12px);
+  }
+
+  aside {
+    border-inline-start: 1px solid var(--app-border);
+    background-color: rgba(2, 1, 33, 0.72);
+  }
+
+  main {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(148, 79, 0, 0.16) 0%, rgba(2, 1, 33, 0.84) 42%, rgba(2, 1, 33, 1) 83%),
+      var(--app-background);
+  }
+
+  section {
+    padding: 16px;
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-xl);
+    background: radial-gradient(
+      circle at top right,
+      rgb(154, 82, 1) 0%,
+      rgba(33, 20, 1, 0.84) 38%,
+      rgba(2, 1, 33, 1) 100%
+    );
+    box-shadow: var(--app-shadow-sm);
+  }
+
+  .version {
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-sm);
+    color: var(--app-text-muted);
+  }
+
+  button {
+    margin-inline: 2px;
+  }
 }
-/* put this at the bottom of globals.css */
+
+/* =========================================================
+   Shared Utility Classes
+   ========================================================= */
+
+@layer utilities {
+  .app-surface {
+    background-color: var(--app-surface);
+    border: 1px solid var(--app-border-transparent);
+  }
+
+  .app-surface-light {
+    background-color: var(--app-surface-light);
+    border: 1px solid var(--app-border-transparent);
+  }
+
+  .app-border {
+    border-color: var(--app-border);
+  }
+
+  .app-text-muted {
+    color: var(--app-text-muted);
+  }
+
+  .app-gradient {
+    background: radial-gradient(
+      circle at top right,
+      rgba(154, 82, 1, 0.9) 0%,
+      rgba(33, 20, 1, 0.84) 46%,
+      rgba(2, 1, 33, 1) 100%
+    );
+  }
+
+  .app-scrollbar {
+    scrollbar-color: var(--app-primary-dark) var(--app-surface);
+    scrollbar-width: thin;
+  }
+
+  .app-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .app-scrollbar::-webkit-scrollbar-track {
+    background: var(--app-surface);
+  }
+
+  .app-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--app-primary-dark);
+    border-radius: 999px;
+  }
+
+  .app-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--app-primary);
+  }
+}
+
+/* =========================================================
+   Ant Design - Global Font
+   ========================================================= */
 
 .ant-app,
 .ant-app *,
@@ -73,11 +257,6 @@ section {
 .ant-select,
 .ant-select *,
 .ant-table,
-.ant-table * {
-  font-family: var(--font-yekan) !important;
-}
-
-.ant-table,
 .ant-table *,
 .ant-table-wrapper,
 .ant-table-wrapper *,
@@ -85,6 +264,210 @@ section {
 .ant-table-container *,
 .ant-table-cell,
 .ant-table-thead > tr > th,
+.ant-table-tbody > tr > td,
+.ant-pagination,
+.ant-pagination *,
+.ant-modal,
+.ant-modal *,
+.ant-drawer,
+.ant-drawer *,
+.ant-dropdown,
+.ant-dropdown *,
+.ant-menu,
+.ant-menu * {
+  font-family: var(--font-yekan), Tahoma, Arial, sans-serif !important;
+}
+
+/* =========================================================
+   Ant Design - Steps
+   ========================================================= */
+
+.ant-steps-item-title {
+  color: var(--app-text) !important;
+  font-size: 0.8rem !important;
+}
+
+.ant-steps-item-description {
+  color: var(--app-text-muted) !important;
+}
+
+.ant-steps-item-icon {
+  background-color: rgba(255, 166, 0, 0.525) !important;
+  border-color: var(--app-primary) !important;
+}
+
+.ant-steps-item-process .ant-steps-item-icon {
+  background-color: var(--app-primary-dark) !important;
+  border-color: var(--app-primary-light) !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon {
+  background-color: transparent !important;
+  border-color: var(--app-primary) !important;
+}
+
+.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
+  background-color: var(--app-primary) !important;
+}
+
+/* =========================================================
+   Ant Design - Inputs and Buttons
+   ========================================================= */
+
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-select-selector,
+.ant-picker,
+.ant-input-number,
+.ant-input-number-group-wrapper {
+  color: var(--app-text) !important;
+  background-color: rgba(10, 9, 45, 0.9) !important;
+  border-color: var(--app-border) !important;
+}
+
+.ant-input::placeholder,
+.ant-select-selection-placeholder {
+  color: var(--app-text-subtle) !important;
+}
+
+.ant-input:hover,
+.ant-input-affix-wrapper:hover,
+.ant-select:hover .ant-select-selector,
+.ant-picker:hover {
+  border-color: var(--app-primary) !important;
+}
+
+.ant-input:focus,
+.ant-input-affix-wrapper-focused,
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused {
+  border-color: var(--app-primary-light) !important;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.16) !important;
+}
+
+.ant-btn-primary {
+  color: #1f1300 !important;
+  background-color: var(--app-primary) !important;
+  border-color: var(--app-primary) !important;
+  font-weight: 600;
+}
+
+.ant-btn-primary:hover {
+  background-color: var(--app-primary-light) !important;
+  border-color: var(--app-primary-light) !important;
+}
+
+/* =========================================================
+   Ant Design - Table
+   ========================================================= */
+
+.ant-table-wrapper,
+.ant-table {
+  color: var(--app-text) !important;
+  background: transparent !important;
+}
+
+.ant-table-container {
+  border: 1px solid var(--app-border-transparent);
+  border-radius: var(--app-radius-md);
+  overflow: hidden;
+}
+
+.ant-table-thead > tr > th {
+  color: var(--app-text) !important;
+  background-color: var(--app-surface-light) !important;
+  border-bottom-color: var(--app-border) !important;
+}
+
 .ant-table-tbody > tr > td {
-  font-family: var(--font-yekan) !important;
+  color: var(--app-text-muted) !important;
+  background-color: rgba(10, 9, 45, 0.72) !important;
+  border-bottom-color: rgba(82, 82, 82, 0.35) !important;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background-color: rgba(154, 82, 1, 0.18) !important;
+}
+
+.ant-table-cell-fix-left,
+.ant-table-cell-fix-right {
+  background-color: var(--app-surface) !important;
+}
+
+.ant-table-pagination {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+
+  margin: 0 !important;
+  padding: 12px 16px;
+
+  background-color: var(--app-surface) !important;
+  border-top: 1px solid var(--app-border);
+}
+
+/* =========================================================
+   Ant Design - Pagination
+   ========================================================= */
+
+.ant-pagination-item {
+  background-color: transparent !important;
+  border-color: var(--app-border) !important;
+}
+
+.ant-pagination-item a {
+  color: var(--app-text-muted) !important;
+}
+
+.ant-pagination-item-active {
+  background-color: var(--app-primary-dark) !important;
+  border-color: var(--app-primary) !important;
+}
+
+.ant-pagination-item-active a {
+  color: var(--app-text) !important;
+}
+
+.ant-pagination-prev button,
+.ant-pagination-next button {
+  color: var(--app-text-muted) !important;
+}
+
+/* =========================================================
+   Ant Design - Dropdown, Select and Modal
+   ========================================================= */
+
+.ant-dropdown,
+.ant-select-dropdown,
+.ant-picker-dropdown,
+.ant-modal-content,
+.ant-drawer-content {
+  background-color: var(--app-surface) !important;
+  border: 1px solid var(--app-border-transparent);
+}
+
+.ant-dropdown-menu,
+.ant-select-item {
+  color: var(--app-text-muted) !important;
+  background-color: transparent !important;
+}
+
+.ant-dropdown-menu-item:hover,
+.ant-select-item-option-active {
+  background-color: rgba(154, 82, 1, 0.2) !important;
+}
+
+.ant-modal-header,
+.ant-drawer-header {
+  background-color: transparent !important;
+  border-bottom-color: var(--app-border) !important;
+}
+
+.ant-modal-title,
+.ant-drawer-title {
+  color: var(--app-text) !important;
+}
+
+.ant-modal-close {
+  color: var(--app-text-muted) !important;
 }

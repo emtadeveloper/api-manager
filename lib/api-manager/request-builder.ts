@@ -1,22 +1,15 @@
 "use server";
 
-import {
-  findRestServiceByName,
-  getAllRestServices,
-} from "@/app/actions/rest-services/rest-serveice.action";
-import { RestType } from "@/utils/rest-type.enum";
+import { findRestServiceByName, getAllRestServices } from "@/app/actions/rest-services/rest-serveice.action";
+import { RestType } from "@/types/enums/rest-type.enum";
 import { NextRequest } from "next/server";
 import { GatewayRequest } from "./types";
 import { success } from "zod";
 import { init } from "next/dist/compiled/webpack/webpack";
 import { message } from "antd";
-import { HttpMethod } from "@/utils/method.enum";
+import { HttpMethod } from "@/types/enums/method.enum";
 
-export const sendRequest = async (
-  req: NextRequest,
-  path: string[],
-  searchParam: URLSearchParams,
-) => {
+export const sendRequest = async (req: NextRequest, path: string[], searchParam: URLSearchParams) => {
   //   const targetUrl = req.url;
   // console.log(path);
   const result = await findRestServiceByName(path[0]);
@@ -74,10 +67,7 @@ export const sendRequest = async (
 
   console.log(gatewayRequest);
   try {
-    const fetchResult = await fetch(
-      gatewayRequest.url,
-      gatewayRequest.init as RequestInit,
-    );
+    const fetchResult = await fetch(gatewayRequest.url, gatewayRequest.init as RequestInit);
 
     return {
       status: 200,

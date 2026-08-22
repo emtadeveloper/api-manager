@@ -1,14 +1,11 @@
-import { DatabaseType } from "@/utils/database-type.enum";
+import { DatabaseType } from "@/types/enums/database-type.enum";
 import { IDatabaseClient } from "./IDatabseClient";
 import { PostgresClient } from "./PostgresClient";
 import { SqlServerClient } from "./SqlServerClient";
 import { OracleClient } from "./OracleClient";
 
 export class DatabaseFactory {
-  static async create(
-    type: DatabaseType,
-    connection?: string,
-  ): Promise<IDatabaseClient> {
+  static async create(type: DatabaseType, connection?: string): Promise<IDatabaseClient> {
     let client: IDatabaseClient;
 
     switch (type) {

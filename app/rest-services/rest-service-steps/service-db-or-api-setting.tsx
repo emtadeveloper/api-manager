@@ -1,6 +1,6 @@
 "use client";
-import { HttpMethod } from "@/utils/method.enum";
-import { RestType } from "@/utils/rest-type.enum";
+import { HttpMethod } from "@/types/enums/method.enum";
+import { RestType } from "@/types/enums/rest-type.enum";
 import { FormInstance } from "antd";
 import ServiceDbSetting from "./service-db-setting";
 import ServiceExternalApiSetting from "./service-external-api-setting";
@@ -20,9 +20,7 @@ const ServiceDbOrApiSetting = ({ form }: Props) => {
         {restType && (
           <li>
             <strong>نوع ارتباط : </strong>
-            {restType === RestType.DATABASEDIRECT
-              ? "اتصال به دیتابیس"
-              : "فراخوانی وب سرویس خارجی"}
+            {restType === RestType.DATABASEDIRECT ? "اتصال به دیتابیس" : "فراخوانی وب سرویس خارجی"}
           </li>
         )}
 
@@ -35,7 +33,11 @@ const ServiceDbOrApiSetting = ({ form }: Props) => {
       </ul>
 
       {restType &&
-        (restType === RestType.DATABASEDIRECT ? <ServiceDbSetting form={form} /> : <ServiceExternalApiSetting form={form} />)}
+        (restType === RestType.DATABASEDIRECT ? (
+          <ServiceDbSetting form={form} />
+        ) : (
+          <ServiceExternalApiSetting form={form} />
+        ))}
     </div>
   );
 };

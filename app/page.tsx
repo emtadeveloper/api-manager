@@ -1,10 +1,13 @@
-'use client'
-import RestServices from './rest-services/page'
+import { redirect } from "next/navigation";
 
-const Home = () => {
-  return (
-    <h1></h1>
-  )
+import { hasUsers } from "../lib/data/users";
+
+export default async function HomePage() {
+  const hasUser = await hasUsers();
+
+  if (!hasUser) {
+    redirect("/initialize");
+  }
+
+  redirect("/initialize");
 }
-
-export default Home

@@ -3,16 +3,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendRequest } from "./request-builder";
 import { findRestServiceByName } from "@/app/actions/rest-services/rest-serveice.action";
-import { RestType } from "@/utils/rest-type.enum";
-import { DatabaseType } from "@/utils/database-type.enum";
+import { RestType } from "@/types/enums/rest-type.enum";
+import { DatabaseType } from "@/types/enums/database-type.enum";
 import { getViewData } from "@/app/actions/postgres/get-view-data";
 import { success, unknown } from "zod";
 import { message } from "antd";
 
-export const executeGatewayRequest = async (
-  req: NextRequest,
-  path?: string[],
-) => {
+export const executeGatewayRequest = async (req: NextRequest, path?: string[]) => {
   const searchParams = req.nextUrl.searchParams;
   let response: NextResponse = null!;
   const service = await findRestServiceByName(path![0]);

@@ -1,7 +1,7 @@
 "use server";
 
 import { DatabaseFactory } from "@/lib/DatabaseFactory";
-import { DatabaseType } from "@/utils/database-type.enum";
+import { DatabaseType } from "@/types/enums/database-type.enum";
 
 export const checkConnection = async (inputUrl: string) => {
   const db = await DatabaseFactory.create(DatabaseType.POSTGRES, inputUrl);

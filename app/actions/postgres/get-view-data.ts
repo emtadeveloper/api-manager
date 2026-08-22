@@ -1,6 +1,6 @@
 "use server";
 import { DatabaseFactory } from "@/lib/DatabaseFactory";
-import { DatabaseType } from "@/utils/database-type.enum";
+import { DatabaseType } from "@/types/enums/database-type.enum";
 
 export const getViewData = async (inputUrl: string, viewName: string) => {
   try {
