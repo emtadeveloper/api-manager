@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { yekan } from "@/fonts/font";
+import { yekan } from "../public/fonts/font";
 import Header from "@/components/header";
 import SideBar from "@/components/side-bar";
 

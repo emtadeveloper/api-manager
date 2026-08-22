@@ -13,7 +13,6 @@ import InitConfirm from "@/app/initialize/components/init-confirm";
 import InitDb from "@/app/initialize/components/init-db";
 import InitUser from "@/app/initialize/components/init-user";
 
-import { yekan } from "@/fonts/font";
 import { getChangedFieldPaths } from "@/utils/get-changed-field-paths";
 import {
   CheckCircleFilled,
@@ -24,6 +23,7 @@ import { Button, Form, message, Steps } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { yekan } from "@/public/fonts/font";
 const InitializeStep = () => {
   const param = useParams();
   const [current, setCurrent] = useState<number>(0);

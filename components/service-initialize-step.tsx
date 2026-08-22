@@ -8,7 +8,7 @@ import { RestServicesCreateDto } from "@/app/dto/rest-services-create-dto";
 import SesrviceDefinition from "@/app/rest-services/rest-service-steps/service-definition";
 import ServiceDbOrApiSetting from "@/app/rest-services/rest-service-steps/service-db-or-api-setting";
 import ServiceFinalize from "@/app/rest-services/rest-service-steps/service-finalize";
-import { yekan } from "@/fonts/font";
+import { yekan } from "../public/fonts/font";
 import { getChangedFieldPaths } from "@/utils/get-changed-field-paths";
 import {
   CheckCircleFilled,
