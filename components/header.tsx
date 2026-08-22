@@ -1,30 +1,21 @@
 "use client";
 
 import { UserOutlined } from "@ant-design/icons";
-import { Image } from "antd";
+import Image from "next/image";
 
 const Header = () => {
   return (
-    <>
-      <header className="border border-gray-50 border-r-0 border-l-0 flex justify-between px-20 items-center    ">
-        <div className="flex items-center" >
-        <Image src="/assets/images/isiran.png" width={50} height={50} alt="ایزایران"/>
-        <small>شرکت ایزایران</small>
-        </div>
-       <div className="flex items-center gap-2" >
-        <small>کاربر : مدیرسیستم</small>
-        <UserOutlined   className="text-orange-500! text-2xl border rounded-full p-1"/> 
-        </div>
-        {/* <div className="   h-15   w-full flex justify-center items-center">
-                <div className="absolute h-full bg-white shadow-gray-300 shadow-inner w-11/12 p-2 rounded-xl flex justify-between items-center">
-                  <div className="w-full pb-1  rounded-xl px-5 flex text-blue-800 justify-between">
-                    <span>سامانه مدیریت وب سرویس</span>
-                    <span>کاربر</span>
-                  </div>
-                </div>
-              </div> */}
-      </header>
-    </>
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-y border-app-border bg-app-background/85 px-4 backdrop-blur sm:px-8 lg:px-20">
+      <div className="flex items-center gap-2">
+        <Image src="/assets/images/isiran.png" width={40} height={40} alt="ایزایران" />
+        <small className="text-app-text-muted">شرکت ایزایران</small>
+      </div>
+
+      <div className="flex items-center gap-2 rounded-full border border-app-border bg-app-surface px-3 py-1">
+        <small className="text-app-text-muted">کاربر: مدیرسیستم</small>
+        <UserOutlined className="text-xl text-app-primary" />
+      </div>
+    </header>
   );
 };
 

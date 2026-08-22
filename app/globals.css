@@ -6,6 +6,9 @@
 
 @theme {
   /* Brand colors */
+  --color-app-primary: #f59e0b;
+  --color-app-primary-light: #ffa600;
+  --color-app-primary-dark: #a95101;
   --color-brand-50: #fff8eb;
   --color-brand-100: #ffedc2;
   --color-brand-200: #ffda85;
