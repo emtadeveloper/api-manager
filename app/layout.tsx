@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { yekan } from "../public/fonts/font";
-import Header from "@/components/header";
-import SideBar from "@/components/side-bar";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 import "./globals.css";
+import AppLayout from "@/components/layout/app-layout";
 
 export const metadata: Metadata = {
   title: {
@@ -19,16 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl" className={`${yekan.className} h-full antialiased`}>
+    <html lang="fa" dir="rtl" data-theme="dark" className={`${yekan.className} h-full antialiased`}>
       <body className="h-full overflow-hidden">
-        <div className="flex h-dvh flex-col">
-          <Header />
-
-          <div className="flex min-h-0 flex-1">
-            <SideBar />
-            <main className="min-h-0 min-w-0 flex-1 overflow-y-auto p-4">{children}</main>
-          </div>
-        </div>
+        <AntdRegistry>
+          <AppLayout>{children}</AppLayout>
+        </AntdRegistry>
       </body>
     </html>
   );
