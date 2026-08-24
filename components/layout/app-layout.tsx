@@ -77,7 +77,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         placement="right"
         size={280}
         styles={{
-          content: { background: "var(--app-surface)" },
+          section: { background: "var(--app-surface)" },
           header: { background: "var(--app-surface)!important", borderBottom: "1px solid var(--app-border)" },
           body: { padding: 0, background: "var(--app-surface)" },
         }}

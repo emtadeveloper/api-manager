@@ -27,14 +27,16 @@ const Header = ({ isDark, onToggleTheme, onMenuClick }: HeaderProps) => {
       <Flex align="center" gap={12}>
         <Button
           type="text"
-          icon={isDark ? <SunOutlined style={{ color: iconColor }} /> : <MoonOutlined style={{ color: iconColor }} />}
+          icon={isDark ? <SunOutlined /> : <MoonOutlined />}
           onClick={onToggleTheme}
           aria-label="تغییر تم"
         />
         <div className="h-6 w-px bg-app-border" />
         <Flex align="center" gap={8}>
-          <Avatar src="/images/user.png" size={20} style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }} />
-          <Typography.Text style={{ color: "var(--app-text)", fontWeight: 500, fontSize: 10 }}>مدیریت</Typography.Text>
+          <Avatar src="/images/user.png" size={30} style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }} />
+          <Typography.Text style={{ color: "var(--app-text)", fontWeight: 500, fontSize: 10 }}>
+            حسین نجفی
+          </Typography.Text>
         </Flex>
       </Flex>
     </header>
