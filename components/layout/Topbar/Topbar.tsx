@@ -12,14 +12,12 @@ interface HeaderProps {
 }
 
 const Topbar = ({ isDark, onToggleTheme, onMenuClick }: HeaderProps) => {
-  const iconColor = isDark ? "#ffffff" : "#f59e0b";
-
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-none bg-app-background/85 px-4 backdrop-blur sm:px-8">
       <Flex align="center" gap={8}>
         <Button
           type="text"
-          icon={<MenuOutlined style={{ color: iconColor }} />}
+          icon={<MenuOutlined style={{ color: "var(--app-primary)" }} />}
           onClick={onMenuClick}
           className="hide-on-desktop"
           aria-label="باز کردن منو"

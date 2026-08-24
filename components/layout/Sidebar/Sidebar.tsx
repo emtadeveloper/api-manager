@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Typography } from "antd";
+import { Menu } from "antd";
 import { navLinks } from "@/lib/navigation";
 
 const SidebarContent = ({ onNavigate }: { onNavigate?: () => void }) => {
@@ -11,33 +10,39 @@ const SidebarContent = ({ onNavigate }: { onNavigate?: () => void }) => {
 
   const activeKey = navLinks.find((link) => pathname === link.href || pathname.startsWith(`${link.href}/`))?.href;
 
-  const items = navLinks.map((link) => ({
-    key: link.href,
-    label: (
-      <Link href={link.href} onClick={onNavigate}>
-        {link.title}
-      </Link>
-    ),
-  }));
+  const items = navLinks.map((link) => {
+    const isActive = activeKey === link.href;
+    return {
+      key: link.href,
+      label: (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          {isActive && (
+            <span
+              style={{
+                color: "var(--app-primary, #1890ff)",
+                fontWeight: "bold",
+                marginLeft: "8px",
+              }}
+            >
+              |
+            </span>
+          )}
+          <Link href={link.href} onClick={onNavigate} style={{ flex: 1 }}>
+            {link.title}
+          </Link>
+        </div>
+      ),
+    };
+  });
 
   return (
     <div className="flex h-full flex-col">
-      <div className="shrink-0 p-3 text-end">
-        <div className="grid w-full place-content-center">
-          <Image src="/images/rasan.png" width={120} height={50} alt="لوگو" />
-        </div>
-
-        <div className="m-2 mb-4 rounded-xl border border-app-border bg-app-surface p-2 text-center text-app-primary">
-          رسان
-          <Typography.Paragraph className="m-2 mt-2 rounded-xl border border-app-border bg-app-surface-light p-2 text-xs text-app-text">
-            سامانه مدیریت سرویس
-          </Typography.Paragraph>
-          <Typography.Paragraph className="m-2 mt-2 rounded-xl border border-app-border bg-app-surface-light p-2 text-xs text-app-text">
-            API MANAGER
-          </Typography.Paragraph>
-        </div>
-      </div>
-
       <Menu
         mode="inline"
         selectedKeys={activeKey ? [activeKey] : []}
@@ -49,13 +54,6 @@ const SidebarContent = ({ onNavigate }: { onNavigate?: () => void }) => {
           overflowY: "auto",
         }}
       />
-
-      <Typography.Text
-        type="secondary"
-        style={{ textAlign: "center", padding: "12px 0", color: "var(--app-text-muted)" }}
-      >
-        نسخه 1.0.0
-      </Typography.Text>
     </div>
   );
 };
