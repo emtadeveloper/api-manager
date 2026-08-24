@@ -5,7 +5,7 @@ import { ConfigProvider, Drawer, Layout, theme } from "antd";
 import SidebarContent from "./Sidebar/Sidebar";
 import Topbar from "./Topbar/Topbar";
 
-const { Sider, Content, Header } = Layout;
+const { Sider, Content } = Layout;
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);

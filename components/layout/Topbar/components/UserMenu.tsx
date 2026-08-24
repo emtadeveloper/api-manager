@@ -9,13 +9,13 @@ const UserMenu = () => {
     {
       key: "profile",
       label: "حساب کاربری",
-      className: "!text-xs",
+      className: "!text-xs w-30",
       onClick: () => console.log("رفتن به حساب کاربری"),
     },
     {
       key: "logout",
       label: "خروج",
-      className: "!text-xs",
+      className: "!text-xs w-30",
       danger: true,
       onClick: () => console.log("خروج از حساب"),
     },
@@ -23,7 +23,7 @@ const UserMenu = () => {
 
   return (
     <Dropdown menu={{ items }} placement="bottomLeft" arrow trigger={["click"]}>
-      <Flex align="center" gap={6} className="cursor-pointer">
+      <Flex align="center" gap={6} className="cursor-pointer ">
         <Avatar src="/images/user.png" size={30} style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }} />
         <Typography.Text
           style={{

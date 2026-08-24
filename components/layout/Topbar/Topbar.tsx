@@ -1,8 +1,9 @@
 "use client";
 
 import { Button, Flex } from "antd";
-import { MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
+import { MenuOutlined } from "@ant-design/icons";
 import UserMenu from "./components/UserMenu";
+import SettingsDrawer from "./components/SettingsDrawer";
 
 interface HeaderProps {
   isDark: boolean;
@@ -24,15 +25,9 @@ const Topbar = ({ isDark, onToggleTheme, onMenuClick }: HeaderProps) => {
           aria-label="باز کردن منو"
         />
       </Flex>
-
-      <Flex align="center" gap={12}>
-        <Button
-          type="text"
-          icon={isDark ? <SunOutlined /> : <MoonOutlined />}
-          onClick={onToggleTheme}
-          aria-label="تغییر تم"
-        />
-        <div className="h-6 w-px bg-app-border" />
+      <Flex align="center">
+        <SettingsDrawer isDark={isDark} onToggleTheme={onToggleTheme} />
+        <div className="h-6 w-px bg-app-border mx-4" />
         <UserMenu />
       </Flex>
     </header>

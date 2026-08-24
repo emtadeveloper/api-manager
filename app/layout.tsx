@@ -3,7 +3,7 @@ import { yekan } from "../public/fonts/font";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 import "./globals.css";
-import AppLayout from "@/components/layout/app-layout";
+import AppLayout from "@/components/layout/AppLayout";
 
 export const metadata: Metadata = {
   title: {
