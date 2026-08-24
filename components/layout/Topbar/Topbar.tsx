@@ -1,7 +1,8 @@
 "use client";
 
-import { Avatar, Button, Flex, Typography } from "antd";
+import { Button, Flex } from "antd";
 import { MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
+import UserMenu from "./components/UserMenu";
 
 interface HeaderProps {
   isDark: boolean;
@@ -9,11 +10,11 @@ interface HeaderProps {
   onMenuClick?: () => void;
 }
 
-const Header = ({ isDark, onToggleTheme, onMenuClick }: HeaderProps) => {
+const Topbar = ({ isDark, onToggleTheme, onMenuClick }: HeaderProps) => {
   const iconColor = isDark ? "#ffffff" : "#f59e0b";
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-y border-app-border bg-app-background/85 px-4 backdrop-blur sm:px-8">
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-none bg-app-background/85 px-4 backdrop-blur sm:px-8">
       <Flex align="center" gap={8}>
         <Button
           type="text"
@@ -32,15 +33,10 @@ const Header = ({ isDark, onToggleTheme, onMenuClick }: HeaderProps) => {
           aria-label="تغییر تم"
         />
         <div className="h-6 w-px bg-app-border" />
-        <Flex align="center" gap={8}>
-          <Avatar src="/images/user.png" size={30} style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }} />
-          <Typography.Text style={{ color: "var(--app-text)", fontWeight: 500, fontSize: 10 }}>
-            حسین نجفی
-          </Typography.Text>
-        </Flex>
+        <UserMenu />
       </Flex>
     </header>
   );
 };
 
-export default Header;
+export default Topbar;

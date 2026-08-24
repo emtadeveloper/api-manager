@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { ConfigProvider, Drawer, Layout, theme } from "antd";
-import SidebarContent from "./side-bar";
-import Header from "./header";
+import SidebarContent from "./Sidebar/Sidebar";
+import Topbar from "./Topbar/Topbar";
 
-const { Sider, Content } = Layout;
+const { Sider, Content, Header } = Layout;
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -64,9 +64,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         >
           {sidebarContent}
         </Sider>
-
         <Layout style={{ minHeight: "100vh" }}>
-          <Header isDark={isDark} onToggleTheme={toggleTheme} onMenuClick={() => setDrawerOpen(true)} />
+          <Topbar isDark={isDark} onToggleTheme={toggleTheme} onMenuClick={() => setDrawerOpen(true)} />
           <Content style={{ padding: 16, overflow: "auto" }}>{children}</Content>
         </Layout>
       </Layout>
