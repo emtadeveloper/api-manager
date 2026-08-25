@@ -1,3 +1,5 @@
+/* app/globals.css */
+
 @import "tailwindcss";
 
 /* =========================================================
@@ -20,18 +22,31 @@
   --color-brand-800: #733600;
   --color-brand-900: #452000;
 
-  /* Application colors */
-  --color-app-background: #020121;
-  --color-app-surface: #0a092d;
-  --color-app-surface-light: #12103c;
+  /* Text colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #d0d5da;
+  --color-text-muted: #919eab;
+  --color-text-subtle: #637381;
+  --color-text-disabled: #454f5b;
+
+  /* Text primary font weights */
+  --font-weight-text-primary-normal: 400;
+  --font-weight-text-primary-medium: 500;
+  --font-weight-text-primary-semibold: 600;
+  --font-weight-text-primary-bold: 700;
+  --font-weight-text-primary-extrabold: 800;
+  --font-weight-text-primary-black: 900;
+
+  /* Application colors - Dark (default) */
+  --color-app-background: #141a21;
+  --color-app-surface: #1c252e;
+  --color-app-surface-light: #28323d;
   --color-app-surface-orange: #211401;
-
-  --color-app-border: #525252;
-  --color-app-border-light: #6b6b6b;
-
+  --color-app-border: rgba(145, 158, 171, 0.2);
+  --color-app-border-light: rgba(145, 158, 171, 0.3);
   --color-app-text: #ffffff;
-  --color-app-text-muted: #b7b7c5;
-  --color-app-text-subtle: #88889a;
+  --color-app-text-muted: #919eab;
+  --color-app-text-subtle: #637381;
 
   /* Status colors */
   --color-success: #22c55e;
@@ -44,30 +59,43 @@
 }
 
 /* =========================================================
-   CSS Variables
+   CSS Variables - Dark Theme (Default)
    ========================================================= */
 
 :root {
   color-scheme: dark;
 
-  --app-background: #020121;
-  --app-background-rgb: 2, 1, 33;
+  --app-background: #141a21;
+  --app-background-rgb: 20, 26, 33;
 
-  --app-surface: #0a092d;
-  --app-surface-light: #12103c;
+  --app-surface: #1c252e;
+  --app-surface-light: #28323d;
   --app-surface-orange: #211401;
 
   --app-primary: #f59e0b;
   --app-primary-light: #ffa600;
   --app-primary-dark: #a95101;
 
-  --app-border: #525252;
-  --app-border-light: #6b6b6b;
-  --app-border-transparent: rgba(82, 82, 82, 0.55);
+  --app-border: rgba(145, 158, 171, 0.2);
+  --app-border-light: rgba(145, 158, 171, 0.3);
+  --app-border-transparent: rgba(145, 158, 171, 0.15);
 
   --app-text: #ffffff;
-  --app-text-muted: #b7b7c5;
-  --app-text-subtle: #88889a;
+  --app-text-primary: #ffffff;
+  --app-text-secondary: #d0d5da;
+  --app-text-disabled: #454f5b;
+  --app-text-muted: #919eab;
+  --app-text-subtle: #637381;
+
+  /* =======================================================
+     Sidebar
+     ======================================================= */
+
+  /* Hover color in Dark theme = Tailwind gray-400 */
+  --app-sidebar-hover: #9ca3af;
+
+  /* Active background in Dark theme */
+  --app-sidebar-active: #28323d;
 
   --app-radius-sm: 6px;
   --app-radius-md: 10px;
@@ -80,227 +108,233 @@
 }
 
 /* =========================================================
-   Base
-   ========================================================= */
-
-@layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  html {
-    min-height: 100%;
-    background-color: var(--app-background);
-    scroll-behavior: smooth;
-  }
-
-  body {
-    min-height: 100vh;
-    margin: 0;
-    color: var(--app-text);
-    background:
-      radial-gradient(circle at top right, rgba(154, 82, 1, 0.12) 0%, rgba(2, 1, 33, 0) 32%), var(--app-background);
-    font-family: var(--font-yekan), Tahoma, Arial, sans-serif;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  button,
-  input,
-  textarea,
-  select {
-    font: inherit;
-  }
-
-  button {
-    cursor: pointer;
-  }
-
-  button:disabled {
-    cursor: not-allowed;
-  }
-
-  ::selection {
-    color: var(--app-background);
-    background-color: var(--app-primary-light);
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--app-primary);
-    outline-offset: 2px;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  img,
-  svg {
-    max-width: 100%;
-  }
-}
-
-/* =========================================================
-   Layout
-   ========================================================= */
-
-@layer components {
-  header {
-    border-block: 1px solid var(--app-border);
-    background-color: rgba(2, 1, 33, 0.86);
-    backdrop-filter: blur(12px);
-  }
-
-  aside {
-    border-inline-start: 1px solid var(--app-border);
-    background-color: rgba(2, 1, 33, 0.72);
-  }
-
-  main {
-    min-height: 100vh;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(148, 79, 0, 0.16) 0%, rgba(2, 1, 33, 0.84) 42%, rgba(2, 1, 33, 1) 83%),
-      var(--app-background);
-  }
-
-  section {
-    padding: 16px;
-    border: 1px solid var(--app-border);
-    border-radius: var(--app-radius-xl);
-    background: radial-gradient(
-      circle at top right,
-      rgb(154, 82, 1) 0%,
-      rgba(33, 20, 1, 0.84) 38%,
-      rgba(2, 1, 33, 1) 100%
-    );
-    box-shadow: var(--app-shadow-sm);
-  }
-
-  .version {
-    border: 1px solid var(--app-border);
-    border-radius: var(--app-radius-sm);
-    color: var(--app-text-muted);
-  }
-
-  button {
-    margin-inline: 2px;
-  }
-}
-
-/* =========================================================
-   Shared Utility Classes
-   ========================================================= */
-
-@layer utilities {
-  .app-surface {
-    background-color: var(--app-surface);
-    border: 1px solid var(--app-border-transparent);
-  }
-
-  .app-surface-light {
-    background-color: var(--app-surface-light);
-    border: 1px solid var(--app-border-transparent);
-  }
-
-  .app-border {
-    border-color: var(--app-border);
-  }
-
-  .app-text-muted {
-    color: var(--app-text-muted);
-  }
-
-  .app-gradient {
-    background: radial-gradient(
-      circle at top right,
-      rgba(154, 82, 1, 0.9) 0%,
-      rgba(33, 20, 1, 0.84) 46%,
-      rgba(2, 1, 33, 1) 100%
-    );
-  }
-
-  .app-scrollbar {
-    scrollbar-color: var(--app-primary-dark) var(--app-surface);
-    scrollbar-width: thin;
-  }
-
-  .app-scrollbar::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  .app-scrollbar::-webkit-scrollbar-track {
-    background: var(--app-surface);
-  }
-
-  .app-scrollbar::-webkit-scrollbar-thumb {
-    background-color: var(--app-primary-dark);
-    border-radius: 999px;
-  }
-
-  .app-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: var(--app-primary);
-  }
-
-  .hide-on-desktop {
-    display: inline-flex;
-  }
-
-  @media (min-width: 1078px) {
-    .hide-on-desktop {
-      display: none !important;
-    }
-  }
-}
-
-/* =========================================================
    Light Theme Overrides
    ========================================================= */
 
-:root[data-theme="light"] {
+[data-theme="light"] {
   color-scheme: light;
 
   --app-background: #ffffff;
-  --app-surface: #fafafa;
-  --app-surface-light: #f0f0f0;
+  --app-background-rgb: 255, 255, 255;
+
+  --app-surface: #ffffff;
+  --app-surface-light: #f4f6f8;
   --app-surface-orange: #fff7e6;
 
-  --app-border: #d9d9d9;
-  --app-border-light: #bfbfbf;
-  --app-border-transparent: rgba(0, 0, 0, 0.08);
+  --app-border: rgba(145, 158, 171, 0.2);
+  --app-border-light: rgba(145, 158, 171, 0.3);
+  --app-border-transparent: rgba(145, 158, 171, 0.08);
 
-  --app-text: #1a1a1a;
-  --app-text-muted: #595959;
-  --app-text-subtle: #8c8c8c;
+  --app-text: #1c252e;
+  --app-text-primary: #1c252e;
+  --app-text-secondary: #454f5b;
+  --app-text-disabled: #c4cdd5;
+  --app-text-muted: #637381;
+  --app-text-subtle: #919eab;
+
+  /* Tailwind gray-50 */
+  --app-sidebar-hover: #f9fafb;
+
+  /* Active background in Light theme */
+  --app-sidebar-active: #f3f4f6;
+
+  --color-text-primary: #1c252e;
+  --color-text-secondary: #454f5b;
+  --color-text-muted: #637381;
+  --color-text-subtle: #919eab;
+  --color-text-disabled: #c4cdd5;
 
   --color-app-background: #ffffff;
-  --color-app-surface: #fafafa;
-  --color-app-surface-light: #f0f0f0;
+  --color-app-surface: #ffffff;
+  --color-app-surface-light: #f4f6f8;
   --color-app-surface-orange: #fff7e6;
-
-  --color-app-border: #d9d9d9;
-  --color-app-border-light: #bfbfbf;
-
-  --color-app-text: #1a1a1a;
-  --color-app-text-muted: #595959;
-  --color-app-text-subtle: #8c8c8c;
+  --color-app-border: rgba(145, 158, 171, 0.2);
+  --color-app-border-light: rgba(145, 158, 171, 0.3);
+  --color-app-text: #1c252e;
+  --color-app-text-muted: #637381;
+  --color-app-text-subtle: #919eab;
 }
 
-:root[data-theme="light"] body {
+/* =========================================================
+   Primary Colors
+   ========================================================= */
+
+[data-primary-color="#f59e0b"] {
+  --app-primary: #f59e0b;
+  --app-primary-light: #ffa600;
+  --app-primary-dark: #a95101;
+}
+
+[data-primary-color="#0C68E9"] {
+  --app-primary: #0c68e9;
+  --app-primary-light: #6bb1f8;
+  --app-primary-dark: #063ba7;
+}
+
+[data-primary-color="#8E33FF"] {
+  --app-primary: #8e33ff;
+  --app-primary-light: #c684ff;
+  --app-primary-dark: #5119b7;
+}
+
+[data-primary-color="#FF3030"] {
+  --app-primary: #ff3030;
+  --app-primary-light: #ffc1ac;
+  --app-primary-dark: #b71833;
+}
+
+[data-primary-color="#22C55E"] {
+  --app-primary: #22c55e;
+  --app-primary-light: #77ed8b;
+  --app-primary-dark: #118d57;
+}
+
+[data-primary-color="#7635dc"] {
+  --app-primary: #7635dc;
+  --app-primary-light: #b985f4;
+  --app-primary-dark: #431a9e;
+}
+
+/* =========================================================
+   Base Styles
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background-color: var(--app-background);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+
+  color: var(--app-text);
+
+  background:
+    radial-gradient(circle at top right, rgba(154, 82, 1, 0.12) 0%, rgba(2, 1, 33, 0) 32%), var(--app-background);
+
+  font-family: var(--font-yekan), Tahoma, Arial, sans-serif;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-theme="light"] body {
   background: var(--app-background);
+
   background-image: radial-gradient(circle at top right, rgba(245, 158, 11, 0.06), transparent 40%);
 }
 
-:root[data-theme="light"] main {
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+::selection {
+  color: var(--app-background);
+  background-color: var(--app-primary-light);
+}
+
+:focus-visible {
+  outline: 2px solid var(--app-primary);
+  outline-offset: 2px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+/* =========================================================
+   Layout Components
+   ========================================================= */
+
+header {
+  border-block: 1px solid var(--app-border);
+
+  background-color: rgba(20, 26, 33, 0.86);
+
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="light"] header {
+  background-color: rgba(255, 255, 255, 0.86);
+}
+
+aside {
+  border-inline-start: 1px solid var(--app-border);
+
+  background-color: rgba(20, 26, 33, 0.72);
+}
+
+[data-theme="light"] aside {
+  background-color: rgba(255, 255, 255, 0.72);
+}
+
+main {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(circle at 50% 0%, rgba(148, 79, 0, 0.16) 0%, rgba(20, 26, 33, 0.84) 42%, rgba(20, 26, 33, 1) 83%),
+    var(--app-background);
+}
+
+[data-theme="light"] main {
   background: var(--app-background);
 }
 
-:root[data-theme="light"] section {
+section {
+  padding: 16px;
+
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-xl);
+
+  background: radial-gradient(
+    circle at top right,
+    rgb(154, 82, 1) 0%,
+    rgba(33, 20, 1, 0.84) 38%,
+    rgba(20, 26, 33, 1) 100%
+  );
+
+  box-shadow: var(--app-shadow-sm);
+}
+
+[data-theme="light"] section {
   background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.2) 0%, rgba(255, 255, 255, 1) 100%);
+
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.version {
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text-muted);
+}
+
+button {
+  margin-inline: 2px;
 }
 
 body,
@@ -313,6 +347,165 @@ section {
     color 0.3s ease,
     border-color 0.3s ease;
 }
+
+/* =========================================================
+   Sidebar
+   ========================================================= */
+
+/*
+  Sidebar normal item hover.
+
+  Dark:
+  #9ca3af = gray-400
+
+  Light:
+  #f9fafb = gray-50
+*/
+
+.sidebar-item {
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-item:hover {
+  background-color: var(--app-sidebar-hover);
+}
+
+/*
+  Active sidebar item.
+
+  The hover rule above does NOT apply to active items
+  because active items don't have .sidebar-item.
+*/
+
+.sidebar-active {
+  background-color: var(--app-sidebar-active);
+  border-right: 4px solid var(--app-primary);
+  border-radius: var(--app-radius-md) 0 0 var(--app-radius-md);
+}
+
+/* =========================================================
+   Text Primary Utilities
+   ========================================================= */
+
+.app-text-primary {
+  color: var(--app-text-primary);
+}
+
+.app-text-secondary {
+  color: var(--app-text-secondary);
+}
+
+.app-text-disabled {
+  color: var(--app-text-disabled);
+}
+
+.app-text-primary-normal {
+  color: var(--app-text-primary);
+  font-weight: 400;
+}
+
+.app-text-primary-medium {
+  color: var(--app-text-primary);
+  font-weight: 500;
+}
+
+.app-text-primary-semibold {
+  color: var(--app-text-primary);
+  font-weight: 600;
+}
+
+.app-text-primary-bold {
+  color: var(--app-text-primary);
+  font-weight: 700;
+}
+
+.app-text-primary-extrabold {
+  color: var(--app-text-primary);
+  font-weight: 800;
+}
+
+.app-text-primary-black {
+  color: var(--app-text-primary);
+  font-weight: 900;
+}
+
+/* =========================================================
+   Utility Classes
+   ========================================================= */
+
+.app-surface {
+  background-color: var(--app-surface);
+  border: 1px solid var(--app-border-transparent);
+}
+
+.app-surface-light {
+  background-color: var(--app-surface-light);
+  border: 1px solid var(--app-border-transparent);
+}
+
+.app-border {
+  border-color: var(--app-border);
+}
+
+.app-text-muted {
+  color: var(--app-text-muted);
+}
+
+.app-gradient {
+  background: radial-gradient(
+    circle at top right,
+    rgba(154, 82, 1, 0.9) 0%,
+    rgba(33, 20, 1, 0.84) 46%,
+    rgba(20, 26, 33, 1) 100%
+  );
+}
+
+/* =========================================================
+   Scrollbar
+   ========================================================= */
+
+.app-scrollbar {
+  scrollbar-color: var(--app-primary-dark) var(--app-surface);
+  scrollbar-width: thin;
+}
+
+.app-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.app-scrollbar::-webkit-scrollbar-track {
+  background: var(--app-surface);
+}
+
+.app-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--app-primary-dark);
+  border-radius: 999px;
+}
+
+.app-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--app-primary);
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+.hide-on-desktop {
+  display: inline-flex;
+}
+
+@media (min-width: 1078px) {
+  .hide-on-desktop {
+    display: none !important;
+  }
+}
+
+/* =========================================================
+   Ant Design Overrides
+   ========================================================= */
+
+/* Menu */
 
 .ant-menu {
   background: transparent !important;
@@ -334,7 +527,7 @@ section {
 }
 
 /* =========================================================
-   Ant Design - Global Font
+   Global Font
    ========================================================= */
 
 .ant-app,
@@ -369,7 +562,7 @@ section {
 }
 
 /* =========================================================
-   Ant Design - Steps
+   Steps
    ========================================================= */
 
 .ant-steps-item-title {
@@ -401,7 +594,7 @@ section {
 }
 
 /* =========================================================
-   Ant Design - Inputs and Buttons
+   Inputs & Buttons
    ========================================================= */
 
 .ant-input,
@@ -411,8 +604,17 @@ section {
 .ant-input-number,
 .ant-input-number-group-wrapper {
   color: var(--app-text) !important;
-  background-color: rgba(10, 9, 45, 0.9) !important;
+  background-color: rgba(28, 37, 46, 0.9) !important;
   border-color: var(--app-border) !important;
+}
+
+[data-theme="light"] .ant-input,
+[data-theme="light"] .ant-input-affix-wrapper,
+[data-theme="light"] .ant-select-selector,
+[data-theme="light"] .ant-picker,
+[data-theme="light"] .ant-input-number,
+[data-theme="light"] .ant-input-number-group-wrapper {
+  background-color: #ffffff !important;
 }
 
 .ant-input::placeholder,
@@ -432,6 +634,7 @@ section {
 .ant-select-focused .ant-select-selector,
 .ant-picker-focused {
   border-color: var(--app-primary-light) !important;
+
   box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.16) !important;
 }
 
@@ -448,7 +651,7 @@ section {
 }
 
 /* =========================================================
-   Ant Design - Table
+   Table
    ========================================================= */
 
 .ant-table-wrapper,
@@ -471,8 +674,12 @@ section {
 
 .ant-table-tbody > tr > td {
   color: var(--app-text-muted) !important;
-  background-color: rgba(10, 9, 45, 0.72) !important;
-  border-bottom-color: rgba(82, 82, 82, 0.35) !important;
+  background-color: rgba(28, 37, 46, 0.72) !important;
+  border-bottom-color: rgba(145, 158, 171, 0.2) !important;
+}
+
+[data-theme="light"] .ant-table-tbody > tr > td {
+  background-color: rgba(255, 255, 255, 0.72) !important;
 }
 
 .ant-table-tbody > tr:hover > td {
@@ -488,16 +695,15 @@ section {
   position: sticky;
   bottom: 0;
   z-index: 10;
-
   margin: 0 !important;
   padding: 12px 16px;
-
   background-color: var(--app-surface) !important;
+
   border-top: 1px solid var(--app-border);
 }
 
 /* =========================================================
-   Ant Design - Pagination
+   Pagination
    ========================================================= */
 
 .ant-pagination-item {
@@ -524,7 +730,7 @@ section {
 }
 
 /* =========================================================
-   Ant Design - Dropdown, Select and Modal
+   Dropdown, Select, Modal, Drawer
    ========================================================= */
 
 .ant-dropdown,

@@ -66,7 +66,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </Sider>
         <Layout style={{ minHeight: "100vh" }}>
           <Topbar isDark={isDark} onToggleTheme={toggleTheme} onMenuClick={() => setDrawerOpen(true)} />
-          <Content style={{ padding: 16, overflow: "auto" }}>{children}</Content>
+          <Content
+            style={{
+              padding: 16,
+              overflow: "auto",
+              background: "var(--app-background)",
+            }}
+          >
+            {/* {children} */}
+          </Content>
         </Layout>
       </Layout>
 

@@ -1,21 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Button,
-  Drawer,
-  Flex,
-  Switch,
-  Typography,
-  Divider,
-  Select,
-  Space,
-  Badge,
-  ColorPicker,
-  Radio,
-  InputNumber,
-  Slider,
-} from "antd";
+import { Button, Drawer, Flex, Typography, Space } from "antd";
 import {
   SettingOutlined,
   SunOutlined,
@@ -23,11 +9,9 @@ import {
   ReloadOutlined,
   ExpandOutlined,
   CloseOutlined,
-  PartitionOutlined,
-  EyeOutlined,
 } from "@ant-design/icons";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 interface SettingsDrawerProps {
   isDark: boolean;
@@ -36,7 +20,6 @@ interface SettingsDrawerProps {
 
 const SettingsDrawer = ({ isDark, onToggleTheme }: SettingsDrawerProps) => {
   const [open, setOpen] = useState(false);
-  const [fontSize, setFontSize] = useState(16);
 
   const showDrawer = () => setOpen(true);
   const onClose = () => setOpen(false);
@@ -48,21 +31,6 @@ const SettingsDrawer = ({ isDark, onToggleTheme }: SettingsDrawerProps) => {
   const handleFullscreen = () => {
     console.log("تغییر حالت تمام‌صفحه");
   };
-
-  const fontFamilyOptions = [
-    { value: "public-sans", label: "Public Sans" },
-    { value: "inter", label: "Inter" },
-    { value: "dm-sans", label: "DM Sans" },
-    { value: "nunito-sans", label: "Nunito Sans" },
-  ];
-
-  const presets = [
-    { color: "#00A76F", name: "سبز" },
-    { color: "#00B8D9", name: "آبی" },
-    { color: "#FFAB00", name: "طلایی" },
-    { color: "#FF5630", name: "قرمز" },
-    { color: "#7A4B9A", name: "بنفش" },
-  ];
 
   return (
     <>
