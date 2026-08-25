@@ -9,6 +9,7 @@ const { Sider, Content } = Layout;
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   const [isDark, setIsDark] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
@@ -32,7 +33,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const sidebarContent = <SidebarContent onNavigate={closeDrawer} />;
+  const sidebarContent = (
+    <SidebarContent
+      collapsed={collapsed}
+      onToggleCollapse={() => setCollapsed((prev) => !prev)}
+      onNavigate={closeDrawer}
+    />
+  );
 
   return (
     <ConfigProvider
@@ -50,16 +57,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <Layout style={{ minHeight: "100vh" }}>
         <Sider
           breakpoint="lg"
-          collapsedWidth={0}
+          collapsed={collapsed}
+          collapsedWidth={90}
+          trigger={null}
           width={280}
           onBreakpoint={handleBreakpoint}
           style={{
             height: "100vh",
             position: "sticky",
             top: 0,
-            overflow: "auto",
+            overflow: "visible",
             background: "var(--app-surface)",
             borderInlineEnd: "1px solid var(--app-border)",
+            zIndex: 1000,
           }}
         >
           {sidebarContent}
