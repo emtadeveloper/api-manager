@@ -40,7 +40,7 @@ const SidebarContent = ({
         <div className={`flex items-center gap-3 px-4 ${collapsed ? "justify-center" : "justify-start"}`}>
           <div
             className={`flex shrink-0 items-center justify-center rounded-2xl bg-white border-3 border-[var(--app-primary)]
-    ${collapsed ? "border-none" : "h-[90px] w-[90px]"}`}
+    ${collapsed ? "border-none h-[70px] w-[70px]" : "h-[90px] w-[90px]"}`}
           >
             <Image
               src="/assets/ISIRAN-Logo.svg"
@@ -51,8 +51,8 @@ const SidebarContent = ({
             />
           </div>
 
-          <div className="flex flex-col">
-            <span className="text-[var(--app-text)] font-bold whitespace-nowrap">سامانه مدیریت سرویس</span>
+          <div className={`flex flex-col ${collapsed ? "hidden" : "block"}`}>
+            <span className="text-[var(--app-text)] font-bold text-md whitespace-nowrap">مدیریت سرویس</span>
 
             <span className="font-bold whitespace-nowrap text-[color-mix(in_srgb,var(--app-text)_50%,transparent)]">
               رسان
@@ -87,7 +87,11 @@ const SidebarContent = ({
                     }}
                   />
 
-                  <span className={isActive ? "font-bold text-[var(--app-primary)]" : "text-[var(--app-text)]"}>
+                  <span
+                    className={
+                      isActive ? "font-bold whitespace-nowrap text-[var(--app-primary)]" : "text-[var(--app-text)]"
+                    }
+                  >
                     {link.title}
                   </span>
                 </div>
