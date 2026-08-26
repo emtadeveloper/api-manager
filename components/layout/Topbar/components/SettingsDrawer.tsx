@@ -28,8 +28,12 @@ const SettingsDrawer = ({ isDark, onToggleTheme }: SettingsDrawerProps) => {
     console.log("بازنشانی تنظیمات");
   };
 
-  const handleFullscreen = () => {
-    console.log("تغییر حالت تمام‌صفحه");
+  const handleFullscreen = async () => {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen();
+    } else {
+      await document.exitFullscreen();
+    }
   };
 
   return (

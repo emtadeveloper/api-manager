@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { navLinks } from "@/lib/navigation";
+import { navLinks } from "@/utils/navigation";
 
 const SidebarContent = ({
   collapsed,
@@ -39,8 +39,7 @@ const SidebarContent = ({
       <div className="p-4">
         <div className={`flex items-center gap-3 px-4 ${collapsed ? "justify-center" : "justify-start"}`}>
           <div
-            className={`flex shrink-0 items-center justify-center rounded-2xl bg-white border-3 border-[var(--app-primary)]
-    ${collapsed ? "border-none h-[70px] w-[70px]" : "h-[90px] w-[90px]"}`}
+            className={`flex shrink-0 items-center justify-center rounded-2xl bg-white ${collapsed ? "h-[70px] w-[70px]" : "h-[90px] w-[90px]"}`}
           >
             <Image
               src="/assets/ISIRAN-Logo.svg"
@@ -88,9 +87,7 @@ const SidebarContent = ({
                   />
 
                   <span
-                    className={
-                      isActive ? "font-bold whitespace-nowrap text-[var(--app-primary)]" : "text-[var(--app-text)]"
-                    }
+                    className={`whitespace-nowrap  ${isActive ? "font-bold text-[var(--app-primary)]" : "text-[var(--app-text)]"}`}
                   >
                     {link.title}
                   </span>
