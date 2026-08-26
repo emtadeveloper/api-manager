@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, Dropdown, Flex, Typography } from "antd";
+import { Avatar, Dropdown, Typography } from "antd";
 import type { MenuProps } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 
@@ -9,33 +9,28 @@ const UserMenu = () => {
     {
       key: "profile",
       label: "حساب کاربری",
-      className: "!text-xs w-30",
+      className: "!w-36 !text-xs !text-[var(--app-text)] hover:!bg-[var(--app-surface-light)]",
       onClick: () => console.log("رفتن به حساب کاربری"),
     },
     {
       key: "logout",
       label: "خروج",
-      className: "!text-xs w-30",
       danger: true,
+      className:
+        "!w-36 !text-xs !text-[var(--app-primary)] hover:!bg-[color-mix(in_srgb,var(--app-primary)_10%,transparent)]",
       onClick: () => console.log("خروج از حساب"),
     },
   ];
 
   return (
-    <Dropdown menu={{ items }} placement="bottomLeft" arrow trigger={["click"]}>
-      <Flex align="center" gap={6} className="cursor-pointer ">
-        <Avatar src="/images/user.png" size={30} style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }} />
-        <Typography.Text
-          style={{
-            color: "var(--app-text)",
-            fontWeight: 500,
-            fontSize: 10,
-          }}
-        >
-          حسین نجفی
-        </Typography.Text>
-        <CaretDownOutlined style={{ fontSize: 10, color: "var(--app-text)" }} />
-      </Flex>
+    <Dropdown menu={{ items }} placement="bottomLeft" arrow trigger={["click"]} className="rounded-md border-none">
+      <div className="flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 hover:bg-[var(--app-surface-light)]">
+        <Avatar src="/images/user.png" size={30} className="shrink-0" />
+
+        <Typography.Text className="!m-0 !text-xs !font-medium !text-[var(--app-text)]">حسین نجفی</Typography.Text>
+
+        <CaretDownOutlined className="text-[10px] !text-[var(--app-text-muted)]" />
+      </div>
     </Dropdown>
   );
 };

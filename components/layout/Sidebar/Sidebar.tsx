@@ -31,7 +31,7 @@ const SidebarContent = ({
         type="button"
         onClick={onToggleCollapse}
         aria-label={collapsed ? "باز کردن سایدبار" : "بستن سایدبار"}
-        className="absolute top-28 -left-3 z-[9999] flex h-6 w-6 items-center justify-center rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] shadow-md transition-all duration-200 hover:scale-105 hover:text-[var(--app-primary)] hover:border-[var(--app-primary)]"
+        className="absolute transition-none top-28 -left-3 z-[9999] flex h-6 w-6 items-center justify-center rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] shadow-md transition-all duration-200 hover:scale-105 hover:text-[var(--app-primary)] hover:border-[var(--app-primary)]"
       >
         {collapsed ? <LeftOutlined className="text-[10px]" /> : <RightOutlined className="text-[10px]" />}
       </button>
