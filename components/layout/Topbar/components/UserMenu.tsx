@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, Dropdown, Typography } from "antd";
+import { Avatar, Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 
@@ -26,9 +26,6 @@ const UserMenu = () => {
     <Dropdown menu={{ items }} placement="bottomLeft" arrow trigger={["click"]} className="rounded-md border-none">
       <div className="flex cursor-pointer items-center gap-3 rounded-md px-2 py-1 hover:bg-[var(--app-surface-light)]">
         <Avatar src="/images/user.png" size={30} className="shrink-0" />
-
-        <Typography.Text className="!m-0 !text-xs !font-medium !text-[var(--app-text)]">حسین نجفی</Typography.Text>
-
         <CaretDownOutlined className="text-[10px] !text-[var(--app-text-muted)]" />
       </div>
     </Dropdown>

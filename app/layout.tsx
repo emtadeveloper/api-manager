@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { yekan } from "../public/fonts/font";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 
+import { yekan } from "../public/fonts/font";
 import "./globals.css";
-import AppLayout from "@/components/layout/AppLayout";
+import ClientLayout from "@/components/layout/ClientLayout";
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/assets/ISIRAN-Logo.svg",
+  },
   title: {
-    default: "سامانه مدیریت سرویس",
-    template: "%s | سامانه مدیریت سرویس",
+    default: "مدیریت سرویس",
+    template: "%s | مدیریت سرویس",
   },
   description: "سامانه مدیریت سرویس - تهیه و تولید در مرکز برسام",
 };
@@ -22,7 +25,7 @@ export default function RootLayout({
     <html lang="fa" dir="rtl" data-theme="dark" className={`${yekan.className} h-full antialiased`}>
       <body className="h-full overflow-hidden">
         <AntdRegistry>
-          <AppLayout>{children}</AppLayout>
+          <ClientLayout>{children}</ClientLayout>
         </AntdRegistry>
       </body>
     </html>
