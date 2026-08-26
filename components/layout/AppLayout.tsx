@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ConfigProvider, Drawer, Layout, theme } from "antd";
 import SidebarContent from "./Sidebar/Sidebar";
 import Topbar from "./Topbar/Topbar";
+import { LoadingScreen } from "../linearLoading/loading-screen";
 
 const { Sider, Content } = Layout;
 
@@ -83,6 +84,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               background: "var(--app-background)",
             }}
           >
+            <LoadingScreen />
             {/* {children} */}
           </Content>
         </Layout>
