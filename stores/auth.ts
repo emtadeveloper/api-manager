@@ -7,48 +7,70 @@ interface Session {
     email?: string | null;
     image?: string | null;
   };
+
   expires: string;
 }
 
 interface SessionState {
   session: Session | null;
+
   status: "loading" | "authenticated" | "unauthenticated";
+
   clearSession: () => void;
+
   updateSession: () => Promise<void>;
 }
 
-const fetchSessionFromAPI = async (): Promise<{
-  session: Session | null;
-  status: "authenticated" | "unauthenticated";
-}> => {
+const fetchSessionFromAPI = async () => {
   try {
-    const response = await fetch("/api/auth/session");
+    const response = await fetch("/api/auth/session", {
+      method: "GET",
+      cache: "no-store",
+    });
 
-    if (response.ok) {
-      const data = (await response.json()) as Session;
-      return data ? { session: data, status: "authenticated" } : { session: null, status: "unauthenticated" };
+    if (!response.ok) {
+      return {
+        session: null,
+        status: "unauthenticated" as const,
+      };
     }
 
-    return { session: null, status: "unauthenticated" };
-  } catch {
-    return { session: null, status: "unauthenticated" };
+    const data = await response.json();
+
+    return {
+      session: data.session ?? null,
+      status: data.status === "authenticated" ? ("authenticated" as const) : ("unauthenticated" as const),
+    };
+  } catch (error) {
+    console.error("Session fetch error:", error);
+
+    return {
+      session: null,
+      status: "unauthenticated" as const,
+    };
   }
 };
 
 export const useSessionStore = create<SessionState>((set) => ({
   session: null,
+
   status: "loading",
-  clearSession: () =>
+
+  clearSession: () => {
     set({
       session: null,
       status: "unauthenticated",
-    }),
+    });
+  },
+
   updateSession: async () => {
-    const { session, status } = await fetchSessionFromAPI();
-    set({ session, status });
+    set({ status: "loading" });
+
+    const result = await fetchSessionFromAPI();
+
+    set({
+      session: result.session,
+      status: result.status,
+    });
   },
 }));
-
-if (typeof window !== "undefined") {
-  useSessionStore.getState().updateSession();
-}

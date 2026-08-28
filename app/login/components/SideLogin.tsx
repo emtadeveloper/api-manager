@@ -5,10 +5,10 @@ import ISIRANLogoCss from "../../../public/icons/ISIRANLogoCss";
 export default function SideLogin() {
   return (
     <div className="hidden lg:flex lg:w-1/3 relative overflow-hidden">
-      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[var(--color-app-background)]" />
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[#141a21]" />
 
       <div className="absolute top-6 right-6 z-20">
-        <ISIRANLogoCss className="w-[70px] h-[70px] text-white" />
+        <ISIRANLogoCss logoColor="white" className="w-[70px] h-[70px] " />
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-white p-12 text-center">

@@ -1,56 +1,66 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { decryptSession } from "@/utils/session";
 
-interface DecryptedSession {
-  exp: number;
-  accessToken: string;
-}
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-export async function authMiddleware(request: NextRequest): Promise<NextResponse> {
-  const session = request.cookies.get("clb-session")?.value;
+  const sessionCookie = request.cookies.get("clb-session")?.value;
 
-  const authRoutes: string[] = ["/login"];
-  const protectedRoutes: string[] = ["/"];
+  const isLogin = pathname === "/login";
 
-  const signinRoute = request.nextUrl.clone();
-  const { nextUrl } = request;
-  const nextResponse = NextResponse.next();
-
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const isProtectedRoute = protectedRoutes.some((route) => nextUrl.pathname.startsWith(route));
-
-  if (!session) {
-    if (isProtectedRoute) {
-      const callbackUrl = encodeURIComponent(nextUrl.pathname);
-      signinRoute.pathname = "/login";
-      return NextResponse.redirect(`${signinRoute}?callbackUrl=${callbackUrl}`);
-    }
-    return nextResponse;
+  // API های Auth آزاد باشند
+  if (pathname.startsWith("/api/auth/")) {
+    return NextResponse.next();
   }
 
+  // Login
+  if (isLogin) {
+    if (sessionCookie) {
+      try {
+        const session = await decryptSession(sessionCookie);
+
+        if (session.expires > Date.now()) {
+          return NextResponse.redirect(new URL("/", request.url));
+        }
+      } catch {
+        // Cookie نامعتبر است
+      }
+    }
+
+    return NextResponse.next();
+  }
+
+  // کاربر لاگین نیست
+  if (!sessionCookie) {
+    const loginUrl = new URL("/login", request.url);
+
+    loginUrl.searchParams.set("callbackUrl", pathname);
+
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // بررسی Session
   try {
-    const parsed = (await decryptSession(session)) as DecryptedSession;
-    const now = Date.now();
-    const accessExpired = parsed.exp < now;
+    const session = await decryptSession(sessionCookie);
 
-    if (!parsed.accessToken || accessExpired) {
-      const cookieStore = await cookies();
-      cookieStore.delete("clb-session");
+    if (!session.expires || session.expires < Date.now()) {
+      const response = NextResponse.redirect(new URL("/login", request.url));
 
-      signinRoute.pathname = "/login";
-      return NextResponse.redirect(signinRoute);
+      response.cookies.delete("clb-session");
+
+      return response;
     }
 
-    if (!accessExpired && isAuthRoute) {
-      const dashboardRoute = request.nextUrl.clone();
-      dashboardRoute.pathname = "/";
-      return NextResponse.redirect(dashboardRoute);
-    }
+    return NextResponse.next();
   } catch {
-    signinRoute.pathname = "/login";
-    return NextResponse.redirect(signinRoute);
-  }
+    const response = NextResponse.redirect(new URL("/login", request.url));
 
-  return nextResponse;
+    response.cookies.delete("clb-session");
+
+    return response;
+  }
 }
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+};

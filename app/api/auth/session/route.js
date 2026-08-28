@@ -1,17 +1,31 @@
-import { decryptSession } from "@/utils/session";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
+import { getAuthSession } from "../../../../utils/session"
 export async function GET() {
-    const cookieStore = await cookies();
-    const encryptedSession = cookieStore.get('clb-session')?.value;
+    const session = await getAuthSession();
 
-    if (!encryptedSession) {
-        return NextResponse.json({ error: 'Session not found' }, {
-            status: 400
-        });
+    if (!session) {
+        return NextResponse.json(
+            {
+                session: null,
+                status: "unauthenticated",
+            },
+            { status: 401 }
+        );
     }
-    const session = await decryptSession(encryptedSession);
-    return NextResponse.json(session);
 
+    return NextResponse.json({
+        session: {
+            user: {
+                id: session.id,
+                name: session.name,
+                email: session.username,
+                image: null,
+            },
+            expires: new Date(
+                session.expires
+            ).toISOString(),
+        },
+
+        status: "authenticated",
+    });
 }

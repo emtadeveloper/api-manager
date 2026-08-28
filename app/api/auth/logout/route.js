@@ -1,18 +1,23 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { clearAuthCookie } from "@/utils/session";
 
 export async function POST() {
-    const response = NextResponse.json(
-        { success: true, message: 'Logged out successfully' },
-        { status: 200 }
-    );
+    try {
+        await clearAuthCookie();
 
-    response.cookies.set('tokens', '', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-        expires: new Date(0)
-    });
+        return NextResponse.json({
+            success: true,
+            message: "با موفقیت از حساب خارج شدید",
+        });
+    } catch (error) {
+        console.error("Logout error:", error);
 
-    return response;
-} 
+        return NextResponse.json(
+            {
+                success: false,
+                message: "خطا در خروج از حساب",
+            },
+            { status: 500 }
+        );
+    }
+}

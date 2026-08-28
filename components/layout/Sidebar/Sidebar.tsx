@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { navLinks } from "@/utils/navigation";
+import ISIRANLogoCss from "@/public/icons/ISIRANLogoCss";
 
 const SidebarContent = ({
   collapsed,
@@ -38,18 +38,7 @@ const SidebarContent = ({
 
       <div className="p-4">
         <div className={`flex items-center gap-3 px-4 ${collapsed ? "justify-center" : "justify-start"}`}>
-          <div
-            className={`flex shrink-0 items-center justify-center rounded-2xl bg-white ${collapsed ? "h-[70px] w-[70px]" : "h-[90px] w-[90px]"}`}
-          >
-            <Image
-              src="/assets/ISIRAN-Logo.svg"
-              alt="ISIRAN"
-              width={collapsed ? 50 : 60}
-              height={collapsed ? 50 : 60}
-              className="object-contain p-1"
-            />
-          </div>
-
+          <ISIRANLogoCss className={`${collapsed ? "" : "w-[70px] h-[70px]"}`} />
           <div className={`flex flex-col ${collapsed ? "hidden" : "block"}`}>
             <span className="text-[var(--app-text)] font-bold text-md whitespace-nowrap">مدیریت سرویس</span>
 

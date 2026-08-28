@@ -1,8 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useTransition } from "react";
+import { useEffect, useRef } from "react";
+
 import { useRouter } from "next/navigation";
+
 import { useSessionStore } from "@/stores/auth";
+
 import { LoadingScreen } from "@/components/linearLoading/loading-screen";
 
 interface AccessGuardProps {
@@ -12,26 +15,47 @@ interface AccessGuardProps {
 }
 
 const AccessGuard = ({ requireAuth, redirectPath, children }: AccessGuardProps) => {
-  const session = useSessionStore((state) => state.session);
-  const status = useSessionStore((state) => state.status);
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
 
-  const shouldRedirect = requireAuth ? !(session && status === "authenticated") : session && status === "authenticated";
+  const session = useSessionStore((state) => state.session);
 
-  const handleRedirect = useCallback(() => {
-    if (status !== "loading" && shouldRedirect) {
-      startTransition(() => router.push(redirectPath));
+  const status = useSessionStore((state) => state.status);
+
+  const updateSession = useSessionStore((state) => state.updateSession);
+
+  const redirectingRef = useRef(false);
+
+  // فقط یک بار Session را از Backend بگیر
+  useEffect(() => {
+    if (status === "loading") {
+      updateSession();
     }
-  }, [status, shouldRedirect, redirectPath, router, startTransition]);
+  }, [status, updateSession]);
+
+  const isAuthenticated = status === "authenticated" && !!session;
+
+  const shouldRedirect = requireAuth ? !isAuthenticated : isAuthenticated;
 
   useEffect(() => {
-    handleRedirect();
-  }, [handleRedirect]);
+    if (status === "loading" || !shouldRedirect || redirectingRef.current) {
+      return;
+    }
 
-  if (status === "loading" || isPending) return <LoadingScreen />;
+    redirectingRef.current = true;
 
-  if (shouldRedirect) return null;
+    router.replace(redirectPath);
+  }, [status, shouldRedirect, redirectPath, router]);
+
+  /*
+   * تا زمانی که Session مشخص نشده
+   */
+  if (status === "loading") {
+    return <LoadingScreen />;
+  }
+
+  if (shouldRedirect) {
+    return null;
+  }
 
   return <>{children}</>;
 };

@@ -11,9 +11,4 @@ export const navLinks = [
     title: "تنظیمات سرویس",
     icon: SettingOutlined,
   },
-  {
-    href: "/login",
-    title: "ورود ",
-    icon: SettingOutlined,
-  },
 ] as const;
