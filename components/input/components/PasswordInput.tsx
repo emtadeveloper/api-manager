@@ -1,10 +1,10 @@
-// components/input/components/TextInput.tsx
 import React from "react";
 import { Input } from "antd";
 import type { InputProps } from "antd";
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import clsx from "clsx";
 
-interface TextInputProps extends Omit<InputProps, "onChange" | "value" | "status"> {
+interface PasswordInputProps extends Omit<InputProps, "onChange" | "value" | "status"> {
   label?: string;
   required?: boolean;
   error?: string;
@@ -12,14 +12,12 @@ interface TextInputProps extends Omit<InputProps, "onChange" | "value" | "status
   onChange?: (value: string) => void;
 }
 
-const TextInput: React.FC<TextInputProps> = ({
+const PasswordInput: React.FC<PasswordInputProps> = ({
   label = "",
-  type = "text",
   required,
   error,
   value = "",
   onChange = () => {},
-  className = "",
   disabled = false,
   placeholder = "",
   ...props
@@ -34,7 +32,7 @@ const TextInput: React.FC<TextInputProps> = ({
         <div className="flex justify-between items-center">
           {label && (
             <label
-              htmlFor="text-input"
+              htmlFor="password-input"
               className="text-xs font-medium text-[var(--app-text-primary)] flex items-center gap-1"
             >
               {label}
@@ -45,25 +43,20 @@ const TextInput: React.FC<TextInputProps> = ({
         </div>
       )}
 
-      <Input
-        id="text-input"
-        type={type}
+      <Input.Password
+        id="password-input"
         value={value ?? ""}
         onChange={handleChange}
         disabled={disabled}
         placeholder={placeholder}
         status={error ? "error" : undefined}
-        className={clsx(
-          "w-full rounded-lg border-[var(--app-border)] bg-[var(--app-surface-light)] text-[var(--app-text-primary)]",
-          "py-2.5 px-4 text-sm transition-all duration-200",
-          "hover:border-[var(--app-primary)] focus:border-[var(--app-primary-light)]",
-          "focus:shadow-[0_0_0_3px_rgba(245,158,11,0.15)]",
-          className,
-        )}
+        iconRender={(visible) =>
+          visible ? <EyeOutlined style={{ color: "#ffffff" }} /> : <EyeInvisibleOutlined style={{ color: "#ffffff" }} />
+        }
         {...props}
       />
     </div>
   );
 };
 
-export default React.memo(TextInput);
+export default React.memo(PasswordInput);

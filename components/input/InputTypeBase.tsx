@@ -2,6 +2,7 @@ import AmountInput from "./components/AmountInput";
 import InputCheckbox from "./components/InputCheckbox";
 import TextField from "./components/TextField";
 import TextInput from "./components/TextInput";
+import PasswordInput from "./components/PasswordInput";
 import MultiSelectFilterTable from "./components/MultiSelectFilterTable";
 import SelectBox from "./components/SelectBox";
 
@@ -80,10 +81,8 @@ const InputTypeBase: React.FC<InputTypeBaseProps> = (props) => {
         variant={variant}
       />
     ),
-    // ➕ اضافه شد
     password: (
-      <TextInput
-        type="password"
+      <PasswordInput
         value={value as string}
         onChange={(val: string) => onChange(val)}
         placeholder={placeholder}
@@ -92,7 +91,6 @@ const InputTypeBase: React.FC<InputTypeBaseProps> = (props) => {
         error={error}
         disabled={disabled}
         className={className}
-        variant={variant}
       />
     ),
     langText: (

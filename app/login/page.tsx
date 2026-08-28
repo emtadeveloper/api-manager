@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Card } from "antd";
+import { Button } from "antd";
 import { LoginOutlined } from "@ant-design/icons";
 import { useForm, Controller } from "react-hook-form";
 import InputTypeBase from "@/components/input/InputTypeBase";
+import SideLogin from "./components/SideLogin";
 
 interface LoginFormValues {
   email: string;
@@ -33,14 +34,16 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-app-background p-4">
-      <Card className="w-full max-w-md shadow-app-shadow-md border-app-border p-6 sm:p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-app-text-primary">ورود به سیستم </h1>
-        </div>
+    <div className="flex min-h-screen font-sans">
+      <SideLogin />
+      <div className="flex-1 flex items-center justify-center p-8 sm:p-12 bg-[var(--app-surface)]">
+        <div className="w-full max-w-sm space-y-10">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl font-bold tracking-tight text-[var(--app-text-primary)]">ورود به حساب کاربری</h2>
+            <p className="text-sm text-[var(--app-text-muted)]">برای ورود اطلاعات خود را وارد کنید</p>
+          </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-14">
-          <div>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <Controller
               name="email"
               control={control}
@@ -55,17 +58,14 @@ export default function LoginPage() {
                 <InputTypeBase
                   {...field}
                   type="text"
-                  placeholder="ایمیل یا نام کاربری را وارد کنید"
-                  className="w-full"
+                  placeholder=" لطفا ایمیل یا نام کاربری را وارد کنید"
                   label="ایمیل یا نام کاربری"
                   required
                   error={errors.email?.message}
                 />
               )}
             />
-          </div>
 
-          <div>
             <Controller
               name="password"
               control={control}
@@ -80,29 +80,33 @@ export default function LoginPage() {
                 <InputTypeBase
                   {...field}
                   type="password"
-                  placeholder="رمز عبور خود را وارد کنید"
-                  className="w-full"
+                  placeholder="لطفاً رمز عبور را وارد کنید"
                   label="رمز عبور"
                   required
                   error={errors.password?.message}
                 />
               )}
             />
-          </div>
 
-          <div className="mt-14">
             <Button
               type="primary"
               htmlType="submit"
               loading={loading}
               icon={<LoginOutlined />}
-              className="w-full h-12 text-base font-semibold"
+              iconPlacement="start"
+              block
+              size="large"
+              style={{
+                padding: "0.75rem 1rem",
+                fontSize: ".8rem",
+                fontWeight: "500",
+              }}
             >
-              ورود
+              ورود به سیستم
             </Button>
-          </div>
-        </form>
-      </Card>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
