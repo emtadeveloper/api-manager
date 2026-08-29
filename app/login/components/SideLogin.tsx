@@ -1,6 +1,6 @@
 "use client";
 
-import ISIRANLogoCss from "../../../public/icons/ISIRANLogoCss";
+import ISIRANLogo from "../../../public/icons/ISIRANLogo";
 
 export default function SideLogin() {
   return (
@@ -8,7 +8,7 @@ export default function SideLogin() {
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[#141a21]" />
 
       <div className="absolute top-6 right-6 z-20">
-        <ISIRANLogoCss logoColor="white" className="w-[70px] h-[70px] " />
+        <ISIRANLogo color="white" className="w-[70px] h-[70px] " />
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-white p-12 text-center">

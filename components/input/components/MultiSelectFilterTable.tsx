@@ -3,6 +3,7 @@
 import React from "react";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
+import { filterBySearchLabel } from "@/utils/antd-select-filter";
 
 interface MultiSelectFilterTableProps {
   label?: string;
@@ -59,7 +60,7 @@ const MultiSelectFilterTable: React.FC<MultiSelectFilterTableProps> = ({
           options={antOptions}
           showSearch
           allowClear
-          filterOption={(input, option) => (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())}
+          filterOption={filterBySearchLabel}
           status={showError || error ? "error" : undefined}
           className="w-full"
           maxTagCount="responsive"

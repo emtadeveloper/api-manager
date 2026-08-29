@@ -1,46 +1,19 @@
 "use client";
-import { getDatabases } from "@/app/actions/postgres/system-actions";
-import { getDatabases as getSqlDatabase } from "@/app/actions/sql/system-actions";
 import { DatabaseSettingDto } from "@/app/dto/database-setting.dto";
 import { DatabaseType } from "@/types/enums/database-type.enum";
 import { SecurityScanFilled } from "@ant-design/icons";
-import { Button, Form, FormInstance, Input, message, Radio, Select } from "antd";
-import { useState } from "react";
+import { Button, Form, FormInstance, Input, Radio, Select } from "antd";
+import { useDatabaseConnection } from "@/hooks/useDatabaseConnection";
+
 interface Props {
   form: FormInstance;
 }
+
 const InitDb = ({ form }: Props) => {
-  const [databaseList, setDatabaseList] = useState<Record<string, string>[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const handleGetDatabases = async () => {
-    setLoading(true);
-    const config = form?.getFieldsValue() as DatabaseSettingDto;
-    let url = "",
-      result:
-        | {
-            success: true;
-            data: unknown[];
-            error?: undefined;
-          }
-        | {
-            success: false;
-            error: string;
-            data?: undefined;
-          };
+  const { databaseList, loading, handleGetDatabases } = useDatabaseConnection(
+    () => form.getFieldsValue() as DatabaseSettingDto,
+  );
 
-    if (config.dbType === DatabaseType.POSTGRES) {
-      url = `postgresql://${config.dbUsername}:${config.dbPassword}@${config.dbServer}:${config.dbPort}/postgres`;
-      result = await getDatabases(url);
-    } else {
-      url = `sqlserver://${config.dbServer}:${config.dbPort};database=Master;user=${config.dbUsername};password=${config.dbPassword};trustServerCertificate=true`;
-      result = await getSqlDatabase(url);
-    }
-    if (!result.success) message.error(result.error);
-    else setDatabaseList(result.data as Record<string, string>[]);
-
-    console.log(result.data);
-    setLoading(false);
-  };
   return (
     <div className="flex flex-wrap bg-gray-50 p-5! rounded-2xl border">
       <Form.Item label="نوع دیتابیس" name="dbType" className="min-w-1/3 pl-2!">
@@ -80,7 +53,6 @@ const InitDb = ({ form }: Props) => {
             value: Object.values(d)[0],
             label: Object.values(d)[0],
           }))}
-          // optionFilterProp="label"
         />
       </Form.Item>
     </div>

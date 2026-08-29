@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
+import { filterBySearchLabel } from "@/utils/antd-select-filter";
 
 interface SelectBoxProps {
   label?: string;
@@ -36,7 +37,6 @@ const SelectBox: React.FC<SelectBoxProps> = ({
     value: opt,
   }));
 
-  // برای اضافه کردن گزینه "همه"
   const allOptions = [{ label: `همه ${label}‌ها`, value: null }, ...antOptions];
 
   const handleChange = useCallback(
@@ -78,7 +78,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
         options={allOptions}
         showSearch
         allowClear
-        filterOption={(input, option) => (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())}
+        filterOption={filterBySearchLabel}
         onSearch={onSearchChange}
         status={error ? "error" : undefined}
         className="w-full"

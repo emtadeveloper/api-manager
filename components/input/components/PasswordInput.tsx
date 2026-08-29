@@ -2,7 +2,8 @@ import React from "react";
 import { Input } from "antd";
 import type { InputProps } from "antd";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
-import clsx from "clsx";
+
+import { useAppTheme } from "@/hooks/useAppTheme";
 
 interface PasswordInputProps extends Omit<InputProps, "onChange" | "value" | "status"> {
   label?: string;
@@ -22,6 +23,8 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   placeholder = "",
   ...props
 }) => {
+  const { colorTextSecondary } = useAppTheme();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
@@ -51,7 +54,11 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
         placeholder={placeholder}
         status={error ? "error" : undefined}
         iconRender={(visible) =>
-          visible ? <EyeOutlined style={{ color: "#ffffff" }} /> : <EyeInvisibleOutlined style={{ color: "#ffffff" }} />
+          visible ? (
+            <EyeOutlined style={{ color: colorTextSecondary }} />
+          ) : (
+            <EyeInvisibleOutlined style={{ color: colorTextSecondary }} />
+          )
         }
         {...props}
       />

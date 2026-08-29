@@ -2,9 +2,28 @@
 
 export function LoadingScreen() {
   return (
-    <div className="flex h-full w-full items-center justify-center px-5 pb-40">
-      <div className="h-1 w-full max-w-[360px] overflow-hidden rounded-full bg-app-primary/40">
-        <div className="h-full w-1/2 animate-linear-loading rounded-full bg-app-primary" />
+    <div
+      dir="rtl"
+      className="flex min-h-screen w-full items-center justify-center bg-[var(--app-background)] px-5 "
+      style={{
+        fontFamily: "var(--app-font-family)",
+        fontSize: "var(--app-font-size)",
+      }}
+    >
+      <div className="w-full max-w-[360px]">
+        <div
+          className="h-1 w-full overflow-hidden rounded-full"
+          style={{
+            backgroundColor: "color-mix(in srgb, var(--app-primary) 40%, transparent)",
+          }}
+        >
+          <div
+            className="h-full w-1/2 animate-linear-loading rounded-full"
+            style={{
+              backgroundColor: "var(--app-primary)",
+            }}
+          />
+        </div>
       </div>
     </div>
   );

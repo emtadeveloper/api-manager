@@ -1,4 +1,6 @@
-/* app/globals.css */
+/* =========================================================
+   Tailwind
+   ========================================================= */
 
 @import "tailwindcss";
 
@@ -11,6 +13,7 @@
   --color-app-primary: #f59e0b;
   --color-app-primary-light: #ffa600;
   --color-app-primary-dark: #a95101;
+
   --color-brand-50: #fff8eb;
   --color-brand-100: #ffedc2;
   --color-brand-200: #ffda85;
@@ -37,13 +40,15 @@
   --font-weight-text-primary-extrabold: 800;
   --font-weight-text-primary-black: 900;
 
-  /* Application colors - Dark (default) */
+  /* Application colors - Dark */
   --color-app-background: #141a21;
   --color-app-surface: #1c252e;
   --color-app-surface-light: #28323d;
   --color-app-surface-orange: #211401;
+
   --color-app-border: rgba(145, 158, 171, 0.2);
   --color-app-border-light: rgba(145, 158, 171, 0.3);
+
   --color-app-text: #ffffff;
   --color-app-text-muted: #919eab;
   --color-app-text-subtle: #637381;
@@ -54,17 +59,23 @@
   --color-danger: #ef4444;
   --color-info: #38bdf8;
 
-  /* Typography */
-  --font-sans: var(--font-yekan), Tahoma, Arial, sans-serif;
+  /* Dynamic application font */
+  --font-sans: var(--app-font-family);
 }
 
 /* =========================================================
-   CSS Variables - Dark Theme (Default)
+   Root Variables - Dark Theme
    ========================================================= */
 
 :root {
   color-scheme: dark;
 
+  /* Dynamic Font */
+  --app-font-family: var(--font-yekan), Tahoma, Arial, sans-serif;
+
+  --app-font-size: 14px;
+
+  /* Application colors */
   --app-background: #141a21;
   --app-background-rgb: 20, 26, 33;
 
@@ -72,14 +83,17 @@
   --app-surface-light: #28323d;
   --app-surface-orange: #211401;
 
+  /* Primary */
   --app-primary: #f59e0b;
   --app-primary-light: #ffa600;
   --app-primary-dark: #a95101;
 
+  /* Borders */
   --app-border: rgba(145, 158, 171, 0.2);
   --app-border-light: rgba(145, 158, 171, 0.3);
   --app-border-transparent: rgba(145, 158, 171, 0.15);
 
+  /* Text */
   --app-text: #ffffff;
   --app-text-primary: #ffffff;
   --app-text-secondary: #d0d5da;
@@ -87,76 +101,78 @@
   --app-text-muted: #919eab;
   --app-text-subtle: #637381;
 
-  /* =======================================================
-     Sidebar
-     ======================================================= */
-
-  /* Hover color in Dark theme = Tailwind gray-400 */
+  /* Sidebar */
   --app-sidebar-hover: #9ca3af;
-
-  /* Active background in Dark theme */
   --app-sidebar-active: #28323d;
 
+  /* Radius */
   --app-radius-sm: 6px;
   --app-radius-md: 10px;
   --app-radius-lg: 16px;
   --app-radius-xl: 20px;
 
+  /* Shadows */
   --app-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+
   --app-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.28);
+
   --app-shadow-orange: 0 0 24px rgba(245, 158, 11, 0.12);
 }
 
 /* =========================================================
-   Light Theme Overrides
+   Font Family
    ========================================================= */
 
-[data-theme="light"] {
-  color-scheme: light;
+[data-font="yekan"] {
+  --app-font-family: var(--font-yekan), Tahoma, Arial, sans-serif;
+}
 
-  --app-background: #ffffff;
-  --app-background-rgb: 255, 255, 255;
-
-  --app-surface: #ffffff;
-  --app-surface-light: #f4f6f8;
-  --app-surface-orange: #fff7e6;
-
-  --app-border: rgba(145, 158, 171, 0.2);
-  --app-border-light: rgba(145, 158, 171, 0.3);
-  --app-border-transparent: rgba(145, 158, 171, 0.08);
-
-  --app-text: #1c252e;
-  --app-text-primary: #1c252e;
-  --app-text-secondary: #454f5b;
-  --app-text-disabled: #c4cdd5;
-  --app-text-muted: #637381;
-  --app-text-subtle: #919eab;
-
-  /* Tailwind gray-50 */
-  --app-sidebar-hover: #f9fafb;
-
-  /* Active background in Light theme */
-  --app-sidebar-active: #f3f4f6;
-
-  --color-text-primary: #1c252e;
-  --color-text-secondary: #454f5b;
-  --color-text-muted: #637381;
-  --color-text-subtle: #919eab;
-  --color-text-disabled: #c4cdd5;
-
-  --color-app-background: #ffffff;
-  --color-app-surface: #ffffff;
-  --color-app-surface-light: #f4f6f8;
-  --color-app-surface-orange: #fff7e6;
-  --color-app-border: rgba(145, 158, 171, 0.2);
-  --color-app-border-light: rgba(145, 158, 171, 0.3);
-  --color-app-text: #1c252e;
-  --color-app-text-muted: #637381;
-  --color-app-text-subtle: #919eab;
+[data-font="vazir"] {
+  --app-font-family: var(--font-vazir), Tahoma, Arial, sans-serif;
 }
 
 /* =========================================================
-   Primary Colors
+   Font Size
+   ========================================================= */
+
+[data-font-size="12"] {
+  --app-font-size: 12px;
+}
+
+[data-font-size="13"] {
+  --app-font-size: 13px;
+}
+
+[data-font-size="14"] {
+  --app-font-size: 14px;
+}
+
+[data-font-size="15"] {
+  --app-font-size: 15px;
+}
+
+[data-font-size="16"] {
+  --app-font-size: 16px;
+}
+
+[data-font-size="17"] {
+  --app-font-size: 17px;
+}
+
+[data-font-size="18"] {
+  --app-font-size: 18px;
+}
+
+[data-font-size="19"] {
+  --app-font-size: 19px;
+}
+
+[data-font-size="20"] {
+  --app-font-size: 20px;
+}
+
+/* =========================================================
+   Primary Color Presets
    ========================================================= */
 
 [data-primary-color="#f59e0b"] {
@@ -196,6 +212,56 @@
 }
 
 /* =========================================================
+   Light Theme Overrides
+   ========================================================= */
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --app-background: #ffffff;
+  --app-background-rgb: 255, 255, 255;
+
+  --app-surface: #ffffff;
+  --app-surface-light: #f4f6f8;
+  --app-surface-orange: #fff7e6;
+
+  --app-border: rgba(145, 158, 171, 0.2);
+  --app-border-light: rgba(145, 158, 171, 0.3);
+  --app-border-transparent: rgba(145, 158, 171, 0.08);
+
+  --app-text: #1c252e;
+  --app-text-primary: #1c252e;
+  --app-text-secondary: #454f5b;
+  --app-text-disabled: #c4cdd5;
+  --app-text-muted: #637381;
+  --app-text-subtle: #919eab;
+
+  /* Sidebar */
+  --app-sidebar-hover: #f9fafb;
+  --app-sidebar-active: #f3f4f6;
+
+  /* Tailwind text colors */
+  --color-text-primary: #1c252e;
+  --color-text-secondary: #454f5b;
+  --color-text-muted: #637381;
+  --color-text-subtle: #919eab;
+  --color-text-disabled: #c4cdd5;
+
+  --color-app-background: #ffffff;
+  --color-app-surface: #ffffff;
+  --color-app-surface-light: #f4f6f8;
+  --color-app-surface-orange: #fff7e6;
+
+  --color-app-border: rgba(145, 158, 171, 0.2);
+
+  --color-app-border-light: rgba(145, 158, 171, 0.3);
+
+  --color-app-text: #1c252e;
+  --color-app-text-muted: #637381;
+  --color-app-text-subtle: #919eab;
+}
+
+/* =========================================================
    Base Styles
    ========================================================= */
 
@@ -208,7 +274,12 @@
 html {
   min-height: 100%;
   background-color: var(--app-background);
+
   scroll-behavior: smooth;
+
+  font-family: var(--app-font-family);
+
+  font-size: var(--app-font-size);
 }
 
 body {
@@ -217,20 +288,22 @@ body {
 
   color: var(--app-text);
 
-  background:
-    radial-gradient(circle at top right, rgba(154, 82, 1, 0.12) 0%, rgba(2, 1, 33, 0) 32%), var(--app-background);
+  font-family: var(--app-font-family);
 
-  font-family: var(--font-yekan), Tahoma, Arial, sans-serif;
+  font-size: var(--app-font-size);
 
   text-rendering: optimizeLegibility;
+
   -webkit-font-smoothing: antialiased;
 }
 
 [data-theme="light"] body {
   background: var(--app-background);
-
-  background-image: radial-gradient(circle at top right, rgba(245, 158, 11, 0.06), transparent 40%);
 }
+
+/* =========================================================
+   Form Elements
+   ========================================================= */
 
 button,
 input,
@@ -254,6 +327,7 @@ button:disabled {
 
 :focus-visible {
   outline: 2px solid var(--app-primary);
+
   outline-offset: 2px;
 }
 
@@ -295,10 +369,6 @@ aside {
 
 main {
   min-height: 100vh;
-
-  background:
-    radial-gradient(circle at 50% 0%, rgba(148, 79, 0, 0.16) 0%, rgba(20, 26, 33, 0.84) 42%, rgba(20, 26, 33, 1) 83%),
-    var(--app-background);
 }
 
 [data-theme="light"] main {
@@ -309,27 +379,21 @@ section {
   padding: 16px;
 
   border: 1px solid var(--app-border);
-  border-radius: var(--app-radius-xl);
 
-  background: radial-gradient(
-    circle at top right,
-    rgb(154, 82, 1) 0%,
-    rgba(33, 20, 1, 0.84) 38%,
-    rgba(20, 26, 33, 1) 100%
-  );
+  border-radius: var(--app-radius-xl);
 
   box-shadow: var(--app-shadow-sm);
 }
 
 [data-theme="light"] section {
-  background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.2) 0%, rgba(255, 255, 255, 1) 100%);
-
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .version {
   border: 1px solid var(--app-border);
+
   border-radius: var(--app-radius-sm);
+
   color: var(--app-text-muted);
 }
 
@@ -341,16 +405,6 @@ button {
    Sidebar
    ========================================================= */
 
-/*
-  Sidebar normal item hover.
-
-  Dark:
-  #9ca3af = gray-400
-
-  Light:
-  #f9fafb = gray-50
-*/
-
 .sidebar-item {
   transition: background-color 0.2s ease;
 }
@@ -359,16 +413,11 @@ button {
   background-color: var(--app-sidebar-hover);
 }
 
-/*
-  Active sidebar item.
-
-  The hover rule above does NOT apply to active items
-  because active items don't have .sidebar-item.
-*/
-
 .sidebar-active {
   background-color: var(--app-sidebar-active);
+
   border-right: 4px solid var(--app-primary);
+
   border-radius: var(--app-radius-md) 0 0 var(--app-radius-md);
 }
 
@@ -390,31 +439,37 @@ button {
 
 .app-text-primary-normal {
   color: var(--app-text-primary);
+
   font-weight: 400;
 }
 
 .app-text-primary-medium {
   color: var(--app-text-primary);
+
   font-weight: 500;
 }
 
 .app-text-primary-semibold {
   color: var(--app-text-primary);
+
   font-weight: 600;
 }
 
 .app-text-primary-bold {
   color: var(--app-text-primary);
+
   font-weight: 700;
 }
 
 .app-text-primary-extrabold {
   color: var(--app-text-primary);
+
   font-weight: 800;
 }
 
 .app-text-primary-black {
   color: var(--app-text-primary);
+
   font-weight: 900;
 }
 
@@ -424,11 +479,13 @@ button {
 
 .app-surface {
   background-color: var(--app-surface);
+
   border: 1px solid var(--app-border-transparent);
 }
 
 .app-surface-light {
   background-color: var(--app-surface-light);
+
   border: 1px solid var(--app-border-transparent);
 }
 
@@ -440,21 +497,13 @@ button {
   color: var(--app-text-muted);
 }
 
-.app-gradient {
-  background: radial-gradient(
-    circle at top right,
-    rgba(154, 82, 1, 0.9) 0%,
-    rgba(33, 20, 1, 0.84) 46%,
-    rgba(20, 26, 33, 1) 100%
-  );
-}
-
 /* =========================================================
    Scrollbar
    ========================================================= */
 
 .app-scrollbar {
   scrollbar-color: var(--app-primary-dark) var(--app-surface);
+
   scrollbar-width: thin;
 }
 
@@ -469,6 +518,7 @@ button {
 
 .app-scrollbar::-webkit-scrollbar-thumb {
   background-color: var(--app-primary-dark);
+
   border-radius: 999px;
 }
 
@@ -502,21 +552,24 @@ button {
 
 .ant-menu-item {
   color: var(--app-text-muted) !important;
+
   border-radius: 8px !important;
 }
 
 .ant-menu-item-selected {
   background-color: var(--app-surface-orange) !important;
+
   color: var(--app-primary) !important;
 }
 
 .ant-menu-item:hover {
   background-color: var(--app-surface-light) !important;
+
   color: var(--app-text) !important;
 }
 
 /* =========================================================
-   Global Font
+   Global Ant Design Font
    ========================================================= */
 
 .ant-app,
@@ -547,7 +600,7 @@ button {
 .ant-dropdown *,
 .ant-menu,
 .ant-menu * {
-  font-family: var(--font-yekan), Tahoma, Arial, sans-serif !important;
+  font-family: var(--app-font-family) !important;
 }
 
 /* =========================================================
@@ -556,6 +609,7 @@ button {
 
 .ant-steps-item-title {
   color: var(--app-text) !important;
+
   font-size: 0.8rem !important;
 }
 
@@ -565,16 +619,19 @@ button {
 
 .ant-steps-item-icon {
   background-color: rgba(255, 166, 0, 0.525) !important;
+
   border-color: var(--app-primary) !important;
 }
 
 .ant-steps-item-process .ant-steps-item-icon {
   background-color: var(--app-primary-dark) !important;
+
   border-color: var(--app-primary-light) !important;
 }
 
 .ant-steps-item-finish .ant-steps-item-icon {
   background-color: transparent !important;
+
   border-color: var(--app-primary) !important;
 }
 
@@ -593,7 +650,9 @@ button {
 .ant-input-number,
 .ant-input-number-group-wrapper {
   color: var(--app-text) !important;
+
   background-color: rgba(28, 37, 46, 0.9) !important;
+
   border-color: var(--app-border) !important;
 }
 
@@ -624,18 +683,22 @@ button {
 .ant-picker-focused {
   border-color: var(--app-primary-light) !important;
 
-  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.16) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--app-primary) 16%, transparent) !important;
 }
 
 .ant-btn-primary {
   color: #1f1300 !important;
+
   background-color: var(--app-primary) !important;
+
   border-color: var(--app-primary) !important;
+
   font-weight: 600;
 }
 
 .ant-btn-primary:hover {
   background-color: var(--app-primary-light) !important;
+
   border-color: var(--app-primary-light) !important;
 }
 
@@ -646,24 +709,31 @@ button {
 .ant-table-wrapper,
 .ant-table {
   color: var(--app-text) !important;
+
   background: transparent !important;
 }
 
 .ant-table-container {
   border: 1px solid var(--app-border-transparent);
+
   border-radius: var(--app-radius-md);
+
   overflow: hidden;
 }
 
 .ant-table-thead > tr > th {
   color: var(--app-text) !important;
+
   background-color: var(--app-surface-light) !important;
+
   border-bottom-color: var(--app-border) !important;
 }
 
 .ant-table-tbody > tr > td {
   color: var(--app-text-muted) !important;
+
   background-color: rgba(28, 37, 46, 0.72) !important;
+
   border-bottom-color: rgba(145, 158, 171, 0.2) !important;
 }
 
@@ -672,7 +742,7 @@ button {
 }
 
 .ant-table-tbody > tr:hover > td {
-  background-color: rgba(154, 82, 1, 0.18) !important;
+  background-color: color-mix(in srgb, var(--app-primary) 18%, transparent) !important;
 }
 
 .ant-table-cell-fix-left,
@@ -682,10 +752,15 @@ button {
 
 .ant-table-pagination {
   position: sticky;
+
   bottom: 0;
+
   z-index: 10;
+
   margin: 0 !important;
+
   padding: 12px 16px;
+
   background-color: var(--app-surface) !important;
 
   border-top: 1px solid var(--app-border);
@@ -697,6 +772,7 @@ button {
 
 .ant-pagination-item {
   background-color: transparent !important;
+
   border-color: var(--app-border) !important;
 }
 
@@ -706,6 +782,7 @@ button {
 
 .ant-pagination-item-active {
   background-color: var(--app-primary-dark) !important;
+
   border-color: var(--app-primary) !important;
 }
 
@@ -719,7 +796,7 @@ button {
 }
 
 /* =========================================================
-   Dropdown, Select, Modal, Drawer
+   Dropdown / Select / Modal / Drawer
    ========================================================= */
 
 .ant-dropdown,
@@ -728,23 +805,26 @@ button {
 .ant-modal-content,
 .ant-drawer-content {
   background-color: var(--app-surface) !important;
+
   border: 1px solid var(--app-border-transparent);
 }
 
 .ant-dropdown-menu,
 .ant-select-item {
   color: var(--app-text-muted) !important;
+
   background-color: transparent !important;
 }
 
 .ant-dropdown-menu-item:hover,
 .ant-select-item-option-active {
-  background-color: rgba(154, 82, 1, 0.2) !important;
+  background-color: color-mix(in srgb, var(--app-primary) 20%, transparent) !important;
 }
 
 .ant-modal-header,
 .ant-drawer-header {
   background-color: transparent !important;
+
   border-bottom-color: var(--app-border) !important;
 }
 
@@ -759,8 +839,33 @@ button {
 
 .ant-dropdown {
   border-radius: var(--app-radius-md) !important;
+
   border: none !important;
 }
+
+/* =========================================================
+   Dynamic Primary Controls
+   ========================================================= */
+
+.ant-switch-checked {
+  background-color: var(--app-primary) !important;
+}
+
+.ant-slider-track {
+  background-color: var(--app-primary) !important;
+}
+
+.ant-slider-handle::after {
+  box-shadow: 0 0 0 2px var(--app-primary) !important;
+}
+
+.ant-select-focused .ant-select-selector {
+  border-color: var(--app-primary) !important;
+}
+
+/* =========================================================
+   Linear Loading
+   ========================================================= */
 
 @keyframes linear-loading {
   0% {
@@ -774,4 +879,30 @@ button {
 
 .animate-linear-loading {
   animation: linear-loading 1.2s ease-in-out infinite;
+}
+
+/* =========================================================
+   Login Submit Button
+   ========================================================= */
+
+.login-submit-button.ant-btn-primary {
+  color: #ffffff !important;
+  background-color: var(--app-primary) !important;
+  border-color: var(--app-primary) !important;
+}
+
+.login-submit-button.ant-btn-primary:hover {
+  color: #ffffff !important;
+  background-color: var(--app-primary-light) !important;
+  border-color: var(--app-primary-light) !important;
+}
+
+.login-submit-button.ant-btn-primary:active {
+  color: #ffffff !important;
+  background-color: var(--app-primary-dark) !important;
+  border-color: var(--app-primary-dark) !important;
+}
+
+.login-submit-button.ant-btn-primary .anticon {
+  color: #ffffff !important;
 }

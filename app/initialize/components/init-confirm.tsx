@@ -7,24 +7,9 @@ interface Props {
   form: FormInstance;
 }
 const InitConfirm = ({ form }: Props) => {
-  console.log(form.getFieldsValue());
   return (
     <>
       <div className="flex flex-wrap bg-gray-50 p-5! rounded-2xl border mb-2">
-        {/* <Form
-        form={form}
-        onFinish={() => {
-          const values = form.getFieldsValue();
-          try {
-            CreateUser(values);
-            message.success("عملیات با موفقیت انجام شد");
-            // window.location.reload();
-          } catch (error) {
-            message.error("خطا در ثبت عملیات" + (error as Error).message);
-          }
-        }}
-        className="flex flex-wrap bg-gray-50 p-5! w-1/2  rounded-2xl border m-5!"
-      > */}
         <Form.Item className="min-w-1/3 pl-2!" label="نام " name="firstName">
           <Input />
         </Form.Item>
@@ -45,7 +30,7 @@ const InitConfirm = ({ form }: Props) => {
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve(); // matches — valid
+                  return Promise.resolve();
                 }
                 return Promise.reject(new Error("رمز عبور و تکرار آن یکسان نیستند"));
               },
@@ -56,13 +41,6 @@ const InitConfirm = ({ form }: Props) => {
         >
           <Input.Password type="password" />
         </Form.Item>
-
-        {/* <Button
-        onClick={() => handleSaveUser}
-        type="primary"
-        className="w-full "
-      ></Button> */}
-        {/* </Form> */}
       </div>
       <div className="flex flex-wrap bg-gray-50 p-5! rounded-2xl border">
         <Form.Item label="نوع دیتابیس" name="dbType" className="min-w-1/3 pl-2!">
