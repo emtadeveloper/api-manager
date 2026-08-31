@@ -1,13 +1,15 @@
 "use client";
 import CustomTable from "@/components/custom-table";
-import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
-import { Button, message, Modal } from "antd";
+import ConfirmActionButton from "@/components/ui/ConfirmActionButton";
+import PageActionsBar from "@/components/ui/PageActionsBar";
+import useAlert from "@/hooks/useAlert";
+import { extractErrorMessage } from "@/utils/extract-error-message";
+import { EditFilled, PlusCircleFilled } from "@ant-design/icons";
+import { Button } from "antd";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  getAllRestServices,
-  removeService,
-} from "../actions/rest-services/rest-serveice.action";
+import { getAllRestServices, removeService } from "../actions/rest-services/rest-serveice.action";
+
 export type RestService = {
   id: number;
   persianName: string | null;
@@ -17,66 +19,68 @@ export type RestService = {
 };
 
 export default function RestServices() {
-  const [selectedRowKey, setSelectedRowKey] = useState<string>("0");
-  const [resetServices, setRestServices] = useState<RestService[]>([]);
+  const alert = useAlert();
+  const [selectedRowKey, setSelectedRowKey] = useState<string | null>(null);
+  const [restServices, setRestServices] = useState<RestService[]>([]);
+
   useEffect(() => {
+    let cancelled = false;
+
     const getServices = async () => {
       const result = await getAllRestServices();
-      if (result.success) {
+      if (result.success && !cancelled) {
         setRestServices(result.data as RestService[]);
-      } else {
-        console.error(result.errors);
+      } else if (!result.success && !cancelled) {
+        alert.error(extractErrorMessage(result));
       }
     };
 
     sessionStorage.removeItem("rest-service-form");
-    getServices();
-  }, []);
+    void getServices();
 
-  const handleDelete = async (id: string) => {
-    Modal.confirm({
-      title: "آیا مطمئن هستید؟",
-      content: "این عملیات قابل بازگشت نیست.",
-      okText: "بله",
-      cancelText: "خیر",
-      onOk: async () => {
-        const result = await removeService(parseInt(id));
-        if (!result.success) {
-          message.error("خطا در حذف" + result.errors);
-          return;
-        }
+    return () => {
+      cancelled = true;
+    };
+  }, [alert]);
 
-        message.success("با موفقیت حذف شد");
-        setRestServices((prev) => prev.filter((p) => p.id !== parseInt(id)));
-      },
-      onCancel: () => {
-        // runs if user clicks "خیر" (No) — optional, often left empty
-      },
-    });
+  const handleDelete = async () => {
+    const selectedServiceId = selectedRowKey ? Number(selectedRowKey) : null;
+    if (selectedServiceId === null || !Number.isInteger(selectedServiceId)) return;
+
+    const result = await removeService(selectedServiceId);
+    if (!result.success) {
+      alert.error(extractErrorMessage(result, "خطا در حذف"));
+      return;
+    }
+
+    alert.success("با موفقیت حذف شد");
+    setRestServices((prev) => prev.filter((service) => service.id !== selectedServiceId));
+    setSelectedRowKey(null);
   };
+
+  const hasSelection = Boolean(selectedRowKey);
+
   return (
     <section>
-      <div className="sticky top-0 mb-0.5 z-5 [&>button]:mr-0.5">
+      <PageActionsBar>
         <Link href="/rest-services/add">
-          <Button icon={<PlusCircleFilled />}>افزودن</Button>
+          <Button type="primary" icon={<PlusCircleFilled />}>
+            افزودن
+          </Button>
         </Link>
-        <Link
-          onClick={(e) => selectedRowKey ?? e.preventDefault()}
-          href={`/rest-services/${selectedRowKey}/edit`}
-        >
-          <Button icon={<EditFilled />}>ویر ایش</Button>
+
+        <Link href={hasSelection ? `/rest-services/${selectedRowKey}/edit` : "#"} aria-disabled={!hasSelection}>
+          <Button icon={<EditFilled />} disabled={!hasSelection}>
+            ویرایش
+          </Button>
         </Link>
-        <Button
-          onClick={async () => handleDelete(selectedRowKey)}
-          icon={<DeleteFilled />}
-        >
+
+        <ConfirmActionButton disabled={!hasSelection} onConfirm={handleDelete}>
           حذف
-        </Button>
-      </div>
-      <CustomTable
-        data={resetServices}
-        handleSelectedKey={(value: string) => setSelectedRowKey(value)}
-      />
+        </ConfirmActionButton>
+      </PageActionsBar>
+
+      <CustomTable data={restServices} handleSelectedKey={(value) => setSelectedRowKey(value)} />
     </section>
   );
 }

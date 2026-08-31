@@ -1,7 +1,11 @@
-import React from "react";
+import { Empty } from "antd";
 
 const RestCall = () => {
-  return <div className="bg-gray-50">تست وب سرویس</div>;
+  return (
+    <div className="app-empty-block">
+      <Empty description="تست وب سرویس به‌زودی" />
+    </div>
+  );
 };
 
 export default RestCall;

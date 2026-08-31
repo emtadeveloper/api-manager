@@ -1,7 +1,11 @@
-import React from "react";
+import { Empty } from "antd";
 
 const RestPathParameters = () => {
-  return <div className="bg-gray-50"> query</div>;
+  return (
+    <div className="app-empty-block">
+      <Empty description="پارامترهای مسیر (Path) به‌زودی" />
+    </div>
+  );
 };
 
 export default RestPathParameters;

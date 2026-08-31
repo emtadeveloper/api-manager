@@ -1,7 +1,11 @@
-import React from "react";
+import { Empty } from "antd";
 
 const RestQueryParameters = () => {
-  return <div className="bg-gray-50">path url</div>;
+  return (
+    <div className="app-empty-block">
+      <Empty description="پارامترهای Query به‌زودی" />
+    </div>
+  );
 };
 
 export default RestQueryParameters;

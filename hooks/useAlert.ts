@@ -1,25 +1,20 @@
 "use client";
 
 import { App } from "antd";
-import type { ModalFuncProps } from "antd";
+import { useMemo } from "react";
 
-export function useAlert() {
-  const { message, notification, modal } = App.useApp();
+const useAlert = () => {
+  const { message } = App.useApp();
 
-  return {
-    success: (content: string) => message.success(content),
-    error: (content: string) => message.error(content),
-    warning: (content: string) => message.warning(content),
-    info: (content: string) => message.info(content),
+  return useMemo(
+    () => ({
+      success: (content: string) => message.success(content),
+      error: (content: string) => message.error(content),
+      info: (content: string) => message.info(content),
+      warning: (content: string) => message.warning(content),
+    }),
+    [message],
+  );
+};
 
-    notify: (config: Parameters<typeof notification.open>[0]) => notification.open(config),
-
-    confirm: (options: ModalFuncProps) =>
-      modal.confirm({
-        okText: "بله",
-        cancelText: "خیر",
-        title: "آیا مطمئن هستید؟",
-        ...options,
-      }),
-  };
-}
+export default useAlert;

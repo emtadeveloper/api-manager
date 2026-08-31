@@ -1,80 +1,50 @@
 "use client";
+import { DatabaseType } from "@/enums/database-type.enum";
+import SectionCard from "@/components/ui/SectionCard";
+import RHFInput from "@/components/form/RHFInput";
+import RHFPassword from "@/components/form/RHFPassword";
+import RHFRadioGroup from "@/components/form/RHFRadioGroup";
+import RHFSelect from "@/components/form/RHFSelect";
+import { Radio } from "antd";
+import { useFormContext } from "react-hook-form";
 
-import { DatabaseType } from "@/types/enums/database-type.enum";
-import { Form, FormInstance, Input, Radio, Select } from "antd";
-import React from "react";
-interface Props {
-  form: FormInstance;
-}
-const InitConfirm = ({ form }: Props) => {
+const InitConfirm = () => {
+  const { control } = useFormContext();
+
   return (
     <>
-      <div className="flex flex-wrap bg-gray-50 p-5! rounded-2xl border mb-2">
-        <Form.Item className="min-w-1/3 pl-2!" label="نام " name="firstName">
-          <Input />
-        </Form.Item>
-        <Form.Item className="min-w-1/3 pl-2!" label="نام خانوادگی " name="lastName">
-          <Input />
-        </Form.Item>
-        <Form.Item className="min-w-1/3 pl-2!" label="نام کاربری " name="username">
-          <Input />
-        </Form.Item>
-        <Form.Item className="min-w-1/3 pl-2!" label="رمز عبور " name="password">
-          <Input.Password />
-        </Form.Item>
-        <Form.Item
-          className="min-w-1/3 pl-2!"
-          dependencies={["password"]}
-          rules={[
-            { required: true, message: "لطفا تکرار رمز عبور را وارد کنید" },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("رمز عبور و تکرار آن یکسان نیستند"));
-              },
-            }),
+      <SectionCard title="اطلاعات کاربر سیستم">
+        <RHFInput control={control} name="firstName" label="نام" required />
+        <RHFInput control={control} name="lastName" label="نام خانوادگی" required />
+        <RHFInput control={control} name="username" label="نام کاربری" required dir="ltr" />
+        <RHFPassword control={control} name="password" label="رمز عبور" required />
+        <RHFPassword control={control} name="password2" label="تکرار رمز عبور" required />
+      </SectionCard>
+
+      <SectionCard title="اطلاعات پایگاه داده">
+        <RHFRadioGroup control={control} name="dbType" label="نوع دیتابیس">
+          <Radio value={DatabaseType.SQL}>SQL</Radio>
+          <Radio value={DatabaseType.ORACLE}>ORACLE</Radio>
+          <Radio value={DatabaseType.POSTGRES}>POSTGRES</Radio>
+        </RHFRadioGroup>
+        <RHFInput control={control} name="dbServer" label="آدرس سرور دیتابیس" required />
+        <RHFInput control={control} name="dbPort" label="پورت" required />
+        <RHFInput control={control} name="dbUsername" label="نام کاربری" required />
+        <RHFPassword control={control} name="dbPassword" label="رمز عبور" required />
+        <RHFSelect
+          control={control}
+          name="dbName"
+          label="نام دیتابیس"
+          allowClear
+          showSearch
+          placeholder="دیتابیس را انتخاب نمایید..."
+          options={[
+            { value: "db1", label: "db1" },
+            { value: "db2", label: "db2" },
+            { value: "db3", label: "db3" },
           ]}
-          label="تکرار رمز عبور"
-          name="password2"
-        >
-          <Input.Password type="password" />
-        </Form.Item>
-      </div>
-      <div className="flex flex-wrap bg-gray-50 p-5! rounded-2xl border">
-        <Form.Item label="نوع دیتابیس" name="dbType" className="min-w-1/3 pl-2!">
-          <Radio.Group>
-            <Radio value={DatabaseType.SQL}>SQL</Radio>
-            <Radio value={DatabaseType.ORACLE}>ORACLEL</Radio>
-            <Radio value={DatabaseType.POSTGRES}>POSTGRES</Radio>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label="آدرس سرور دیتابیس" name="dbServer" className="min-w-1/3 pl-2!">
-          <Input placeholder="آدرس سرور دیتابیس" />
-        </Form.Item>
-        <Form.Item label="پورت" name="dbPort" className="min-w-1/3 pl-2!">
-          <Input placeholder="پورت" />
-        </Form.Item>
-        <Form.Item label="نام کاربری" name="dbUsername" className="min-w-1/3 pl-2!">
-          <Input placeholder="نام کاربری" />
-        </Form.Item>
-        <Form.Item label="رمز عبور" name="dbPassword" className="min-w-1/3 pl-2!">
-          <Input type="password" placeholder="رمز عبور" />
-        </Form.Item>
-        <Form.Item label="نام دیتابیس" name="dbName" className="min-w-1/3 pl-2!">
-          <Select
-            allowClear
-            showSearch
-            placeholder=" دیتابیس را انتخاب نمایید..."
-            options={[
-              { value: "db1", label: "db1" },
-              { value: "db2", label: "db2" },
-              { value: "db3", label: "db3" },
-            ]}
-          />
-        </Form.Item>
-      </div>
+        />
+      </SectionCard>
     </>
   );
 };

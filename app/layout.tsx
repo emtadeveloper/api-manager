@@ -7,6 +7,7 @@ import { yekan, vazir } from "../public/fonts/font";
 import "./globals.css";
 
 import ClientLayout from "@/components/layout/ClientLayout";
+import AppProviders from "@/components/providers/AppProviders";
 
 export const metadata: Metadata = {
   icons: {
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 
   title: {
     default: "مدیریت سرویس",
+
     template: "%s | مدیریت سرویس",
   },
 
@@ -39,7 +41,9 @@ export default function RootLayout({
     >
       <body className="h-full overflow-hidden">
         <AntdRegistry>
-          <ClientLayout>{children}</ClientLayout>
+          <AppProviders>
+            <ClientLayout>{children}</ClientLayout>
+          </AppProviders>
         </AntdRegistry>
       </body>
     </html>

@@ -1,7 +1,7 @@
 "use server";
 
 import { DatabaseFactory } from "@/lib/DatabaseFactory";
-import { DatabaseType } from "@/types/enums/database-type.enum";
+import { DatabaseType } from "@/enums/database-type.enum";
 
 export const checkConnection = async (inputUrl: string) => {
   console.log("SQL URL:", inputUrl);

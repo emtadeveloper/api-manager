@@ -2,50 +2,45 @@
 
 import { Empty, Input, Table } from "antd";
 import type { FilterDropdownProps } from "antd/es/table/interface";
-import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
+import { useState } from "react";
+import { filterBySearchLabel } from "@/utils/filter-by-search-label";
 
 export interface DataTableColumn<T> {
   title: string;
   dataIndex: keyof T;
   searchable?: boolean;
+  width?: number | string;
+  render?: (value: T[keyof T], record: T, index: number) => ReactNode;
 }
 
 interface DataTableProps<T extends Record<string, unknown>> {
   data: T[];
-  rowKey?: keyof T;
-  /** اگر ندهید، ستون‌ها به‌طور خودکار از کلیدهای اولین رکورد ساخته می‌شوند */
-  columns?: DataTableColumn<T>[];
-  selectable?: boolean;
+  columns: DataTableColumn<T>[];
+  rowKey: keyof T;
   onSelectRow?: (key: string) => void;
-  pageSize?: number;
   emptyText?: string;
+  pageSize?: number;
 }
 
-/**
- * جدول عمومی پروژه با قابلیت جستجوی ستونی و انتخاب یک ردیف (radio).
- * جایگزین تکرار کامل منطق جدول در چند فایل مختلف پروژه.
- */
 export default function DataTable<T extends Record<string, unknown>>({
   data,
-  rowKey = "id" as keyof T,
   columns,
-  selectable = false,
+  rowKey,
   onSelectRow,
-  pageSize: initialPageSize = 5,
   emptyText = "داده‌ای برای نمایش وجود ندارد",
+  pageSize: initialPageSize = 5,
 }: DataTableProps<T>) {
   const [pageSize, setPageSize] = useState(initialPageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-  const resolvedColumns = useMemo<DataTableColumn<T>[]>(() => {
-    if (columns) return columns;
-    if (data.length === 0) return [];
-    return Object.keys(data[0]).map((key) => ({
-      title: key,
-      dataIndex: key as keyof T,
-      searchable: true,
-    }));
-  }, [columns, data]);
+  if (!data || data.length === 0) {
+    return (
+      <div className="app-empty-block">
+        <Empty description={emptyText} />
+      </div>
+    );
+  }
 
   const getColumnSearchProps = (dataIndex: keyof T) => ({
     filterDropdown: ({ selectedKeys, setSelectedKeys, confirm }: FilterDropdownProps) => (
@@ -55,55 +50,44 @@ export default function DataTable<T extends Record<string, unknown>>({
           value={selectedKeys[0] as string}
           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => confirm()}
-          placeholder={`جستجوی ${String(dataIndex)}`}
+          placeholder={`جستجو ${String(dataIndex)}`}
         />
       </div>
     ),
-    onFilter: (value: React.Key | boolean, record: T) =>
-      String(record[dataIndex]).toLowerCase().includes(String(value).toLowerCase()),
+    onFilter: (value: React.Key | boolean, record: T) => filterBySearchLabel(String(value), record, dataIndex),
   });
 
-  if (data.length === 0) {
-    return <Empty description={emptyText} />;
-  }
+  const antColumns = columns.map((col) => ({
+    title: col.title,
+    dataIndex: col.dataIndex as string,
+    key: col.dataIndex as string,
+    width: col.width,
+    render: col.render,
+    ...(col.searchable !== false ? getColumnSearchProps(col.dataIndex) : {}),
+  }));
 
-  const tableColumns = [
-    {
-      title: "ردیف",
-      key: "__index",
-      render: (_: unknown, __: T, index: number) => index + 1,
-    },
-    ...resolvedColumns.map((col) => ({
-      title: col.title,
-      dataIndex: col.dataIndex as string,
-      key: col.dataIndex as string,
-      ...(col.searchable ? getColumnSearchProps(col.dataIndex) : {}),
-    })),
-  ];
+  const rowSelection = onSelectRow
+    ? {
+        type: "radio" as const,
+        selectedRowKeys,
+        onChange: (newSelectedRowKeys: React.Key[]) => {
+          setSelectedRowKeys(newSelectedRowKeys);
+          onSelectRow(newSelectedRowKeys[0]?.toString() ?? "");
+        },
+      }
+    : undefined;
 
   return (
     <Table<T>
-      className="mt-2"
       rowKey={rowKey as string}
-      columns={tableColumns}
+      columns={[
+        { title: "ردیف", key: "index", render: (_: unknown, _r: T, index: number) => index + 1 },
+        ...antColumns,
+      ]}
       dataSource={data}
-      pagination={{
-        pageSize,
-        onShowSizeChange: (_, size) => setPageSize(size),
-        showTotal: (total) => `${total} رکورد`,
-      }}
-      rowSelection={
-        selectable
-          ? {
-              type: "radio" as const,
-              selectedRowKeys,
-              onChange: (keys) => {
-                setSelectedRowKeys(keys);
-                onSelectRow?.(keys[0]?.toString() ?? "");
-              },
-            }
-          : undefined
-      }
+      onChange={(pagination) => setPageSize(pagination.pageSize ?? initialPageSize)}
+      pagination={{ pageSize, showTotal: (total) => `${total} رکورد` }}
+      rowSelection={rowSelection}
     />
   );
 }

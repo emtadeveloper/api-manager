@@ -1,21 +1,19 @@
-export interface ActionFailure {
-  success: false;
-  error?: string;
-  errors?: unknown;
-}
+export function extractErrorMessage(result: unknown, fallback = "خطایی رخ داد"): string {
+  if (!result || typeof result !== "object") return fallback;
 
-export function extractErrorMessage(result: ActionFailure, fallback = "خطایی رخ داد"): string {
-  if (result.error) return result.error;
+  const r = result as Record<string, unknown>;
 
-  if (Array.isArray(result.errors)) {
-    const messages = result.errors
-      .map((issue) => (issue && typeof issue === "object" && "message" in issue ? String(issue.message) : null))
+  if (typeof r.error === "string" && r.error) return r.error;
+
+  if (Array.isArray(r.errors)) {
+    const messages = r.errors
+      .map((e) => (typeof e === "string" ? e : (e as { message?: string })?.message))
       .filter(Boolean);
 
-    if (messages.length > 0) return messages.join("، ");
+    if (messages.length) return messages.join(" - ");
   }
 
-  if (typeof result.errors === "string") return result.errors;
+  if (typeof r.message === "string" && r.message) return r.message;
 
   return fallback;
 }

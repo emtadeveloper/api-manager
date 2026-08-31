@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 
 import { hasUsers } from "../lib/data/users";
 

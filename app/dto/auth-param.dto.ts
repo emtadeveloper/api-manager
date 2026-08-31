@@ -1,4 +1,4 @@
-import { PARAMTYPE } from "@/types/enums/param-type.enum";
+import { PARAMTYPE } from "@/enums/param-type.enum";
 import { z } from "zod";
 
 export const AuthParamDto = z.object({

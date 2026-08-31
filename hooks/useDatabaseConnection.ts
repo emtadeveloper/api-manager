@@ -1,37 +1,62 @@
 "use client";
 
-import { useState } from "react";
-import { useAlert } from "@/hooks/useAlert";
+import { useCallback, useState } from "react";
+import { DatabaseType } from "@/enums/database-type.enum";
 import { getDatabases } from "@/app/actions/postgres/system-actions";
-import { getDatabases as getSqlDatabase } from "@/app/actions/sql/system-actions";
-import { DatabaseSettingDto } from "@/app/dto/database-setting.dto";
-import { DatabaseType } from "@/types/enums/database-type.enum";
+import { getDatabases as getSqlDatabases } from "@/app/actions/sql/system-actions";
+import useAlert from "./useAlert";
+import { extractErrorMessage } from "@/utils/extract-error-message";
 
-export function useDatabaseConnection(getConfig: () => DatabaseSettingDto) {
-  const { error } = useAlert();
+// یونیون رشته‌ای منطبق با مقادیر enum (سازگار با z.enum(["SQL","ORACLE","POSTGRES"]) در DTOها)
+export type DbTypeValue = `${DatabaseType}`;
+
+export interface DbConnectionConfig {
+  dbType: DbTypeValue;
+  dbServer: string;
+  dbPort: string;
+  dbUsername: string;
+  dbPassword: string;
+}
+
+function buildMasterConnectionUrl(config: DbConnectionConfig) {
+  if (config.dbType === DatabaseType.POSTGRES) {
+    return `postgresql://${config.dbUsername}:${config.dbPassword}@${config.dbServer}:${config.dbPort}/postgres`;
+  }
+  return `sqlserver://${config.dbServer}:${config.dbPort};database=Master;user=${config.dbUsername};password=${config.dbPassword};trustServerCertificate=true`;
+}
+
+export function buildTargetConnectionUrl(config: DbConnectionConfig & { dbName: string }) {
+  if (config.dbType === DatabaseType.POSTGRES) {
+    return `postgresql://${config.dbUsername}:${config.dbPassword}@${config.dbServer}:${config.dbPort}/${config.dbName}`;
+  }
+  return `sqlserver://${config.dbServer}:${config.dbPort};database=${config.dbName};user=${config.dbUsername};password=${config.dbPassword};trustServerCertificate=true`;
+}
+
+export default function useDatabaseConnection() {
+  const alert = useAlert();
   const [databaseList, setDatabaseList] = useState<Record<string, string>[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const handleGetDatabases = async () => {
-    setLoading(true);
+  const connect = useCallback(
+    async (config: DbConnectionConfig) => {
+      setLoading(true);
+      try {
+        const url = buildMasterConnectionUrl(config);
+        const result = config.dbType === DatabaseType.POSTGRES ? await getDatabases(url) : await getSqlDatabases(url);
 
-    const config = getConfig();
+        if (!result.success) {
+          alert.error(extractErrorMessage(result));
+          return;
+        }
 
-    const url =
-      config.dbType === DatabaseType.POSTGRES
-        ? `postgresql://${config.dbUsername}:${config.dbPassword}@${config.dbServer}:${config.dbPort}/postgres`
-        : `sqlserver://${config.dbServer}:${config.dbPort};database=Master;user=${config.dbUsername};password=${config.dbPassword};trustServerCertificate=true`;
+        setDatabaseList(result.data as Record<string, string>[]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
-    const result = config.dbType === DatabaseType.POSTGRES ? await getDatabases(url) : await getSqlDatabase(url);
-
-    if (!result.success) {
-      error(result.error);
-    } else {
-      setDatabaseList(result.data as Record<string, string>[]);
-    }
-
-    setLoading(false);
-  };
-
-  return { databaseList, loading, handleGetDatabases };
+  return { databaseList, loading, connect };
 }

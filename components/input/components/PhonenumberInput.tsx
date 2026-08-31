@@ -25,20 +25,19 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({ setPhoneNumber = ()
   };
 
   return (
-    <div>
-      <label htmlFor="phone-number" className="block text-sm font-normal text-right leading-6 text-gray-700">
+    <div className="flex flex-col gap-1.5 w-full font-sans">
+      <label htmlFor="phone-number" className="text-xs font-medium app-text-primary">
         شماره موبایل
       </label>
-      <div className={`flex flex-row mt-2 rounded-md ${className || ""}`}>
-        <Input
-          id="phone-number"
-          type="text"
-          placeholder="شماره موبایل را وارد نمایید"
-          value={inputValue}
-          onChange={handleInputChange}
-          className="w-full text-right text-lg py-2 leading-tight"
-        />
-      </div>
+      <Input
+        id="phone-number"
+        type="text"
+        dir="ltr"
+        placeholder="شماره موبایل را وارد نمایید"
+        value={inputValue}
+        onChange={handleInputChange}
+        className={className}
+      />
     </div>
   );
 };

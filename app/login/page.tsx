@@ -3,16 +3,23 @@
 import { useTransition } from "react";
 
 import { Button } from "antd";
+
 import { LoginOutlined } from "@ant-design/icons";
+
 import { Controller, useForm } from "react-hook-form";
+
 import { useRouter } from "next/navigation";
 
 import InputTypeBase from "@/components/input/InputTypeBase";
+
 import { signIn } from "@/apis/apis";
+
 import SideLogin from "./components/SideLogin";
+
 import { useSessionStore } from "@/stores/auth";
-import { useAlert } from "@/hooks/useAlert";
+
 import SettingsDrawer from "@/components/layout/Topbar/components/SettingsDrawer";
+import useAlert from "@/hooks/useAlert";
 
 interface LoginFormValues {
   username: string;
@@ -21,8 +28,10 @@ interface LoginFormValues {
 
 export default function LoginPage() {
   const [isPending, startTransition] = useTransition();
+  const alert = useAlert();
+
   const updateSession = useSessionStore((state) => state.updateSession);
-  const { error } = useAlert();
+
   const router = useRouter();
 
   const {
@@ -31,7 +40,7 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginFormValues>({
     defaultValues: {
-      username: "admin@talazo.com",
+      username: "admin@rasan.com",
       password: "Admin123!",
     },
   });
@@ -47,7 +56,7 @@ export default function LoginPage() {
         return;
       }
 
-      error(response.message ?? "ورود ناموفق بود");
+      alert.error(response.message ?? "ورود ناموفق بود");
     });
   };
 
@@ -59,6 +68,7 @@ export default function LoginPage() {
         <div className="w-full max-w-sm space-y-10">
           <div className="space-y-2 text-center">
             <h2 className="text-2xl font-bold tracking-tight text-[var(--app-text-primary)]">ورود به حساب کاربری</h2>
+
             <p className="text-sm text-[var(--app-text-muted)]">برای ورود اطلاعات خود را وارد کنید</p>
           </div>
 
@@ -68,8 +78,10 @@ export default function LoginPage() {
               control={control}
               rules={{
                 required: "لطفاً ایمیل یا نام کاربری را وارد کنید",
+
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+
                   message: "لطفاً یک ایمیل معتبر وارد کنید",
                 },
               }}
@@ -90,7 +102,11 @@ export default function LoginPage() {
               control={control}
               rules={{
                 required: "لطفاً رمز عبور را وارد کنید",
-                minLength: { value: 6, message: "رمز عبور باید حداقل ۶ کاراکتر باشد" },
+
+                minLength: {
+                  value: 6,
+                  message: "رمز عبور باید حداقل ۶ کاراکتر باشد",
+                },
               }}
               render={({ field }) => (
                 <InputTypeBase
@@ -113,7 +129,6 @@ export default function LoginPage() {
               block
               size="large"
               className="login-submit-button"
-              style={{ padding: "0.75rem 1rem", fontSize: ".8rem", fontWeight: "500" }}
             >
               ورود به سیستم
             </Button>

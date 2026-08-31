@@ -1,46 +1,72 @@
 "use client";
-import { PARAMTYPE } from "@/types/enums/param-type.enum";
+import { PARAMTYPE } from "@/enums/param-type.enum";
 import { DeleteFilled, PlusCircleFilled } from "@ant-design/icons";
-import { Button, Form, Input, Radio } from "antd";
+import { Button, Empty, Radio, Space } from "antd";
+import { useFieldArray, useFormContext } from "react-hook-form";
+import SectionCard from "@/components/ui/SectionCard";
+import RHFInput from "@/components/form/RHFInput";
+import RHFRadioGroup from "@/components/form/RHFRadioGroup";
+
 const RestExternalApiParam = () => {
+  const { control } = useFormContext();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "restExternalApiSetting.restExternalApiParam",
+  });
+
   return (
-    <div className="flex flex-col bg-gray-50 p-5! rounded-2xl border mb-2 mt-2  ">
-      <Form.List name={["restExternalApiSetting", "restExternalApiParam"]}>
-        {(fields, { add, remove }) => (
-          <>
-            <Button onClick={() => add()}>
-              <PlusCircleFilled />
-              ایجاد پارامتر
-            </Button>
-            <div className="flex flex-wrap   ">
-              {fields.map((field) => (
-                <div key={field.key} className=" border border-blue-300 m-1 px-4 w-2/12  rounded-xl  grow ">
-                  <DeleteFilled className="w-full   bg-red-50  rounded-2xl" onClick={() => remove(field.name)} />
-                  <Form.Item name={[field.name, "paramName"]}>
-                    <Input placeholder="نام پارامتر" />
-                  </Form.Item>
+    <SectionCard nested title="پارامترهای وب سرویس خارجی">
+      <div className="w-full">
+        <Button
+          icon={<PlusCircleFilled />}
+          onClick={() => append({ paramName: "", paramValue: "", paramType: PARAMTYPE.QUERY })}
+          className="mb-3"
+        >
+          ایجاد پارامتر
+        </Button>
 
-                  <Form.Item name={[field.name, "paramValue"]}>
-                    <Input placeholder="مقدار پارامتر" />
-                  </Form.Item>
-
-                  <Form.Item name={[field.name, "paramType"]}>
-                    <Radio.Group>
-                      <Radio value={PARAMTYPE.HEADER}>HEADER</Radio>
-                      <Radio value={PARAMTYPE.BODY}>BODY</Radio>
-                      <Radio value={PARAMTYPE.PATH}>PATH</Radio>
-                      <Radio defaultChecked value={PARAMTYPE.QUERY}>
-                        QUERY
-                      </Radio>
-                    </Radio.Group>
-                  </Form.Item>
+        {fields.length === 0 ? (
+          <Empty description="پارامتری تعریف نشده است" />
+        ) : (
+          <Space direction="vertical" size={12} className="w-full">
+            {fields.map((field, index) => (
+              <SectionCard key={field.id} nested>
+                <div className="w-full flex justify-end">
+                  <Button
+                    danger
+                    type="text"
+                    icon={<DeleteFilled />}
+                    onClick={() => remove(index)}
+                    aria-label="حذف پارامتر"
+                  />
                 </div>
-              ))}
-            </div>
-          </>
+
+                <RHFInput
+                  control={control}
+                  name={`restExternalApiSetting.restExternalApiParam.${index}.paramName`}
+                  placeholder="نام پارامتر"
+                />
+                <RHFInput
+                  control={control}
+                  name={`restExternalApiSetting.restExternalApiParam.${index}.paramValue`}
+                  placeholder="مقدار پارامتر"
+                />
+                <RHFRadioGroup
+                  control={control}
+                  name={`restExternalApiSetting.restExternalApiParam.${index}.paramType`}
+                  full
+                >
+                  <Radio value={PARAMTYPE.HEADER}>HEADER</Radio>
+                  <Radio value={PARAMTYPE.BODY}>BODY</Radio>
+                  <Radio value={PARAMTYPE.PATH}>PATH</Radio>
+                  <Radio value={PARAMTYPE.QUERY}>QUERY</Radio>
+                </RHFRadioGroup>
+              </SectionCard>
+            ))}
+          </Space>
         )}
-      </Form.List>
-    </div>
+      </div>
+    </SectionCard>
   );
 };
 

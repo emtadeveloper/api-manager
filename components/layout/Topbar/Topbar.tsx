@@ -34,6 +34,7 @@ const Topbar = ({ onMenuClick }: HeaderProps) => {
         <SettingsDrawer />
 
         <div className="mx-4 h-6 w-px bg-app-border" />
+
         <UserMenu />
       </Flex>
     </header>

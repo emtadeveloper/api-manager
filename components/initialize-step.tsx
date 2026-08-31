@@ -1,138 +1,229 @@
 "use client";
 
 import { CreateUser, findAllUsers } from "@/app/actions/user.actions";
-import {
-  CreateDatabaseSettings,
-  findAllDbSetting,
-} from "@/app/actions/database-settings.action";
-import { getDatabases } from "@/app/actions/postgres/system-actions";
-import { DatabaseSettingDto } from "@/app/dto/database-setting.dto";
-import { RestServicesCreateDto } from "@/app/dto/rest-services-create-dto";
-import { UserCreateDto } from "@/app/dto/user-create-dto";
+
+import { CreateDatabaseSettings, findAllDbSetting } from "@/app/actions/database-settings.action";
+
+import { UserFieldsSchema } from "@/app/dto/user-form.schema";
+
+import { DatabaseSettingSchema } from "@/app/dto/database-setting.dto";
+
 import InitConfirm from "@/app/initialize/components/init-confirm";
 import InitDb from "@/app/initialize/components/init-db";
 import InitUser from "@/app/initialize/components/init-user";
 
-import { getChangedFieldPaths } from "@/utils/get-changed-field-paths";
-import {
-  CheckCircleFilled,
-  FastBackwardOutlined,
-  FastForwardFilled,
-} from "@ant-design/icons";
-import { Button, Form, message, Steps } from "antd";
-import { useForm } from "antd/es/form/Form";
-import { useParams, useRouter } from "next/navigation";
+import { CheckCircleFilled, FastBackwardOutlined, FastForwardFilled } from "@ant-design/icons";
+
+import { Button, Steps } from "antd";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { FormProvider, useForm } from "react-hook-form";
+
 import { useEffect, useState } from "react";
+
+import { z } from "zod";
+
 import { yekan } from "@/public/fonts/font";
+
+import useAlert from "@/hooks/useAlert";
+
+import { extractErrorMessage } from "@/utils/extract-error-message";
+
+import type { UserCreateDto } from "@/app/dto/user-create-dto";
+
+const InitializeFormSchema = UserFieldsSchema.merge(DatabaseSettingSchema).refine(
+  (data) => data.password === data.password2,
+  {
+    message: "رمز عبور و تکرار آن یکسان نیستند",
+    path: ["password2"],
+  },
+);
+
+type InitializeFormValues = z.infer<typeof InitializeFormSchema>;
+
+const STORAGE_KEY = "settings-form";
+
 const InitializeStep = () => {
-  const param = useParams();
-  const [current, setCurrent] = useState<number>(0);
-  const router = useRouter();
+  const alert = useAlert();
+
+  const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    const formValues = form.getFieldsValue();
-    setLoading(true);
+  const methods = useForm<InitializeFormValues>({
+    resolver: zodResolver(InitializeFormSchema),
 
-    const userResult = await CreateUser({
-      firstName: formValues["firstName"],
-      lastName: formValues["lastName"],
-      username: formValues["username"],
-      password: formValues["password"],
-    } as UserCreateDto);
+    mode: "onBlur",
 
-    if (!userResult.success) {
-      message.error("خطا" + userResult.error);
-      return;
-    }
-    message.success("ثبت موفق کاربر");
-    const dbResult = await CreateDatabaseSettings({
-      dbServer: formValues["dbServer"],
-      dbType: formValues["dbType"],
-      dbPort: formValues["dbPort"],
-      dbName: formValues["dbName"],
-      dbUsername: formValues["dbUsername"],
-      dbPassword: formValues["dbPassword"],
-    } as DatabaseSettingDto);
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      username: "",
+      password: "",
+      password2: "",
 
-    if (!dbResult.success) {
-      message.error("خطا" + dbResult.error);
-      return;
-    }
-    message.success("ثبت موفق تنظیمات دیتابیس");
-    setLoading(false);
-  };
-  const next = async () => {
-    // console.log(form.getFieldsValue())
-    setCurrent((c) => c + 1);
-  };
-  const prev = () => setCurrent((c) => (c >= 1 ? c - 1 : c));
-  const [form] = useForm();
-  const [restService, setRestService] = useState<RestServicesCreateDto>();
+      dbType: "POSTGRES",
+      dbServer: "",
+      dbPort: "",
+      dbUsername: "",
+      dbPassword: "",
+      dbName: "",
+    },
+  });
+
+  const { handleSubmit, reset, watch } = methods;
+
   useEffect(() => {
-    const saved = sessionStorage.getItem("settings-form");
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+
     if (saved) {
-      form.setFieldsValue(JSON.parse(saved));
+      try {
+        const parsed: unknown = JSON.parse(saved);
+
+        const result = InitializeFormSchema.safeParse(parsed);
+
+        if (result.success) {
+          reset(result.data);
+        } else {
+          sessionStorage.removeItem(STORAGE_KEY);
+        }
+      } catch {
+        sessionStorage.removeItem(STORAGE_KEY);
+      }
+
+      return;
     }
+
     const getData = async () => {
-      const user = await findAllUsers();
-      const dbSetting = await findAllDbSetting();
-      form.setFieldsValue({ ...user?.data, ...dbSetting?.data });
-      // form.setFieldsValue({...user, ...dbSetting});
+      const [userResult, dbResult] = await Promise.all([findAllUsers(), findAllDbSetting()]);
+
+      const dbType =
+        dbResult?.data?.dbType === "SQL" || dbResult?.data?.dbType === "ORACLE" || dbResult?.data?.dbType === "POSTGRES"
+          ? dbResult.data.dbType
+          : "POSTGRES";
+
+      reset({
+        firstName: userResult?.data?.firstName ?? "",
+
+        lastName: userResult?.data?.lastName ?? "",
+
+        username: userResult?.data?.username ?? "",
+
+        password: "",
+
+        password2: "",
+
+        dbType,
+
+        dbServer: dbResult?.data?.dbServer ?? "",
+
+        dbPort: dbResult?.data?.dbPort ?? "",
+
+        dbUsername: dbResult?.data?.dbUsername ?? "",
+
+        dbPassword: dbResult?.data?.dbPassword ?? "",
+
+        dbName: dbResult?.data?.dbName ?? "",
+      });
     };
 
-    getData();
-    // findRest(param.id?.toString() ?? "0");
-  }, [form]);
+    void getData();
+  }, [reset]);
+
+  useEffect(() => {
+    const subscription = watch((values) => {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [watch]);
+
+  const next = () => {
+    setCurrent((current) => Math.min(current + 1, 2));
+  };
+
+  const prev = () => {
+    setCurrent((current) => Math.max(current - 1, 0));
+  };
+
+  const onSubmit = async (values: InitializeFormValues) => {
+    setLoading(true);
+
+    try {
+      const user: UserCreateDto = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        username: values.username,
+        password: values.password,
+      };
+
+      const userResult = await CreateUser(user);
+
+      if (!userResult.success) {
+        alert.error(extractErrorMessage(userResult, "خطا در ثبت کاربر"));
+
+        return;
+      }
+
+      const dbResult = await CreateDatabaseSettings({
+        dbType: values.dbType,
+        dbServer: values.dbServer,
+        dbPort: values.dbPort,
+        dbUsername: values.dbUsername,
+        dbPassword: values.dbPassword,
+        dbName: values.dbName,
+      });
+
+      if (!dbResult.success) {
+        alert.error(extractErrorMessage(dbResult, "خطا در ثبت تنظیمات دیتابیس"));
+
+        return;
+      }
+
+      alert.success("راه‌اندازی اولیه با موفقیت انجام شد");
+
+      sessionStorage.removeItem(STORAGE_KEY);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <Form
-      form={form}
-      onFinish={handleSubmit}
-      preserve={true}
-      onValuesChange={(changedValues) => {
-        const values = form.getFieldsValue(true);
-        sessionStorage.setItem("rest-service-form", JSON.stringify(values));
-        const paths = getChangedFieldPaths(changedValues);
-        form.setFields(paths.map((name) => ({ name, errors: [] })));
-      }}
-    >
-      <Steps
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Steps
+          className={`step ${yekan.className}`}
+          current={current}
+          items={[{ title: "تعریف کاربر سیستم" }, { title: "تنظیمات اتصال" }, { title: "تایید نهایی" }]}
+        />
 
-        className={`step ${yekan.className}`}
-        current={current}
-        // onChange={(step) => setCurrent(step)}
-        items={[
-          { title: "تعریف کاربر سیستم" },
-          //   { title: "تنظیمات احراز هویت" },
-          { title: "تنظیمات اتصال" },
-          { title: "تایید نهایی" },
-        ]}
-      />
-      <div className="my-2">
-        {current > 0 && (
-          <Button title="قبلی" onClick={prev}>
-            <FastForwardFilled />
-          </Button>
-        )}
-        {current <= 1 && (
-          <Button title="بعدی" onClick={next}>
-            <FastBackwardOutlined />
-          </Button>
-        )}
+        <div className="my-2">
+          {current > 0 && (
+            <Button title="قبلی" onClick={prev}>
+              <FastForwardFilled />
+            </Button>
+          )}
 
-        {current > 1 && (
-          <Button loading={loading} htmlType="submit" title="تایید نهایی">
-            <CheckCircleFilled />
-          </Button>
-        )}
-      </div>
+          {current <= 1 && (
+            <Button title="بعدی" onClick={next}>
+              <FastBackwardOutlined />
+            </Button>
+          )}
 
-      {current === 0 && <InitUser />}
-      {current === 1 && <InitDb form={form} />}
-      {/* {current === 2 && <InitAuth form={form} />} */}
-      {current === 2 && <InitConfirm form={form} />}
-    </Form>
+          {current > 1 && (
+            <Button loading={loading} htmlType="submit" title="تایید نهایی" type="primary">
+              <CheckCircleFilled />
+            </Button>
+          )}
+        </div>
+
+        {current === 0 && <InitUser />}
+        {current === 1 && <InitDb />}
+        {current === 2 && <InitConfirm />}
+      </form>
+    </FormProvider>
   );
 };
 

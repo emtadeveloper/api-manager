@@ -113,10 +113,17 @@
 
   /* Shadows */
   --app-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
-
   --app-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.28);
-
   --app-shadow-orange: 0 0 24px rgba(245, 158, 11, 0.12);
+
+  /* Form system tokens */
+  --app-form-gap: 16px;
+  --app-form-item-min: 260px;
+
+  /* Layout tokens */
+  --app-sidebar-width: 280px;
+  --app-sidebar-collapsed-width: 90px;
+  --app-content-padding: 16px;
 }
 
 /* =========================================================
@@ -236,11 +243,9 @@
   --app-text-muted: #637381;
   --app-text-subtle: #919eab;
 
-  /* Sidebar */
   --app-sidebar-hover: #f9fafb;
   --app-sidebar-active: #f3f4f6;
 
-  /* Tailwind text colors */
   --color-text-primary: #1c252e;
   --color-text-secondary: #454f5b;
   --color-text-muted: #637381;
@@ -253,7 +258,6 @@
   --color-app-surface-orange: #fff7e6;
 
   --color-app-border: rgba(145, 158, 171, 0.2);
-
   --color-app-border-light: rgba(145, 158, 171, 0.3);
 
   --color-app-text: #1c252e;
@@ -274,31 +278,20 @@
 html {
   min-height: 100%;
   background-color: var(--app-background);
-
   scroll-behavior: smooth;
-
   font-family: var(--app-font-family);
-
   font-size: var(--app-font-size);
 }
 
 body {
   min-height: 100vh;
   margin: 0;
-
   color: var(--app-text);
-
-  font-family: var(--app-font-family);
-
-  font-size: var(--app-font-size);
-
-  text-rendering: optimizeLegibility;
-
-  -webkit-font-smoothing: antialiased;
-}
-
-[data-theme="light"] body {
   background: var(--app-background);
+  font-family: var(--app-font-family);
+  font-size: var(--app-font-size);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* =========================================================
@@ -327,7 +320,6 @@ button:disabled {
 
 :focus-visible {
   outline: 2px solid var(--app-primary);
-
   outline-offset: 2px;
 }
 
@@ -347,9 +339,7 @@ svg {
 
 header {
   border-block: 1px solid var(--app-border);
-
   background-color: rgba(20, 26, 33, 0.86);
-
   backdrop-filter: blur(12px);
 }
 
@@ -359,7 +349,6 @@ header {
 
 aside {
   border-inline-start: 1px solid var(--app-border);
-
   background-color: rgba(20, 26, 33, 0.72);
 }
 
@@ -369,31 +358,25 @@ aside {
 
 main {
   min-height: 100vh;
-}
-
-[data-theme="light"] main {
   background: var(--app-background);
 }
 
 section {
   padding: 16px;
-
   border: 1px solid var(--app-border);
-
   border-radius: var(--app-radius-xl);
-
+  background: var(--app-surface);
   box-shadow: var(--app-shadow-sm);
 }
 
 [data-theme="light"] section {
+  background: var(--app-surface);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .version {
   border: 1px solid var(--app-border);
-
   border-radius: var(--app-radius-sm);
-
   color: var(--app-text-muted);
 }
 
@@ -415,9 +398,7 @@ button {
 
 .sidebar-active {
   background-color: var(--app-sidebar-active);
-
   border-right: 4px solid var(--app-primary);
-
   border-radius: var(--app-radius-md) 0 0 var(--app-radius-md);
 }
 
@@ -439,37 +420,31 @@ button {
 
 .app-text-primary-normal {
   color: var(--app-text-primary);
-
   font-weight: 400;
 }
 
 .app-text-primary-medium {
   color: var(--app-text-primary);
-
   font-weight: 500;
 }
 
 .app-text-primary-semibold {
   color: var(--app-text-primary);
-
   font-weight: 600;
 }
 
 .app-text-primary-bold {
   color: var(--app-text-primary);
-
   font-weight: 700;
 }
 
 .app-text-primary-extrabold {
   color: var(--app-text-primary);
-
   font-weight: 800;
 }
 
 .app-text-primary-black {
   color: var(--app-text-primary);
-
   font-weight: 900;
 }
 
@@ -479,13 +454,11 @@ button {
 
 .app-surface {
   background-color: var(--app-surface);
-
   border: 1px solid var(--app-border-transparent);
 }
 
 .app-surface-light {
   background-color: var(--app-surface-light);
-
   border: 1px solid var(--app-border-transparent);
 }
 
@@ -503,7 +476,6 @@ button {
 
 .app-scrollbar {
   scrollbar-color: var(--app-primary-dark) var(--app-surface);
-
   scrollbar-width: thin;
 }
 
@@ -518,7 +490,6 @@ button {
 
 .app-scrollbar::-webkit-scrollbar-thumb {
   background-color: var(--app-primary-dark);
-
   border-radius: 999px;
 }
 
@@ -544,27 +515,22 @@ button {
    Ant Design Overrides
    ========================================================= */
 
-/* Menu */
-
 .ant-menu {
   background: transparent !important;
 }
 
 .ant-menu-item {
   color: var(--app-text-muted) !important;
-
   border-radius: 8px !important;
 }
 
 .ant-menu-item-selected {
   background-color: var(--app-surface-orange) !important;
-
   color: var(--app-primary) !important;
 }
 
 .ant-menu-item:hover {
   background-color: var(--app-surface-light) !important;
-
   color: var(--app-text) !important;
 }
 
@@ -609,7 +575,6 @@ button {
 
 .ant-steps-item-title {
   color: var(--app-text) !important;
-
   font-size: 0.8rem !important;
 }
 
@@ -619,19 +584,16 @@ button {
 
 .ant-steps-item-icon {
   background-color: rgba(255, 166, 0, 0.525) !important;
-
   border-color: var(--app-primary) !important;
 }
 
 .ant-steps-item-process .ant-steps-item-icon {
   background-color: var(--app-primary-dark) !important;
-
   border-color: var(--app-primary-light) !important;
 }
 
 .ant-steps-item-finish .ant-steps-item-icon {
   background-color: transparent !important;
-
   border-color: var(--app-primary) !important;
 }
 
@@ -650,9 +612,7 @@ button {
 .ant-input-number,
 .ant-input-number-group-wrapper {
   color: var(--app-text) !important;
-
   background-color: rgba(28, 37, 46, 0.9) !important;
-
   border-color: var(--app-border) !important;
 }
 
@@ -682,23 +642,18 @@ button {
 .ant-select-focused .ant-select-selector,
 .ant-picker-focused {
   border-color: var(--app-primary-light) !important;
-
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--app-primary) 16%, transparent) !important;
 }
 
 .ant-btn-primary {
   color: #1f1300 !important;
-
   background-color: var(--app-primary) !important;
-
   border-color: var(--app-primary) !important;
-
   font-weight: 600;
 }
 
 .ant-btn-primary:hover {
   background-color: var(--app-primary-light) !important;
-
   border-color: var(--app-primary-light) !important;
 }
 
@@ -709,31 +664,24 @@ button {
 .ant-table-wrapper,
 .ant-table {
   color: var(--app-text) !important;
-
   background: transparent !important;
 }
 
 .ant-table-container {
   border: 1px solid var(--app-border-transparent);
-
   border-radius: var(--app-radius-md);
-
   overflow: hidden;
 }
 
 .ant-table-thead > tr > th {
   color: var(--app-text) !important;
-
   background-color: var(--app-surface-light) !important;
-
   border-bottom-color: var(--app-border) !important;
 }
 
 .ant-table-tbody > tr > td {
   color: var(--app-text-muted) !important;
-
   background-color: rgba(28, 37, 46, 0.72) !important;
-
   border-bottom-color: rgba(145, 158, 171, 0.2) !important;
 }
 
@@ -752,17 +700,11 @@ button {
 
 .ant-table-pagination {
   position: sticky;
-
   bottom: 0;
-
   z-index: 10;
-
   margin: 0 !important;
-
   padding: 12px 16px;
-
   background-color: var(--app-surface) !important;
-
   border-top: 1px solid var(--app-border);
 }
 
@@ -772,7 +714,6 @@ button {
 
 .ant-pagination-item {
   background-color: transparent !important;
-
   border-color: var(--app-border) !important;
 }
 
@@ -782,7 +723,6 @@ button {
 
 .ant-pagination-item-active {
   background-color: var(--app-primary-dark) !important;
-
   border-color: var(--app-primary) !important;
 }
 
@@ -805,14 +745,12 @@ button {
 .ant-modal-content,
 .ant-drawer-content {
   background-color: var(--app-surface) !important;
-
   border: 1px solid var(--app-border-transparent);
 }
 
 .ant-dropdown-menu,
 .ant-select-item {
   color: var(--app-text-muted) !important;
-
   background-color: transparent !important;
 }
 
@@ -824,7 +762,6 @@ button {
 .ant-modal-header,
 .ant-drawer-header {
   background-color: transparent !important;
-
   border-bottom-color: var(--app-border) !important;
 }
 
@@ -839,7 +776,6 @@ button {
 
 .ant-dropdown {
   border-radius: var(--app-radius-md) !important;
-
   border: none !important;
 }
 
@@ -871,7 +807,6 @@ button {
   0% {
     transform: translateX(-100%);
   }
-
   100% {
     transform: translateX(200%);
   }
@@ -905,4 +840,321 @@ button {
 
 .login-submit-button.ant-btn-primary .anticon {
   color: #ffffff !important;
+}
+
+.login-submit-button {
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* =========================================================
+   Form System
+   ========================================================= */
+
+.app-form-section {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 12px;
+  border-radius: var(--app-radius-lg);
+  border: 1px solid var(--app-border);
+  background-color: var(--app-surface);
+  transition: border-color 0.2s ease;
+}
+
+.app-form-section:last-child {
+  margin-bottom: 0;
+}
+
+.app-form-section--nested {
+  padding: 16px;
+  margin-top: 8px;
+  background-color: var(--app-surface-light);
+}
+
+.app-form-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.app-form-section-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-text);
+}
+
+.app-form-item {
+  flex: 1 1 var(--app-form-item-min);
+  min-width: var(--app-form-item-min);
+  padding-inline-end: 12px;
+  margin-bottom: 12px;
+}
+
+.app-form-item--full {
+  flex-basis: 100%;
+  min-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .app-form-item {
+    flex-basis: 100%;
+    min-width: 100%;
+    padding-inline-end: 0;
+  }
+}
+
+.app-page-actions {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.app-empty-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  border-radius: var(--app-radius-lg);
+  border: 1px dashed var(--app-border);
+  color: var(--app-text-muted);
+}
+
+/* =========================================================
+   Settings Drawer cards
+   ========================================================= */
+
+.app-settings-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 14px;
+  background-color: color-mix(in srgb, var(--app-surface) 90%, var(--app-text) 10%);
+  border: 1px solid var(--app-border);
+}
+
+.app-settings-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: color-mix(in srgb, var(--app-primary) 12%, transparent);
+  color: var(--app-primary);
+  font-size: 20px;
+}
+
+.app-settings-title {
+  font-size: 14px;
+  color: var(--app-text) !important;
+}
+
+.app-settings-subtitle {
+  font-size: 12px;
+  color: var(--app-text-muted) !important;
+}
+
+.app-settings-value {
+  color: var(--app-primary) !important;
+  font-size: 13px;
+}
+
+.app-settings-color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.app-settings-color-swatch--active {
+  border: 3px solid var(--app-text);
+  outline: 2px solid var(--app-swatch-color, var(--app-primary));
+  outline-offset: 1px;
+}
+
+.app-settings-color-swatch--inactive {
+  border: 2px solid transparent;
+  outline: 1px solid var(--app-border);
+  outline-offset: 0;
+}
+
+/* =========================================================
+   AppLayout structural classes
+   ========================================================= */
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-sider {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow: visible;
+  background: var(--app-surface);
+  border-inline-end: 1px solid var(--app-border);
+  z-index: 1000;
+}
+
+.app-content {
+  padding: var(--app-content-padding);
+  overflow: auto;
+  background: var(--app-background);
+}
+
+.app-drawer-surface .ant-drawer-body {
+  padding: 0;
+  background: var(--app-surface);
+}
+
+.app-drawer-surface .ant-drawer-header {
+  background: var(--app-surface);
+  border-bottom: 1px solid var(--app-border);
+}
+
+.app-sidebar-collapse-btn {
+  position: absolute;
+  top: 90px;
+  inset-inline-end: -12px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 1px solid var(--app-border);
+  background-color: var(--app-surface);
+  color: var(--app-text);
+  box-shadow: var(--app-shadow-sm);
+  transition: transform 0.2s ease;
+}
+
+.app-sidebar-collapse-btn:hover {
+  transform: scale(1.05);
+  border-color: var(--app-primary);
+  color: var(--app-primary);
+}
+
+.app-nav-icon {
+  flex-shrink: 0;
+  font-size: 1.125rem;
+  transition: margin-inline-end 300ms ease-in-out;
+}
+
+.app-nav-icon--collapsed {
+  margin-inline-end: 0;
+}
+
+.app-nav-icon--expanded {
+  margin-inline-end: 1rem;
+}
+
+.app-nav-icon--active {
+  color: var(--app-primary);
+}
+
+.app-nav-icon--inactive {
+  color: var(--app-text);
+}
+
+.app-topbar-settings-btn {
+  position: absolute;
+  font-size: 18px;
+  border-radius: 50% !important;
+  color: color-mix(in srgb, var(--app-text-primary) 80%, transparent);
+  animation: app-spin 8s linear infinite;
+}
+
+@keyframes app-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   Drawer
+   ========================================================= */
+
+.app-drawer-surface .ant-drawer-content {
+  background: var(--app-surface) !important;
+}
+
+.app-drawer-surface .ant-drawer-body {
+  padding: 0;
+  background: var(--app-surface);
+}
+
+.app-drawer-surface .ant-drawer-header {
+  background: var(--app-surface);
+  border-bottom: 1px solid var(--app-border);
+}
+
+/* =========================================================
+   Sidebar
+   ========================================================= */
+
+.app-sidebar-collapse-btn {
+  position: absolute;
+  top: 90px;
+  inset-inline-end: -12px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 1px solid var(--app-border);
+  background-color: var(--app-surface);
+  color: var(--app-text);
+  box-shadow: var(--app-shadow-sm);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.app-sidebar-collapse-btn:hover {
+  transform: scale(1.05);
+  border-color: var(--app-primary);
+  color: var(--app-primary);
+}
+
+.app-nav-icon {
+  flex-shrink: 0;
+  font-size: 1.125rem;
+  transition: margin-inline-end 300ms ease-in-out;
+}
+
+.app-nav-icon--collapsed {
+  margin-inline-end: 0;
+}
+
+.app-nav-icon--expanded {
+  margin-inline-end: 1rem;
+}
+
+.app-nav-icon--active {
+  color: var(--app-primary);
+}
+
+.app-nav-icon--inactive {
+  color: var(--app-text);
 }

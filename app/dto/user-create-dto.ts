@@ -1,8 +1,6 @@
-export class UserCreateDto {
-  id!: number;
-  firstName!: string;
-  lastName!: string;
-  username!: string;
-  
-  password!: string;
+export interface UserCreateDto {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
 }

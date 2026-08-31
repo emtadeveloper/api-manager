@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
-import { filterBySearchLabel } from "@/utils/antd-select-filter";
 
 interface SelectBoxProps {
   label?: string;
@@ -62,12 +61,12 @@ const SelectBox: React.FC<SelectBoxProps> = ({
       {(label || error) && (
         <div className="flex justify-between items-center mb-1">
           {label && (
-            <label className="text-xs font-normal text-gray-800 flex items-center gap-1">
+            <label className="text-xs font-normal app-text-primary flex items-center gap-1">
               {label}
-              {required && <span className="text-red-500 font-bold">*</span>}
+              {required && <span className="text-danger font-bold">*</span>}
             </label>
           )}
-          {error && <p className="text-red-500 text-xs font-medium truncate max-w-[50%]">{error}</p>}
+          {error && <p className="text-danger text-xs font-medium truncate max-w-[50%]">{error}</p>}
         </div>
       )}
 
@@ -78,7 +77,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
         options={allOptions}
         showSearch
         allowClear
-        filterOption={filterBySearchLabel}
+        filterOption={(input, option) => (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())}
         onSearch={onSearchChange}
         status={error ? "error" : undefined}
         className="w-full"

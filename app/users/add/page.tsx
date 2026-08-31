@@ -1,63 +1,73 @@
 "use client";
-import { Button, Form, Input, message } from "antd";
+import { Button } from "antd";
 import { CreateUser } from "@/app/actions/user.actions";
+import SectionCard from "@/components/ui/SectionCard";
+import RHFInput from "@/components/form/RHFInput";
+import RHFPassword from "@/components/form/RHFPassword";
+import useAlert from "@/hooks/useAlert";
+import { extractErrorMessage } from "@/utils/extract-error-message";
+import { UserFormSchema, type UserFormValues } from "@/app/dto/user-form.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import type { UserCreateDto } from "@/app/dto/user-create-dto";
+
 const UsersAdd = () => {
-  const [form] = Form.useForm();
+  const alert = useAlert();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const { control, handleSubmit } = useForm<UserFormValues>({
+    resolver: zodResolver(UserFormSchema),
+    mode: "onBlur",
+  });
+
+  const onSubmit = async (values: UserFormValues) => {
+    setLoading(true);
+    try {
+      const result = await CreateUser({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        username: values.username,
+        password: values.password,
+      } as UserCreateDto);
+
+      if (!result.success) {
+        alert.error(extractErrorMessage(result, "خطا در ثبت عملیات"));
+        return;
+      }
+      alert.success("عملیات با موفقیت انجام شد");
+      router.push("/initialize");
+      router.refresh();
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="grid place-items-center">
-      <h1>هیج کاربری یافت نشد لطفا کاربر ادمین را ایجاد نمایید!</h1>
+    <div className="grid place-items-center min-h-full py-8">
+      <div className="w-full max-w-2xl">
+        <h1 className="app-text-primary text-lg font-semibold text-center mb-4">
+          هیچ کاربری یافت نشد؛ لطفاً کاربر ادمین را ایجاد نمایید
+        </h1>
 
-      <Form
-        form={form}
-        onFinish={() => {
-          const values = form.getFieldsValue();
-          try {
-            CreateUser(values);
-            message.success("عملیات با موفقیت انجام شد");
-            window.location.reload();
-          } catch (error) {
-            message.error("خطا در ثبت عملیات" + (error as Error).message);
-          }
-        }}
-        className="flex flex-wrap bg-gray-50 p-5! w-1/2  rounded-2xl border m-5!"
-      >
-        <Form.Item label="نام " name="firstName">
-          <Input />
-        </Form.Item>
-        <Form.Item label="نام خانوادگی " name="lastName">
-          <Input />
-        </Form.Item>
-        <Form.Item label="نام کاربری " name="username">
-          <Input />
-        </Form.Item>
-        <Form.Item label="رمز عبور " name="password">
-          <Input.Password />
-        </Form.Item>
-        <Form.Item
-          dependencies={["password"]}
-          rules={[
-            { required: true, message: "لطفا تکرار رمز عبور را وارد کنید" },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve(); // matches — valid
-                }
-                return Promise.reject(
-                  new Error("رمز عبور و تکرار آن یکسان نیستند"),
-                );
-              },
-            }),
-          ]}
-          label="تکرار رمز عبور"
-          name="password2"
-        >
-          <Input.Password type="password" />
-        </Form.Item>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <SectionCard>
+            <RHFInput control={control} name="firstName" label="نام" required />
+            <RHFInput control={control} name="lastName" label="نام خانوادگی" required />
+            <RHFInput control={control} name="username" label="نام کاربری" required dir="ltr" />
+            <RHFPassword control={control} name="password" label="رمز عبور" required />
+            <RHFPassword control={control} name="password2" label="تکرار رمز عبور" required />
 
-        <Button htmlType="submit" type="primary" className="w-full ">
-          ثبت
-        </Button>
-      </Form>
+            <div className="app-form-item--full">
+              <Button htmlType="submit" type="primary" loading={loading} block>
+                ثبت
+              </Button>
+            </div>
+          </SectionCard>
+        </form>
+      </div>
     </div>
   );
 };

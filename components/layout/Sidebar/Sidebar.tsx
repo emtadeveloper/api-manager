@@ -2,21 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 import { navLinks } from "@/utils/navigation";
 import ISIRANLogo from "@/public/icons/ISIRANLogo";
+import { cn } from "@/utils/cn";
 
-const SidebarContent = ({
-  collapsed,
-  onToggleCollapse,
-  onNavigate,
-}: {
+interface SidebarContentProps {
   collapsed: boolean;
   onToggleCollapse: () => void;
   onNavigate?: () => void;
-}) => {
+}
+
+const SidebarContent = ({ collapsed, onToggleCollapse, onNavigate }: SidebarContentProps) => {
   const pathname = usePathname();
 
   const activeKey = navLinks.find((link) => pathname === link.href || pathname.startsWith(`${link.href}/`))?.href;
@@ -24,46 +22,17 @@ const SidebarContent = ({
   return (
     <div
       data-collapsed={collapsed}
-      className={`
-        relative
-        flex
-        h-full
-        shrink-0
-        flex-col
-        overflow-visible
-        ${collapsed ? "w-[90px]" : "w-[280px]"}
-        transition-[width]
-        duration-300
-        ease-in-out
-      `}
+      className={cn(
+        "relative flex h-full shrink-0 flex-col overflow-visible transition-[width] duration-300 ease-in-out",
+        collapsed ? "w-[90px]" : "w-[280px]",
+      )}
     >
       {/* Collapse Button */}
       <button
         type="button"
         onClick={onToggleCollapse}
         aria-label={collapsed ? "باز کردن سایدبار" : "بستن سایدبار"}
-        className="
-          absolute
-          top-28
-          -left-3
-          z-[9999]
-          flex
-          h-6
-          w-6
-          items-center
-          justify-center
-          rounded-full
-          border
-          border-[var(--app-border)]
-          bg-[var(--app-surface)]
-          text-[var(--app-text)]
-          shadow-md
-          transition-transform
-          duration-200
-          hover:scale-105
-          hover:border-[var(--app-primary)]
-          hover:text-[var(--app-primary)]
-        "
+        className="app-sidebar-collapse-btn"
       >
         {collapsed ? <LeftOutlined className="text-[10px]" /> : <RightOutlined className="text-[10px]" />}
       </button>
@@ -71,90 +40,36 @@ const SidebarContent = ({
       {/* Header */}
       <div className="p-4">
         <div
-          className={`
-            flex
-            items-center
-            gap-3
-            px-4
-            ${collapsed ? "justify-center" : "justify-start"}
-            transition-[justify-content]
-            duration-300
-          `}
+          className={cn(
+            "flex items-center gap-3 px-4 transition-[justify-content] duration-300",
+            collapsed ? "justify-center" : "justify-start",
+          )}
         >
-          {/* Logo Container */}
-          <div
-            className="
-              flex
-              h-[70px]
-              w-[70px]
-              shrink-0
-              items-center
-              justify-center
-              overflow-visible
-            "
-          >
+          <div className="flex h-[70px] w-[70px] shrink-0 items-center justify-center overflow-visible">
             <ISIRANLogo
-              className={`
-                shrink-0
-                ${collapsed ? "scale-[0.55] p-0" : "scale-100 p-3"}
-                transition-[transform,padding]
-                duration-300
-                ease-in-out
-              `}
+              className={cn(
+                "shrink-0 transition-[transform,padding] duration-300 ease-in-out",
+                collapsed ? "scale-[0.55] p-0" : "scale-100 p-3",
+              )}
             />
           </div>
 
-          {/* Header Text */}
           <div
-            className={`
-              flex
-              min-w-0
-              flex-col
-              overflow-hidden
-              whitespace-nowrap
-              ${collapsed ? "max-w-0 translate-x-4 opacity-0" : "max-w-[180px] translate-x-0 opacity-100"}
-              transition-[max-width,transform,opacity]
-              duration-300
-              ease-in-out
-            `}
+            className={cn(
+              "flex min-w-0 flex-col overflow-hidden whitespace-nowrap transition-[max-width,transform,opacity] duration-300 ease-in-out",
+              collapsed ? "max-w-0 translate-x-4 opacity-0" : "max-w-[180px] translate-x-0 opacity-100",
+            )}
           >
-            <span
-              className="
-                block
-                w-full
-                whitespace-nowrap
-                text-md
-                font-bold
-                text-[var(--app-text)]
-              "
-            >
-              مدیریت سرویس
-            </span>
+            <span className="block w-full whitespace-nowrap text-md font-bold app-text-primary">مدیریت سرویس</span>
 
-            <span
-              className="
-                block
-                w-full
-                whitespace-nowrap
-                font-bold
-                text-[color-mix(in_srgb,var(--app-text)_50%,transparent)]
-              "
-            >
+            <span className="block w-full whitespace-nowrap font-bold text-[color-mix(in_srgb,var(--app-text)_50%,transparent)]">
               رسان
             </span>
           </div>
         </div>
-
-        {/* Divider */}
-        <div
-          className="
-            mt-5
-            h-px
-            w-full
-            bg-[var(--app-border)]
-          "
-        />
       </div>
+
+      <div className="my-1 h-px w-full bg-[var(--app-border)]" />
 
       {/* Navigation */}
       <ul className="flex-1 overflow-y-auto overflow-x-hidden">
@@ -166,52 +81,27 @@ const SidebarContent = ({
             <li key={link.href}>
               <Link href={link.href} onClick={onNavigate}>
                 <div
-                  className={`
-                    group
-                    m-4
-                    flex
-                    items-center
-                    justify-start
-                    overflow-hidden
-                    px-4
-                    py-3
-
-                    ${
-                      isActive
-                        ? "rounded-l-lg bg-[color-mix(in_srgb,var(--app-primary)_10%,transparent)] shadow-[inset_-4px_0_0_var(--app-primary)]"
-                        : "rounded-lg hover:bg-[color-mix(in_srgb,var(--app-primary)_5%,transparent)]"
-                    }
-                  `}
+                  className={cn(
+                    "group m-4 flex items-center justify-start overflow-hidden px-4 py-3",
+                    isActive
+                      ? "rounded-l-lg bg-[color-mix(in_srgb,var(--app-primary)_10%,transparent)] shadow-[inset_-4px_0_0_var(--app-primary)]"
+                      : "rounded-lg hover:bg-[color-mix(in_srgb,var(--app-primary)_5%,transparent)]",
+                  )}
                 >
-                  {/* Icon */}
                   <Icon
-                    className="
-                      shrink-0
-                      text-lg
-                    "
-                    style={{
-                      marginInlineEnd: collapsed ? "0" : "1rem",
-                      color: isActive ? "var(--app-primary)" : "var(--app-text)",
-                      transition: "margin-inline-end 300ms ease-in-out",
-                    }}
+                    className={cn(
+                      "app-nav-icon",
+                      collapsed ? "app-nav-icon--collapsed" : "app-nav-icon--expanded",
+                      isActive ? "app-nav-icon--active" : "app-nav-icon--inactive",
+                    )}
                   />
 
-                  {/* Menu Text */}
                   <span
-                    className={`
-                      block
-                      min-w-0
-                      overflow-hidden
-                      whitespace-nowrap
-
-                      ${collapsed ? "max-w-0 translate-x-4 opacity-0" : "max-w-[180px] translate-x-0 opacity-100"}
-
-                      ${isActive ? "font-bold text-[var(--app-primary)]" : "text-[var(--app-text)]"}
-
-                      transition-[max-width,transform,opacity]
-                      duration-300
-                      ease-in-out
-                    `}
+                    className={cn(
+                      "block min-w-0 overflow-hidden whitespace-nowrap transition-[max-width,transform,opacity] duration-300 ease-in-out",
+                      collapsed ? "max-w-0 translate-x-4 opacity-0" : "max-w-[180px] translate-x-0 opacity-100",
+                      isActive ? "font-bold text-[var(--app-primary)]" : "app-text-primary",
+                    )}
                   >
                     {link.title}
                   </span>

@@ -1,4 +1,4 @@
-import { DatabaseType } from "@/types/enums/database-type.enum";
+import { DatabaseType } from "@/enums/database-type.enum";
 import { IDatabaseClient } from "./IDatabseClient";
 import { PostgresClient } from "./PostgresClient";
 import { SqlServerClient } from "./SqlServerClient";

@@ -4,7 +4,7 @@ import { setAuthCookie } from "@/utils/session";
 const USERS = [
   {
     id: "1",
-    username: "admin@talazo.com",
+    username: "admin@rasan.com",
     password: "Admin123!",
     name: "مدیر سیستم",
   },

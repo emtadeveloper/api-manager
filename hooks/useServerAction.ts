@@ -1,54 +1,49 @@
 "use client";
 
 import { useCallback, useState } from "react";
-
-import { useAlert } from "./useAlert";
+import useAlert from "./useAlert";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 
-type ActionResult<T> =
-  | { success: true; data?: T; [key: string]: unknown }
-  | { success: false; error?: string; errors?: unknown };
-
-interface UseServerActionOptions {
-  successMessage?: string;
-  fallbackErrorMessage?: string;
-  showErrorAlert?: boolean;
+interface ActionResult<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+  errors?: unknown;
 }
 
-export function useServerAction<TArgs extends unknown[], TResult>(
+interface UseServerActionOptions<T> {
+  successMessage?: string;
+  errorFallback?: string;
+  onSuccess?: (data: T | undefined) => void;
+}
+
+export default function useServerAction<TArgs extends unknown[], TResult>(
   action: (...args: TArgs) => Promise<ActionResult<TResult>>,
-  options: UseServerActionOptions = {},
+  options: UseServerActionOptions<TResult> = {},
 ) {
-  const { success, error } = useAlert();
+  const alert = useAlert();
   const [loading, setLoading] = useState(false);
 
-  const { successMessage, fallbackErrorMessage = "خطایی رخ داد", showErrorAlert = true } = options;
-
   const run = useCallback(
-    async (...args: TArgs): Promise<ActionResult<TResult> | null> => {
+    async (...args: TArgs) => {
       setLoading(true);
       try {
         const result = await action(...args);
 
         if (!result.success) {
-          if (showErrorAlert) {
-            error(extractErrorMessage(result, fallbackErrorMessage));
-          }
+          alert.error(extractErrorMessage(result, options.errorFallback));
           return result;
         }
 
-        if (successMessage) success(successMessage);
+        if (options.successMessage) alert.success(options.successMessage);
+        options.onSuccess?.(result.data);
         return result;
-      } catch (err) {
-        if (showErrorAlert) {
-          error(err instanceof Error ? err.message : fallbackErrorMessage);
-        }
-        return null;
       } finally {
         setLoading(false);
       }
     },
-    [action, error, success, successMessage, fallbackErrorMessage, showErrorAlert],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [action],
   );
 
   return { run, loading };

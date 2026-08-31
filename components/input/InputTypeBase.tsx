@@ -185,10 +185,10 @@ const InputTypeBase: React.FC<InputTypeBaseProps> = (props) => {
 
   const renderComponent = () => {
     if (!type) {
-      return <div className="text-red-500">نوع ورودی مشخص نشده است</div>;
+      return <div className="text-danger">نوع ورودی مشخص نشده است</div>;
     }
     if (!(type in inputComponents)) {
-      return <div className="text-red-500">نوع ورودی پشتیبانی نمی‌شود: {type}</div>;
+      return <div className="text-danger">نوع ورودی پشتیبانی نمی‌شود: {type}</div>;
     }
     return inputComponents[type];
   };

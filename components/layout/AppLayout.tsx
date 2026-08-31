@@ -9,80 +9,70 @@ import Topbar from "./Topbar/Topbar";
 
 const { Sider, Content } = Layout;
 
-/**
- * توجه: ConfigProvider (تم) دیگر اینجا نیست — به AppProviders در بالاترین سطح منتقل شد
- * تا همه‌ی صفحات (از جمله لاگین و خطاها) از یک تم واحد پیروی کنند.
- */
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [collapsed, setCollapsed] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
 
-  const closeDrawer = () => setDrawerOpen(false);
-
-  const handleBreakpoint = (broken: boolean) => {
-    if (!broken) setDrawerOpen(false);
+  const closeDrawer = () => {
+    setDrawerOpen(false);
   };
 
-  const sidebarContent = (
-    <SidebarContent
-      collapsed={collapsed}
-      onToggleCollapse={() => setCollapsed((prev) => !prev)}
-      onNavigate={closeDrawer}
-    />
+  const handleBreakpoint = (broken: boolean) => {
+    setIsMobile(broken);
+
+    if (!broken) {
+      setDrawerOpen(false);
+    }
+  };
+
+  const openMobileMenu = () => {
+    if (isMobile) {
+      setDrawerOpen(true);
+    }
+  };
+
+  const desktopSidebarContent = (
+    <SidebarContent collapsed={collapsed} onToggleCollapse={() => setCollapsed((prev) => !prev)} />
+  );
+
+  const mobileSidebarContent = (
+    <SidebarContent collapsed={false} onToggleCollapse={() => {}} onNavigate={closeDrawer} />
   );
 
   return (
-    <>
-      <Layout style={{ minHeight: "100vh" }}>
-        <Sider
-          breakpoint="lg"
-          collapsed={collapsed}
-          collapsedWidth={90}
-          trigger={null}
-          width={280}
-          onBreakpoint={handleBreakpoint}
-          style={{
-            height: "100vh",
-            position: "sticky",
-            top: 0,
-            overflow: "visible",
-            background: "var(--app-surface)",
-            borderInlineEnd: "1px solid var(--app-border)",
-            zIndex: 1000,
-          }}
-        >
-          {sidebarContent}
-        </Sider>
+    <Layout className="app-shell">
+      {/* Desktop Sidebar */}
+      <Sider
+        breakpoint="lg"
+        collapsed={collapsed}
+        collapsedWidth={90}
+        trigger={null}
+        width={280}
+        onBreakpoint={handleBreakpoint}
+        className="app-sider"
+      >
+        {desktopSidebarContent}
+      </Sider>
 
-        <Layout style={{ minHeight: "100vh" }}>
-          <Topbar />
+      <Layout className="app-shell">
+        <Topbar onMenuClick={openMobileMenu} />
 
-          <Content
-            style={{
-              padding: 16,
-              overflow: "auto",
-              background: "var(--app-background)",
-            }}
-          >
-            {children}
-          </Content>
-        </Layout>
+        <Content className="app-content">{children}</Content>
       </Layout>
 
+      {/* Mobile Sidebar Drawer */}
       <Drawer
         open={drawerOpen}
         onClose={closeDrawer}
         placement="right"
         size={280}
-        styles={{
-          section: { background: "var(--app-surface)" },
-          header: { background: "var(--app-surface)", borderBottom: "1px solid var(--app-border)" },
-          body: { padding: 0, background: "var(--app-surface)" },
-        }}
+        className="app-drawer-surface"
+        closable
       >
-        {sidebarContent}
+        {mobileSidebarContent}
       </Drawer>
-    </>
+    </Layout>
   );
 };
 

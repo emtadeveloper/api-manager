@@ -9,21 +9,18 @@ import { CloseOutlined, ExpandOutlined, ReloadOutlined, SettingOutlined } from "
 import Settings from "./Settings";
 
 import useSettingsStore from "@/stores/settings";
+import useAlert from "@/hooks/useAlert";
 
 const { Text } = Typography;
 
 const SettingsDrawer = () => {
   const [open, setOpen] = useState(false);
+  const alert = useAlert();
 
   const resetSettings = useSettingsStore((state) => state.resetSettings);
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
+  const showDrawer = () => setOpen(true);
+  const onClose = () => setOpen(false);
 
   const handleFullscreen = async () => {
     try {
@@ -32,56 +29,31 @@ const SettingsDrawer = () => {
       } else {
         await document.exitFullscreen();
       }
-    } catch (error) {
-      console.error("Fullscreen error:", error);
+    } catch {
+      alert.error("امکان تغییر حالت تمام‌صفحه وجود ندارد");
     }
-  };
-
-  const handleReset = () => {
-    resetSettings();
   };
 
   return (
     <>
       <Button
         type="text"
-        icon={
-          <SettingOutlined
-            style={{
-              fontSize: 18,
-            }}
-          />
-        }
+        icon={<SettingOutlined />}
         onClick={showDrawer}
         aria-label="تنظیمات"
-        className="z-[1001] animate-spin absolute"
-        style={{
-          fontSize: 18,
-          borderRadius: "50%",
-          animationDuration: "8s",
-          color: "color-mix(in srgb, var(--app-text-primary) 80%, transparent)",
-          marginLeft: 4,
-        }}
+        className="app-topbar-settings-btn"
       />
 
       <Drawer
         title={
           <Flex justify="space-between" align="center">
-            <Text
-              strong
-              style={{
-                fontSize: 16,
-                color: "var(--app-text)",
-              }}
-            >
+            <Text strong className="app-settings-title">
               تنظیمات
             </Text>
 
             <Space size={0}>
-              <Button type="text" icon={<ReloadOutlined />} onClick={handleReset} aria-label="بازنشانی" />
-
+              <Button type="text" icon={<ReloadOutlined />} onClick={resetSettings} aria-label="بازنشانی" />
               <Button type="text" icon={<ExpandOutlined />} onClick={handleFullscreen} aria-label="تمام‌صفحه" />
-
               <Button type="text" icon={<CloseOutlined />} onClick={onClose} aria-label="بستن" />
             </Space>
           </Flex>
@@ -91,22 +63,7 @@ const SettingsDrawer = () => {
         onClose={onClose}
         open={open}
         size={320}
-        styles={{
-          section: {
-            background: "var(--app-surface)",
-          },
-
-          header: {
-            background: "var(--app-surface)",
-            borderBottom: "1px solid var(--app-border)",
-            padding: "16px 20px",
-          },
-
-          body: {
-            padding: "24px 20px",
-            background: "var(--app-surface)",
-          },
-        }}
+        className="app-drawer-surface"
       >
         <Flex vertical gap={28}>
           <Settings />

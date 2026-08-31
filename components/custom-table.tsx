@@ -9,18 +9,18 @@ type Props = {
 };
 
 const columns: DataTableColumn<RestService>[] = [
-  { title: "نام فارسی", dataIndex: "persianName", searchable: true },
-  { title: "نام لاتین", dataIndex: "latinName", searchable: true },
+  { title: "نام فارسی", dataIndex: "persianName" },
+  { title: "نام لاتین", dataIndex: "latinName" },
 ];
 
 export default function CustomTable({ handleSelectedKey, data }: Props) {
   return (
-    <DataTable<RestService>
+    <DataTable
       data={data}
       columns={columns}
-      selectable
+      rowKey="id"
       onSelectRow={handleSelectedKey}
-      emptyText="هیچ سرویسی ثبت نشده است"
+      emptyText="سرویسی ثبت نشده است"
     />
   );
 }

@@ -3,7 +3,6 @@
 import React from "react";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
-import { filterBySearchLabel } from "@/utils/antd-select-filter";
 
 interface MultiSelectFilterTableProps {
   label?: string;
@@ -39,13 +38,13 @@ const MultiSelectFilterTable: React.FC<MultiSelectFilterTableProps> = ({
         {(label || showError || error) && (
           <div className="flex justify-between items-center mb-1">
             {label && (
-              <label className="text-xs font-normal text-gray-800 flex items-center gap-1">
+              <label className="text-xs font-normal app-text-primary flex items-center gap-1">
                 {label}
-                {required && <span className="text-red-500 font-bold">*</span>}
+                {required && <span className="text-danger font-bold">*</span>}
               </label>
             )}
             {(showError || error) && (
-              <p className="text-red-500 text-xs font-medium truncate max-w-[50%]">
+              <p className="text-danger text-xs font-medium truncate max-w-[50%]">
                 {error || `لطفاً حداقل یک ${label} انتخاب کنید.`}
               </p>
             )}
@@ -60,7 +59,7 @@ const MultiSelectFilterTable: React.FC<MultiSelectFilterTableProps> = ({
           options={antOptions}
           showSearch
           allowClear
-          filterOption={filterBySearchLabel}
+          filterOption={(input, option) => (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())}
           status={showError || error ? "error" : undefined}
           className="w-full"
           maxTagCount="responsive"
