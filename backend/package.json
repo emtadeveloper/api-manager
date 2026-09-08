@@ -1,0 +1,54 @@
+{
+  "name": "api-manager-backend",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "allowScripts": {
+    "better-sqlite3": true
+  },
+  "scripts": {
+    "build": "nest build",
+    "start": "node dist/main.js",
+    "start:dev": "nest start --watch",
+    "native:rebuild": "npm rebuild better-sqlite3",
+    "lint": "eslint \"{src,test}/**/*.ts\"",
+    "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+    "prisma:format": "prisma format --schema prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate deploy --schema prisma/schema.prisma"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.2.3",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/core": "^11.2.3",
+    "@nestjs/platform-express": "^11.2.3",
+    "@prisma/adapter-better-sqlite3": "^7.9.1",
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^7.9.1",
+    "better-sqlite3": "^13.0.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "cookie-parser": "^1.4.7",
+    "jose": "^6.2.10",
+    "mssql": "^12.7.0",
+    "oracledb": "^7.0.1",
+    "pg": "^8.22.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.24",
+    "@nestjs/schematics": "^11.0.24",
+    "@nestjs/testing": "^11.2.3",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/express": "^5.0.3",
+    "@types/mssql": "^12.3.0",
+    "@types/node": "^22.0.0",
+    "@types/oracledb": "^7.0.2",
+    "eslint": "^9.0.0",
+    "prisma": "^7.9.1",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.69.0"
+  }
+}
