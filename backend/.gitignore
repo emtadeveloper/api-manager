@@ -4,7 +4,9 @@ node_modules/
 # build output
 dist/
 generated/
-
+.agents
+.claude
+.windsurf
 # local environment
 .env
 

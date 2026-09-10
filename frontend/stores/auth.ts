@@ -19,6 +19,8 @@ interface SessionState {
   clearSession: () => void;
 
   updateSession: () => Promise<void>;
+
+  refreshSession: () => Promise<void>;
 }
 
 const fetchSessionFromAPI = async () => {
@@ -53,6 +55,8 @@ const fetchSessionFromAPI = async () => {
   }
 };
 
+let sessionRequest: Promise<void> | null = null;
+
 export const useSessionStore = create<SessionState>((set) => ({
   session: null,
 
@@ -66,13 +70,40 @@ export const useSessionStore = create<SessionState>((set) => ({
   },
 
   updateSession: async () => {
-    set({ status: "loading" });
+    if (sessionRequest) return sessionRequest;
 
-    const result = await fetchSessionFromAPI();
+    sessionRequest = (async () => {
+      set({ status: "loading" });
 
-    set({
-      session: result.session,
-      status: result.status,
+      const result = await fetchSessionFromAPI();
+
+      set({
+        session: result.session,
+        status: result.status,
+      });
+    })().finally(() => {
+      sessionRequest = null;
     });
+
+    return sessionRequest;
+  },
+
+  refreshSession: async () => {
+    if (sessionRequest) await sessionRequest;
+
+    sessionRequest = (async () => {
+      set({ status: "loading" });
+
+      const result = await fetchSessionFromAPI();
+
+      set({
+        session: result.session,
+        status: result.status,
+      });
+    })().finally(() => {
+      sessionRequest = null;
+    });
+
+    return sessionRequest;
   },
 }));

@@ -1,6 +1,7 @@
 "use client";
 
-import { CreateUser, findAllUsers } from "@/apis/backend";
+import { findAllUsers } from "@/apis/backend";
+import { registerUser } from "@/apis/auth.api";
 
 import { CreateDatabaseSettings, findAllDbSetting } from "@/apis/backend";
 
@@ -160,7 +161,7 @@ const InitializeStep = () => {
         password: values.password,
       };
 
-      const userResult = await CreateUser(user);
+      const userResult = await registerUser(user);
 
       if (!userResult.success) {
         alert.error(extractErrorMessage(userResult, "خطا در ثبت کاربر"));

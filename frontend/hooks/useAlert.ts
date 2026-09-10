@@ -1,20 +1,17 @@
 "use client";
 
-import { App } from "antd";
+import { toast } from "react-toastify";
 import { useMemo } from "react";
 
-const useAlert = () => {
-  const { message } = App.useApp();
-
-  return useMemo(
+const useAlert = () =>
+  useMemo(
     () => ({
-      success: (content: string) => message.success(content),
-      error: (content: string) => message.error(content),
-      info: (content: string) => message.info(content),
-      warning: (content: string) => message.warning(content),
+      success: (content: string) => toast.success(content),
+      error: (content: string) => toast.error(content),
+      info: (content: string) => toast.info(content),
+      warning: (content: string) => toast.warning(content),
     }),
-    [message],
+    [],
   );
-};
 
 export default useAlert;

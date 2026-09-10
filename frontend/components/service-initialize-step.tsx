@@ -10,7 +10,7 @@ import { yekan } from "../public/fonts/font";
 import { CheckCircleFilled, FastBackwardOutlined, FastForwardFilled } from "@ant-design/icons";
 import { Button, Steps } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm, FieldPath } from "react-hook-form";
+import { FormProvider, useForm, FieldPath, type FieldErrors } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useAlert from "@/hooks/useAlert";
@@ -99,10 +99,28 @@ const ServiceIntializeStep = () => {
   const next = () => setCurrent((c) => c + 1);
   const prev = () => setCurrent((c) => (c >= 1 ? c - 1 : c));
 
+  const onInvalid = (errors: FieldErrors<RestServicesCreateDtoType>) => {
+    const findMessage = (value: unknown): string | undefined => {
+      if (!value || typeof value !== "object") return undefined;
+      const item = value as { message?: unknown; [key: string]: unknown };
+      if (typeof item.message === "string") return item.message;
+      return Object.values(item).map(findMessage).find(Boolean);
+    };
+    alert.error(findMessage(errors) ?? "لطفاً اطلاعات الزامی را کامل کنید");
+  };
+
   const onSubmit = async (values: RestServicesCreateDtoType) => {
     setLoading(true);
     try {
-      const result = await createRestService(Number(param.id) || 0, values);
+      const externalSetting =
+        values.restExternalApiSetting as { hasAuth?: boolean } | null | undefined;
+      const payload = {
+        ...values,
+        restAuthServiceSetting: externalSetting?.hasAuth ? values.restAuthServiceSetting : null,
+        restDatabaseSetting: values.restType === "DATABASEDIRECT" ? values.restDatabaseSetting : null,
+        restExternalApiSetting: values.restType === "EXTERNALAPI" ? values.restExternalApiSetting : null,
+      };
+      const result = await createRestService(Number(param.id) || 0, payload);
       if (!result.success) {
         if (Array.isArray(result.errors)) {
           result.errors.forEach((issue) => {
@@ -124,7 +142,7 @@ const ServiceIntializeStep = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
         <Steps
           className={`step ${yekan.className}`}
           current={current}
@@ -134,12 +152,12 @@ const ServiceIntializeStep = () => {
 
         <div className="my-2">
           {current > 0 && (
-            <Button title="قبلی" onClick={prev}>
+            <Button htmlType="button" title="قبلی" onClick={prev}>
               <FastForwardFilled />
             </Button>
           )}
           {current <= 1 && (
-            <Button title="بعدی" onClick={next}>
+            <Button htmlType="button" title="بعدی" onClick={next}>
               <FastBackwardOutlined />
             </Button>
           )}

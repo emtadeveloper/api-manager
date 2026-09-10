@@ -63,7 +63,7 @@ const ServiceDbSetting = () => {
       <RHFPassword control={control} name="restDatabaseSetting.dbPassword" label="رمز عبور" required />
 
       <div className="app-form-item--full">
-        <Button loading={loading} icon={<SecurityScanFilled />} type="primary" onClick={handleGetDatabases}>
+        <Button htmlType="button" loading={loading} icon={<SecurityScanFilled />} type="primary" onClick={handleGetDatabases}>
           اتصال به دیتابیس
         </Button>
       </div>
@@ -81,7 +81,7 @@ const ServiceDbSetting = () => {
       <RHFInput control={control} name="restDatabaseSetting.dbViewName" label="نام ویو" required />
 
       <div className="app-form-item--full">
-        <Button loading={loadingViewData} icon={<CameraFilled />} onClick={handleGetViewData} disabled={!dbType}>
+        <Button htmlType="button" loading={loadingViewData} icon={<CameraFilled />} onClick={handleGetViewData} disabled={!dbType}>
           نمایش اطلاعات
         </Button>
       </div>

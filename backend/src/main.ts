@@ -3,9 +3,13 @@ import "reflect-metadata";
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { ConfigService } from "@nestjs/config";
+import { SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module";
+import { HttpExceptionResponseFilter } from "./common/filters/http-exception.filter";
+import { swaggerConfig } from "./config/swagger.config";
+import { ConfigKeys } from "./common/enum/config-keys.enum";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,7 +18,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.setGlobalPrefix("api");
   app.enableCors({
-    origin: config.get<string>("FRONTEND_ORIGIN", "http://localhost:3000"),
+    origin: config.get<string>(`${ConfigKeys.App}.frontendOrigin`, "http://localhost:3000"),
     credentials: true,
   });
   app.useGlobalPipes(
@@ -24,8 +28,12 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  app.useGlobalFilters(new HttpExceptionResponseFilter());
 
-  await app.listen(config.get<number>("PORT", 4000));
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup("api/docs", app, swaggerDocument);
+
+  await app.listen(config.get<number>(`${ConfigKeys.App}.port`, 4000));
 }
 
 void bootstrap();

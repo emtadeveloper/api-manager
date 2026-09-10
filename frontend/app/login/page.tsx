@@ -30,7 +30,7 @@ export default function LoginPage() {
   const [isPending, startTransition] = useTransition();
   const alert = useAlert();
 
-  const updateSession = useSessionStore((state) => state.updateSession);
+  const refreshSession = useSessionStore((state) => state.refreshSession);
 
   const router = useRouter();
 
@@ -50,9 +50,8 @@ export default function LoginPage() {
       const response = await signIn(data);
 
       if (response.isSuccess) {
-        await updateSession();
-        router.push("/");
-        router.refresh();
+        await refreshSession();
+        router.replace("/rest-services");
         return;
       }
 

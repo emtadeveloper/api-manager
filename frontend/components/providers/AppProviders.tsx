@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 import { App as AntApp, ConfigProvider, theme } from "antd";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useSettingsStore from "@/stores/settings";
 
 export default function AppProviders({ children }: { children: React.ReactNode }) {
@@ -29,6 +31,7 @@ export default function AppProviders({ children }: { children: React.ReactNode }
       }}
     >
       <AntApp>{children}</AntApp>
+      <ToastContainer position="top-right" autoClose={3500} newestOnTop closeOnClick rtl pauseOnFocusLoss draggable pauseOnHover theme={isDark ? "dark" : "light"} />
     </ConfigProvider>
   );
 }

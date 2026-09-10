@@ -77,11 +77,11 @@ const ServiceExternalApiSetting = () => {
       </RHFRadioGroup>
 
       <div className="app-form-item--full">
-        <Button icon={<PlusCircleOutlined />} onClick={() => setExternalApiParamOpen(true)}>
+        <Button htmlType="button" icon={<PlusCircleOutlined />} onClick={() => setExternalApiParamOpen(true)}>
           پارامترهای وب سرویس
         </Button>
 
-        <Button onClick={handleApiTest} icon={<CheckOutlined />} loading={apiTestLoading} className="mr-2">
+        <Button htmlType="button" onClick={handleApiTest} icon={<CheckOutlined />} loading={apiTestLoading} className="mr-2">
           تست وب سرویس
         </Button>
       </div>
@@ -126,11 +126,11 @@ const ServiceExternalApiSetting = () => {
           </RHFRadioGroup>
 
           <div className="app-form-item--full">
-            <Button onClick={() => setAuthParamOpen(true)} icon={<SecurityScanFilled />}>
+            <Button htmlType="button" onClick={() => setAuthParamOpen(true)} icon={<SecurityScanFilled />}>
               پارامترهای سرویس احراز هویت
             </Button>
 
-            <Button loading={authTestLoading} onClick={handleAuthTest} icon={<SecurityScanFilled />} className="mr-2">
+            <Button htmlType="button" loading={authTestLoading} onClick={handleAuthTest} icon={<SecurityScanFilled />} className="mr-2">
               تست احراز هویت
             </Button>
           </div>
