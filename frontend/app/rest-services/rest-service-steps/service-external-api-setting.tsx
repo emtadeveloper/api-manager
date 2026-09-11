@@ -7,7 +7,7 @@ import { ApiTest, AuthTest } from "@/apis/backend";
 import ServiceParamAdd from "@/app/service-param/components/auth-service-param-add";
 import RestExternalApiParam from "../components/rest-external-api-param";
 import { AuthType } from "@/enums/auth-type.enum";
-import SectionCard from "@/components/ui/SectionCard";
+import SectionCard from "@/components/SectionCard/SectionCard";
 import RHFInput from "@/components/form/RHFInput";
 import RHFRadioGroup from "@/components/form/RHFRadioGroup";
 import useNotificationStore from "@/stores/notification";
@@ -81,7 +81,13 @@ const ServiceExternalApiSetting = () => {
           پارامترهای وب سرویس
         </Button>
 
-        <Button htmlType="button" onClick={handleApiTest} icon={<CheckOutlined />} loading={apiTestLoading} className="mr-2">
+        <Button
+          htmlType="button"
+          onClick={handleApiTest}
+          icon={<CheckOutlined />}
+          loading={apiTestLoading}
+          className="mr-2"
+        >
           تست وب سرویس
         </Button>
       </div>
@@ -130,7 +136,13 @@ const ServiceExternalApiSetting = () => {
               پارامترهای سرویس احراز هویت
             </Button>
 
-            <Button htmlType="button" loading={authTestLoading} onClick={handleAuthTest} icon={<SecurityScanFilled />} className="mr-2">
+            <Button
+              htmlType="button"
+              loading={authTestLoading}
+              onClick={handleAuthTest}
+              icon={<SecurityScanFilled />}
+              className="mr-2"
+            >
               تست احراز هویت
             </Button>
           </div>

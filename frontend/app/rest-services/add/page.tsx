@@ -1,5 +1,5 @@
 "use client";
-import ServiceIntializeStep from "@/components/service-initialize-step";
+import ServiceIntializeStep from "@/app/rest-services/add/components/service-initialize-step";
 import { RollbackOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,6 @@ const Add = () => {
           بازگشت
         </Button>
       </div>
-      {/* <hr className="border-t-amber-100 border-t-2 m-2" /> */}
       <ServiceIntializeStep />
     </section>
   );

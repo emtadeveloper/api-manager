@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "antd";
 import { CreateUser } from "@/apis/backend";
-import SectionCard from "@/components/ui/SectionCard";
+import SectionCard from "@/components/SectionCard/SectionCard";
 import RHFInput from "@/components/form/RHFInput";
 import RHFPassword from "@/components/form/RHFPassword";
 import useNotificationStore from "@/stores/notification";

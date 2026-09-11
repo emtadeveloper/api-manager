@@ -2,7 +2,7 @@
 import { HttpMethod } from "@/enums/method.enum";
 import { RestType } from "@/enums/rest-type.enum";
 import { Radio } from "antd";
-import SectionCard from "@/components/ui/SectionCard";
+import SectionCard from "@/components/SectionCard/SectionCard";
 import RHFInput from "@/components/form/RHFInput";
 import RHFRadioGroup from "@/components/form/RHFRadioGroup";
 import { useFormContext, useWatch } from "react-hook-form";

@@ -1,5 +1,5 @@
 "use client";
-import InitializeStep from "@/components/initialize-step";
+import InitializeStep from "@/app/initialize/components/initialize-step";
 
 const Initialize = () => {
   return (

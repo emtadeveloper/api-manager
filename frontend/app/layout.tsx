@@ -7,7 +7,7 @@ import { yekan, vazir } from "../public/fonts/font";
 import "./globals.css";
 
 import ClientLayout from "@/components/layout/ClientLayout";
-import AppProviders from "@/components/providers/AppProviders";
+import AppProviders from "@/providers/AppProviders";
 
 export const metadata: Metadata = {
   icons: {

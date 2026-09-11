@@ -2,7 +2,7 @@
 
 import { DeleteOutlined, EditOutlined, MoreOutlined } from "@ant-design/icons";
 import { Button, Dropdown } from "antd";
-import DataTable, { DataTableColumn } from "@/components/ui/DataTable";
+import DataTable, { DataTableColumn } from "@/components/table/DataTable";
 
 export interface RestServiceTableRow {
   id: number;

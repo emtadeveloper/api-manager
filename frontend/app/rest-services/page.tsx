@@ -1,7 +1,6 @@
 "use client";
 
-import CustomTable from "@/components/custom-table";
-import PageActionsBar from "@/components/ui/PageActionsBar";
+import CustomTable from "@/components/table/custom-table";
 import useNotificationStore from "@/stores/notification";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 import { PlusCircleFilled } from "@ant-design/icons";
@@ -50,13 +49,11 @@ export default function RestServices() {
 
   return (
     <section>
-      <PageActionsBar>
-        <Link href="/rest-services/add">
-          <Button type="primary" icon={<PlusCircleFilled />}>
-            افزودن
-          </Button>
-        </Link>
-      </PageActionsBar>
+      <Link href="/rest-services/add">
+        <Button type="primary" icon={<PlusCircleFilled />}>
+          افزودن
+        </Button>
+      </Link>
       <CustomTable
         data={restServices}
         onEdit={(id) => router.push(`/rest-services/${id}/edit`)}

@@ -6,7 +6,7 @@ import type { RestServicesCreateDto as RestServicesCreateDtoType } from "@/app/d
 import SesrviceDefinition from "@/app/rest-services/rest-service-steps/service-definition";
 import ServiceDbOrApiSetting from "@/app/rest-services/rest-service-steps/service-db-or-api-setting";
 import ServiceFinalize from "@/app/rest-services/rest-service-steps/service-finalize";
-import { yekan } from "../public/fonts/font";
+import { yekan } from "../../../../public/fonts/font";
 import { CheckCircleFilled, FastBackwardOutlined, FastForwardFilled } from "@ant-design/icons";
 import { Button, Steps } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -112,8 +112,7 @@ const ServiceIntializeStep = () => {
   const onSubmit = async (values: RestServicesCreateDtoType) => {
     setLoading(true);
     try {
-      const externalSetting =
-        values.restExternalApiSetting as { hasAuth?: boolean } | null | undefined;
+      const externalSetting = values.restExternalApiSetting as { hasAuth?: boolean } | null | undefined;
       const payload = {
         ...values,
         restAuthServiceSetting: externalSetting?.hasAuth ? values.restAuthServiceSetting : null,
@@ -124,9 +123,9 @@ const ServiceIntializeStep = () => {
       if (!result.success) {
         if (Array.isArray(result.errors)) {
           result.errors.forEach((issue) => {
-          setError(issue.path.join(".") as FieldPath<RestServicesCreateDtoType>, {
-            message: issue.message,
-          });
+            setError(issue.path.join(".") as FieldPath<RestServicesCreateDtoType>, {
+              message: issue.message,
+            });
           });
         }
         notifyError("خطا در ثبت اطلاعات");

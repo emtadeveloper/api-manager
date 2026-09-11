@@ -1,5 +1,5 @@
 "use client";
-import Step from "@/components/service-initialize-step";
+import Step from "@/app/rest-services/add/components/service-initialize-step";
 import { RollbackOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useParams, useRouter } from "next/navigation";

@@ -1,6 +1,6 @@
 "use client";
 import { DatabaseType } from "@/enums/database-type.enum";
-import SectionCard from "@/components/ui/SectionCard";
+import SectionCard from "@/components/SectionCard/SectionCard";
 import RHFInput from "@/components/form/RHFInput";
 import RHFPassword from "@/components/form/RHFPassword";
 import RHFRadioGroup from "@/components/form/RHFRadioGroup";

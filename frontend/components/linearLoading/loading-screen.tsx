@@ -4,13 +4,13 @@ export function LoadingScreen() {
   return (
     <div
       dir="rtl"
-      className="flex min-h-screen w-full items-center justify-center bg-[var(--app-background)] px-5 "
+      className="flex min-h-screen w-full items-center justify-center bg-(--app-background) px-5 "
       style={{
         fontFamily: "var(--app-font-family)",
         fontSize: "var(--app-font-size)",
       }}
     >
-      <div className="w-full max-w-[360px]">
+      <div className="w-full max-w-90">
         <div
           className="h-1 w-full overflow-hidden rounded-full"
           style={{

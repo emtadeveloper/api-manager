@@ -1,6 +1,6 @@
 "use client";
 
-import DataTable, { DataTableColumn } from "@/components/ui/DataTable";
+import DataTable, { DataTableColumn } from "@/components/table/DataTable";
 import { useMemo } from "react";
 
 type Props = {

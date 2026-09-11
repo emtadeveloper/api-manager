@@ -1,7 +1,7 @@
 "use client";
 import RHFInput from "@/components/form/RHFInput";
 import RHFPassword from "@/components/form/RHFPassword";
-import SectionCard from "@/components/ui/SectionCard";
+import SectionCard from "@/components/SectionCard/SectionCard";
 import { useFormContext } from "react-hook-form";
 
 const InitUser = () => {

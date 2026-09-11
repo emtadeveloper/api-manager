@@ -3,7 +3,7 @@ import { PARAMTYPE } from "@/enums/param-type.enum";
 import { DeleteFilled, PlusCircleFilled } from "@ant-design/icons";
 import { Button, Empty, Radio, Space } from "antd";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import SectionCard from "@/components/ui/SectionCard";
+import SectionCard from "@/components/SectionCard/SectionCard";
 import RHFInput from "@/components/form/RHFInput";
 import RHFRadioGroup from "@/components/form/RHFRadioGroup";
 
