@@ -2,7 +2,7 @@
 
 import CustomTable from "@/components/custom-table";
 import PageActionsBar from "@/components/ui/PageActionsBar";
-import useAlert from "@/hooks/useAlert";
+import useNotificationStore from "@/stores/notification";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 import { PlusCircleFilled } from "@ant-design/icons";
 import { Button, Modal } from "antd";
@@ -20,7 +20,7 @@ export type RestService = {
 };
 
 export default function RestServices() {
-  const alert = useAlert();
+  const { setText, setError } = useNotificationStore();
   const router = useRouter();
   const [restServices, setRestServices] = useState<RestService[]>([]);
 
@@ -29,22 +29,22 @@ export default function RestServices() {
     const getServices = async () => {
       const result = await getAllRestServices();
       if (result.success && !cancelled) setRestServices(result.data as RestService[]);
-      else if (!result.success && !cancelled) alert.error(extractErrorMessage(result));
+      else if (!result.success && !cancelled) setError(extractErrorMessage(result));
     };
     sessionStorage.removeItem("rest-service-form");
     void getServices();
     return () => {
       cancelled = true;
     };
-  }, [alert]);
+  }, [setError]);
 
   const handleDelete = async (service: RestService) => {
     const result = await removeService(service.id);
     if (!result.success) {
-      alert.error(extractErrorMessage(result, "خطا در حذف"));
+      setError(extractErrorMessage(result, "خطا در حذف"));
       return;
     }
-    alert.success("با موفقیت حذف شد");
+    setText("با موفقیت حذف شد");
     setRestServices((prev) => prev.filter((item) => item.id !== service.id));
   };
 

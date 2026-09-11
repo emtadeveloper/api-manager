@@ -19,7 +19,7 @@ import SideLogin from "./components/SideLogin";
 import { useSessionStore } from "@/stores/auth";
 
 import SettingsDrawer from "@/components/layout/Topbar/components/SettingsDrawer";
-import useAlert from "@/hooks/useAlert";
+import useNotificationStore from "@/stores/notification";
 
 interface LoginFormValues {
   username: string;
@@ -28,7 +28,7 @@ interface LoginFormValues {
 
 export default function LoginPage() {
   const [isPending, startTransition] = useTransition();
-  const alert = useAlert();
+  const { setError } = useNotificationStore();
 
   const refreshSession = useSessionStore((state) => state.refreshSession);
 
@@ -45,8 +45,9 @@ export default function LoginPage() {
     },
   });
 
-  const onSubmit = async (data: LoginFormValues) => {
-    startTransition(async () => {
+  const onSubmit = (data: LoginFormValues) => {
+    startTransition(() => {
+      void (async () => {
       const response = await signIn(data);
 
       if (response.isSuccess) {
@@ -55,7 +56,8 @@ export default function LoginPage() {
         return;
       }
 
-      alert.error(response.message ?? "ورود ناموفق بود");
+      setError(response.message ?? "ورود ناموفق بود");
+      })();
     });
   };
 

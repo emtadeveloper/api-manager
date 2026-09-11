@@ -9,13 +9,13 @@ import { CloseOutlined, ExpandOutlined, ReloadOutlined, SettingOutlined } from "
 import Settings from "./Settings";
 
 import useSettingsStore from "@/stores/settings";
-import useAlert from "@/hooks/useAlert";
+import useNotificationStore from "@/stores/notification";
 
 const { Text } = Typography;
 
 const SettingsDrawer = () => {
   const [open, setOpen] = useState(false);
-  const alert = useAlert();
+  const { setError } = useNotificationStore();
 
   const resetSettings = useSettingsStore((state) => state.resetSettings);
 
@@ -30,7 +30,7 @@ const SettingsDrawer = () => {
         await document.exitFullscreen();
       }
     } catch {
-      alert.error("امکان تغییر حالت تمام‌صفحه وجود ندارد");
+      setError("امکان تغییر حالت تمام‌صفحه وجود ندارد");
     }
   };
 

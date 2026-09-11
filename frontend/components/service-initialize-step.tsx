@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, FieldPath, type FieldErrors } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import useAlert from "@/hooks/useAlert";
+import useNotificationStore from "@/stores/notification";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 import { AuthType } from "@/enums/auth-type.enum";
 
@@ -46,7 +46,7 @@ const DEFAULT_VALUES: Partial<RestServicesCreateDtoType> = {
 const ServiceIntializeStep = () => {
   const param = useParams();
   const router = useRouter();
-  const alert = useAlert();
+  const { setText: notifySuccess, setError: notifyError } = useNotificationStore();
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -65,7 +65,7 @@ const ServiceIntializeStep = () => {
     const findRest = async (id: string) => {
       const result = await findRestServiceById(parseInt(id));
       if (!result.success && !cancelled) {
-        alert.error(extractErrorMessage(result));
+        notifyError(extractErrorMessage(result));
         return;
       }
       if (result.data && !cancelled) {
@@ -86,7 +86,7 @@ const ServiceIntializeStep = () => {
     return () => {
       cancelled = true;
     };
-  }, [alert, param.id, reset]);
+  }, [param.id, reset, notifyError]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/incompatible-library
@@ -106,7 +106,7 @@ const ServiceIntializeStep = () => {
       if (typeof item.message === "string") return item.message;
       return Object.values(item).map(findMessage).find(Boolean);
     };
-    alert.error(findMessage(errors) ?? "لطفاً اطلاعات الزامی را کامل کنید");
+    notifyError(findMessage(errors) ?? "لطفاً اطلاعات الزامی را کامل کنید");
   };
 
   const onSubmit = async (values: RestServicesCreateDtoType) => {
@@ -129,10 +129,10 @@ const ServiceIntializeStep = () => {
           });
           });
         }
-        alert.error("خطا در ثبت اطلاعات");
+        notifyError("خطا در ثبت اطلاعات");
         return;
       }
-      alert.success("با موفقیت ثبت شد");
+      notifySuccess("با موفقیت ثبت شد");
       sessionStorage.removeItem(STORAGE_KEY);
       router.push("/rest-services");
     } finally {

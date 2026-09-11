@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import useAlert from "./useAlert";
+import useNotificationStore from "@/stores/notification";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 
 interface ActionResult<T> {
@@ -21,7 +21,7 @@ export default function useServerAction<TArgs extends unknown[], TResult>(
   action: (...args: TArgs) => Promise<ActionResult<TResult>>,
   options: UseServerActionOptions<TResult> = {},
 ) {
-  const alert = useAlert();
+  const { setText, setError } = useNotificationStore();
   const [loading, setLoading] = useState(false);
 
   const run = useCallback(
@@ -31,11 +31,11 @@ export default function useServerAction<TArgs extends unknown[], TResult>(
         const result = await action(...args);
 
         if (!result.success) {
-          alert.error(extractErrorMessage(result, options.errorFallback));
+          setError(extractErrorMessage(result, options.errorFallback));
           return result;
         }
 
-        if (options.successMessage) alert.success(options.successMessage);
+        if (options.successMessage) setText(options.successMessage);
         options.onSuccess?.(result.data);
         return result;
       } finally {

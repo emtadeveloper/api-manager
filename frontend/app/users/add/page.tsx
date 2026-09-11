@@ -4,7 +4,7 @@ import { CreateUser } from "@/apis/backend";
 import SectionCard from "@/components/ui/SectionCard";
 import RHFInput from "@/components/form/RHFInput";
 import RHFPassword from "@/components/form/RHFPassword";
-import useAlert from "@/hooks/useAlert";
+import useNotificationStore from "@/stores/notification";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 import { UserFormSchema, type UserFormValues } from "@/app/dto/user-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +14,7 @@ import { useState } from "react";
 import type { UserCreateDto } from "@/app/dto/user-create-dto";
 
 const UsersAdd = () => {
-  const alert = useAlert();
+  const { setText, setError } = useNotificationStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -34,10 +34,10 @@ const UsersAdd = () => {
       } as UserCreateDto);
 
       if (!result.success) {
-        alert.error(extractErrorMessage(result, "خطا در ثبت عملیات"));
+        setError(extractErrorMessage(result, "خطا در ثبت عملیات"));
         return;
       }
-      alert.success("عملیات با موفقیت انجام شد");
+      setText("عملیات با موفقیت انجام شد");
       router.push("/initialize");
       router.refresh();
     } finally {

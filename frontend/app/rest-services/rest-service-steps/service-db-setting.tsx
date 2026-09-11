@@ -9,7 +9,7 @@ import RHFInput from "@/components/form/RHFInput";
 import RHFPassword from "@/components/form/RHFPassword";
 import RHFRadioGroup from "@/components/form/RHFRadioGroup";
 import RHFSelect from "@/components/form/RHFSelect";
-import useAlert from "@/hooks/useAlert";
+import useNotificationStore from "@/stores/notification";
 import useDatabaseConnection, { buildTargetConnectionUrl, DbConnectionConfig } from "@/hooks/useDatabaseConnection";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 import { DatabaseType } from "@/enums/database-type.enum";
@@ -17,7 +17,7 @@ import RestShowDatabaseCallData from "../components/database-call/rest-database-
 
 const ServiceDbSetting = () => {
   const { control, getValues } = useFormContext();
-  const alert = useAlert();
+  const { setError } = useNotificationStore();
   const { databaseList, loading, connect } = useDatabaseConnection();
   const dbType = useWatch({ control, name: "restDatabaseSetting.dbType" });
 
@@ -38,7 +38,7 @@ const ServiceDbSetting = () => {
       const result = await getViewData(url, config.dbViewName);
 
       if (!result.success) {
-        alert.error(extractErrorMessage(result));
+        setError(extractErrorMessage(result));
         setShowData(false);
         return;
       }

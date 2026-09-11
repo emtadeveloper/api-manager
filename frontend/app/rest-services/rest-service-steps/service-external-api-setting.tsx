@@ -10,12 +10,12 @@ import { AuthType } from "@/enums/auth-type.enum";
 import SectionCard from "@/components/ui/SectionCard";
 import RHFInput from "@/components/form/RHFInput";
 import RHFRadioGroup from "@/components/form/RHFRadioGroup";
-import useAlert from "@/hooks/useAlert";
+import useNotificationStore from "@/stores/notification";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 
 const ServiceExternalApiSetting = () => {
   const { control, getValues } = useFormContext();
-  const alert = useAlert();
+  const { setText, setError } = useNotificationStore();
 
   const [authTestLoading, setAuthTestLoading] = useState(false);
   const [apiTestLoading, setApiTestLoading] = useState(false);
@@ -33,7 +33,7 @@ const ServiceExternalApiSetting = () => {
     try {
       const result = await ApiTest(getValues("restExternalApiSetting"), getValues("latinName"));
       if (!result.success) {
-        alert.error(extractErrorMessage(result));
+        setError(extractErrorMessage(result));
         return;
       }
       setApiResult(result.data);
@@ -48,10 +48,10 @@ const ServiceExternalApiSetting = () => {
     try {
       const result = await AuthTest(getValues("restAuthServiceSetting"));
       if (!result.success) {
-        alert.error(extractErrorMessage(result));
+        setError(extractErrorMessage(result));
         return;
       }
-      alert.success("تست احراز هویت با موفقیت انجام شد");
+      setText("تست احراز هویت با موفقیت انجام شد");
       setAuthResult(result.data);
       setAuthResultOpen(true);
     } finally {

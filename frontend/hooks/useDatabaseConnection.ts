@@ -3,10 +3,9 @@
 import { useCallback, useState } from "react";
 import { DatabaseType } from "@/enums/database-type.enum";
 import { getDatabases } from "@/apis/backend";
-import useAlert from "./useAlert";
+import useNotificationStore from "@/stores/notification";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 
-// یونیون رشته‌ای منطبق با مقادیر enum (سازگار با z.enum(["SQL","ORACLE","POSTGRES"]) در DTOها)
 export type DbTypeValue = `${DatabaseType}`;
 
 export interface DbConnectionConfig {
@@ -32,7 +31,7 @@ export function buildTargetConnectionUrl(config: DbConnectionConfig & { dbName: 
 }
 
 export default function useDatabaseConnection() {
-  const alert = useAlert();
+  const { setError } = useNotificationStore();
   const [databaseList, setDatabaseList] = useState<Record<string, string>[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -44,7 +43,7 @@ export default function useDatabaseConnection() {
         const result = await getDatabases(config.dbType, url);
 
         if (!result.success) {
-          alert.error(extractErrorMessage(result));
+          setError(extractErrorMessage(result));
           return;
         }
 

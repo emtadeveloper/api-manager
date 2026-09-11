@@ -27,7 +27,7 @@ import { z } from "zod";
 
 import { yekan } from "@/public/fonts/font";
 
-import useAlert from "@/hooks/useAlert";
+import useNotificationStore from "@/stores/notification";
 
 import { extractErrorMessage } from "@/utils/extract-error-message";
 
@@ -46,7 +46,7 @@ type InitializeFormValues = z.infer<typeof InitializeFormSchema>;
 const STORAGE_KEY = "settings-form";
 
 const InitializeStep = () => {
-  const alert = useAlert();
+  const { setText, setError } = useNotificationStore();
 
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -164,7 +164,7 @@ const InitializeStep = () => {
       const userResult = await registerUser(user);
 
       if (!userResult.success) {
-        alert.error(extractErrorMessage(userResult, "خطا در ثبت کاربر"));
+        setError(extractErrorMessage(userResult, "خطا در ثبت کاربر"));
 
         return;
       }
@@ -179,12 +179,12 @@ const InitializeStep = () => {
       });
 
       if (!dbResult.success) {
-        alert.error(extractErrorMessage(dbResult, "خطا در ثبت تنظیمات دیتابیس"));
+        setError(extractErrorMessage(dbResult, "خطا در ثبت تنظیمات دیتابیس"));
 
         return;
       }
 
-      alert.success("راه‌اندازی اولیه با موفقیت انجام شد");
+      setText("راه‌اندازی اولیه با موفقیت انجام شد");
 
       sessionStorage.removeItem(STORAGE_KEY);
     } finally {
