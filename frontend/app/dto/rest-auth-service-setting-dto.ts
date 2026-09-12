@@ -12,4 +12,6 @@ export const RestAuthServiceSettingDto = z.object({
   restAuthServiceParam: z.array(RestAuthServiceParamDto),
 });
 
-export type RestAuthServiceSettingDto = z.infer<typeof RestAuthServiceSettingDto>;
+export type RestAuthServiceSettingDto = z.infer<
+  typeof RestAuthServiceSettingDto
+>;

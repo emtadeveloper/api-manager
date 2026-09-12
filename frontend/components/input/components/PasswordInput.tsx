@@ -3,7 +3,10 @@ import { Input } from "antd";
 import type { InputProps } from "antd";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
-interface PasswordInputProps extends Omit<InputProps, "onChange" | "value" | "status"> {
+interface PasswordInputProps extends Omit<
+  InputProps,
+  "onChange" | "value" | "status"
+> {
   label?: string;
   required?: boolean;
   error?: string;
@@ -38,7 +41,11 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
               {required && <span className="text-red-500 font-bold">*</span>}
             </label>
           )}
-          {error && <p className="text-red-500 text-xs font-medium truncate max-w-[50%]">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-xs font-medium truncate max-w-[50%]">
+              {error}
+            </p>
+          )}
         </div>
       )}
 
@@ -49,7 +56,9 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
         disabled={disabled}
         placeholder={placeholder}
         status={error ? "error" : undefined}
-        iconRender={(visible) => (visible ? <EyeOutlined /> : <EyeInvisibleOutlined />)}
+        iconRender={(visible) =>
+          visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
+        }
         {...props}
       />
     </div>

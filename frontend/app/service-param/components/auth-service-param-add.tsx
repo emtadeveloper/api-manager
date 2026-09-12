@@ -19,7 +19,13 @@ const AuthServiceParamAdd = () => {
       <div className="w-full">
         <Button
           icon={<PlusCircleFilled />}
-          onClick={() => append({ paramName: "", paramValue: "", paramType: PARAMTYPE.QUERY })}
+          onClick={() =>
+            append({
+              paramName: "",
+              paramValue: "",
+              paramType: PARAMTYPE.QUERY,
+            })
+          }
           className="mb-3"
         >
           ایجاد پارامتر

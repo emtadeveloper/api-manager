@@ -7,7 +7,9 @@ import RHFInput from "@/components/form/RHFInput";
 import RHFPassword from "@/components/form/RHFPassword";
 import RHFRadioGroup from "@/components/form/RHFRadioGroup";
 import RHFSelect from "@/components/form/RHFSelect";
-import useDatabaseConnection, { DbConnectionConfig } from "@/hooks/useDatabaseConnection";
+import useDatabaseConnection, {
+  DbConnectionConfig,
+} from "@/hooks/useDatabaseConnection";
 import { useFormContext } from "react-hook-form";
 
 const InitDb = () => {
@@ -27,13 +29,33 @@ const InitDb = () => {
         <Radio value={DatabaseType.POSTGRES}>POSTGRES</Radio>
       </RHFRadioGroup>
 
-      <RHFInput control={control} name="dbServer" label="آدرس سرور دیتابیس" required />
+      <RHFInput
+        control={control}
+        name="dbServer"
+        label="آدرس سرور دیتابیس"
+        required
+      />
       <RHFInput control={control} name="dbPort" label="پورت" required />
-      <RHFInput control={control} name="dbUsername" label="نام کاربری" required />
-      <RHFPassword control={control} name="dbPassword" label="رمز عبور" required />
+      <RHFInput
+        control={control}
+        name="dbUsername"
+        label="نام کاربری"
+        required
+      />
+      <RHFPassword
+        control={control}
+        name="dbPassword"
+        label="رمز عبور"
+        required
+      />
 
       <div className="app-form-item--full">
-        <Button loading={loading} icon={<SecurityScanFilled />} type="primary" onClick={handleGetDatabases}>
+        <Button
+          loading={loading}
+          icon={<SecurityScanFilled />}
+          type="primary"
+          onClick={handleGetDatabases}
+        >
           اتصال به دیتابیس
         </Button>
       </div>
@@ -46,7 +68,10 @@ const InitDb = () => {
         allowClear
         showSearch
         placeholder="دیتابیس را انتخاب نمایید..."
-        options={databaseList.map((d) => ({ value: Object.values(d)[0], label: Object.values(d)[0] }))}
+        options={databaseList.map((d) => ({
+          value: Object.values(d)[0],
+          label: Object.values(d)[0],
+        }))}
       />
     </SectionCard>
   );

@@ -48,15 +48,15 @@ export default function LoginPage() {
   const onSubmit = (data: LoginFormValues) => {
     startTransition(() => {
       void (async () => {
-      const response = await signIn(data);
+        const response = await signIn(data);
 
-      if (response.isSuccess) {
-        await refreshSession();
-        router.replace("/rest-services");
-        return;
-      }
+        if (response.isSuccess) {
+          await refreshSession();
+          router.replace("/rest-services");
+          return;
+        }
 
-      setError(response.message ?? "ورود ناموفق بود");
+        setError(response.message ?? "ورود ناموفق بود");
       })();
     });
   };
@@ -68,9 +68,13 @@ export default function LoginPage() {
       <div className="flex flex-1 items-center justify-center bg-[var(--app-surface)] p-8 sm:p-12">
         <div className="w-full max-w-sm space-y-10">
           <div className="space-y-2 text-center">
-            <h2 className="text-2xl font-bold tracking-tight text-[var(--app-text-primary)]">ورود به حساب کاربری</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-[var(--app-text-primary)]">
+              ورود به حساب کاربری
+            </h2>
 
-            <p className="text-sm text-[var(--app-text-muted)]">برای ورود اطلاعات خود را وارد کنید</p>
+            <p className="text-sm text-[var(--app-text-muted)]">
+              برای ورود اطلاعات خود را وارد کنید
+            </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

@@ -10,9 +10,18 @@ interface RHFFieldWrapperProps {
   children: ReactNode;
 }
 
-export function RHFFieldWrapper({ label, required, error, className, full, children }: RHFFieldWrapperProps) {
+export function RHFFieldWrapper({
+  label,
+  required,
+  error,
+  className,
+  full,
+  children,
+}: RHFFieldWrapperProps) {
   return (
-    <div className={cn("app-form-item", full && "app-form-item--full", className)}>
+    <div
+      className={cn("app-form-item", full && "app-form-item--full", className)}
+    >
       {(label || error) && (
         <div className="flex justify-between items-center mb-1">
           {label && (
@@ -21,7 +30,11 @@ export function RHFFieldWrapper({ label, required, error, className, full, child
               {required && <span className="text-danger font-bold">*</span>}
             </label>
           )}
-          {error && <p className="text-danger text-xs font-medium truncate max-w-[50%]">{error}</p>}
+          {error && (
+            <p className="text-danger text-xs font-medium truncate max-w-[50%]">
+              {error}
+            </p>
+          )}
         </div>
       )}
       {children}

@@ -35,7 +35,8 @@ const UserMenu = () => {
     {
       key: "profile",
       label: "حساب کاربری",
-      className: "!w-36 !py-2 !rounded-md !text-xs !text-[var(--app-text)] hover:!bg-[var(--app-surface-light)]",
+      className:
+        "!w-36 !py-2 !rounded-md !text-xs !text-[var(--app-text)] hover:!bg-[var(--app-surface-light)]",
       onClick: () => {
         console.log("رفتن به حساب کاربری");
       },

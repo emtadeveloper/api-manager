@@ -34,12 +34,19 @@ const TextField: React.FC<TextFieldProps> = ({
       {(label || error) && (
         <div className="flex justify-between items-center mb-1">
           {label && (
-            <label htmlFor="text-field" className="text-xs font-normal app-text-primary flex items-center gap-1">
+            <label
+              htmlFor="text-field"
+              className="text-xs font-normal app-text-primary flex items-center gap-1"
+            >
               {label}
               {required && <span className="text-danger font-bold">*</span>}
             </label>
           )}
-          {error && <p className="text-danger text-xs font-medium truncate max-w-[50%]">{error}</p>}
+          {error && (
+            <p className="text-danger text-xs font-medium truncate max-w-[50%]">
+              {error}
+            </p>
+          )}
         </div>
       )}
 

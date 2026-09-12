@@ -10,7 +10,10 @@ import RHFPassword from "@/components/form/RHFPassword";
 import RHFRadioGroup from "@/components/form/RHFRadioGroup";
 import RHFSelect from "@/components/form/RHFSelect";
 import useNotificationStore from "@/stores/notification";
-import useDatabaseConnection, { buildTargetConnectionUrl, DbConnectionConfig } from "@/hooks/useDatabaseConnection";
+import useDatabaseConnection, {
+  buildTargetConnectionUrl,
+  DbConnectionConfig,
+} from "@/hooks/useDatabaseConnection";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 import { DatabaseType } from "@/enums/database-type.enum";
 import RestShowDatabaseCallData from "../components/database-call/rest-database-call-data";
@@ -33,7 +36,10 @@ const ServiceDbSetting = () => {
   const handleGetViewData = async () => {
     setLoadingViewData(true);
     try {
-      const config = getValues("restDatabaseSetting") as DbConnectionConfig & { dbName: string; dbViewName: string };
+      const config = getValues("restDatabaseSetting") as DbConnectionConfig & {
+        dbName: string;
+        dbViewName: string;
+      };
       const url = buildTargetConnectionUrl(config);
       const result = await getViewData(url, config.dbViewName);
 
@@ -51,16 +57,40 @@ const ServiceDbSetting = () => {
 
   return (
     <SectionCard title="تنظیمات اتصال به پایگاه داده">
-      <RHFRadioGroup control={control} name="restDatabaseSetting.dbType" label="نوع دیتابیس">
+      <RHFRadioGroup
+        control={control}
+        name="restDatabaseSetting.dbType"
+        label="نوع دیتابیس"
+      >
         <Radio value={DatabaseType.SQL}>SQL</Radio>
         <Radio value={DatabaseType.ORACLE}>ORACLE</Radio>
         <Radio value={DatabaseType.POSTGRES}>POSTGRES</Radio>
       </RHFRadioGroup>
 
-      <RHFInput control={control} name="restDatabaseSetting.dbServer" label="آدرس سرور دیتابیس" required />
-      <RHFInput control={control} name="restDatabaseSetting.dbPort" label="پورت" required />
-      <RHFInput control={control} name="restDatabaseSetting.dbUsername" label="نام کاربری" required />
-      <RHFPassword control={control} name="restDatabaseSetting.dbPassword" label="رمز عبور" required />
+      <RHFInput
+        control={control}
+        name="restDatabaseSetting.dbServer"
+        label="آدرس سرور دیتابیس"
+        required
+      />
+      <RHFInput
+        control={control}
+        name="restDatabaseSetting.dbPort"
+        label="پورت"
+        required
+      />
+      <RHFInput
+        control={control}
+        name="restDatabaseSetting.dbUsername"
+        label="نام کاربری"
+        required
+      />
+      <RHFPassword
+        control={control}
+        name="restDatabaseSetting.dbPassword"
+        label="رمز عبور"
+        required
+      />
 
       <div className="app-form-item--full">
         <Button
@@ -82,9 +112,17 @@ const ServiceDbSetting = () => {
         allowClear
         showSearch
         placeholder="دیتابیس را انتخاب نمایید..."
-        options={databaseList.map((d) => ({ value: Object.values(d)[0], label: Object.values(d)[0] }))}
+        options={databaseList.map((d) => ({
+          value: Object.values(d)[0],
+          label: Object.values(d)[0],
+        }))}
       />
-      <RHFInput control={control} name="restDatabaseSetting.dbViewName" label="نام ویو" required />
+      <RHFInput
+        control={control}
+        name="restDatabaseSetting.dbViewName"
+        label="نام ویو"
+        required
+      />
 
       <div className="app-form-item--full">
         <Button

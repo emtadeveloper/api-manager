@@ -14,7 +14,11 @@ interface AccessGuardProps {
   children: React.ReactNode;
 }
 
-const AccessGuard = ({ requireAuth, redirectPath, children }: AccessGuardProps) => {
+const AccessGuard = ({
+  requireAuth,
+  redirectPath,
+  children,
+}: AccessGuardProps) => {
   const router = useRouter();
 
   const session = useSessionStore((state) => state.session);

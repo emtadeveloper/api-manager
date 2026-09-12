@@ -13,7 +13,11 @@ import InitConfirm from "@/app/initialize/components/init-confirm";
 import InitDb from "@/app/initialize/components/init-db";
 import InitUser from "@/app/initialize/components/init-user";
 
-import { CheckCircleFilled, FastBackwardOutlined, FastForwardFilled } from "@ant-design/icons";
+import {
+  CheckCircleFilled,
+  FastBackwardOutlined,
+  FastForwardFilled,
+} from "@ant-design/icons";
 
 import { Button, Steps } from "antd";
 
@@ -33,13 +37,12 @@ import { extractErrorMessage } from "@/utils/extract-error-message";
 
 import type { UserCreateDto } from "@/app/dto/user-create-dto";
 
-const InitializeFormSchema = UserFieldsSchema.merge(DatabaseSettingSchema).refine(
-  (data) => data.password === data.password2,
-  {
-    message: "رمز عبور و تکرار آن یکسان نیستند",
-    path: ["password2"],
-  },
-);
+const InitializeFormSchema = UserFieldsSchema.merge(
+  DatabaseSettingSchema,
+).refine((data) => data.password === data.password2, {
+  message: "رمز عبور و تکرار آن یکسان نیستند",
+  path: ["password2"],
+});
 
 type InitializeFormValues = z.infer<typeof InitializeFormSchema>;
 
@@ -96,10 +99,15 @@ const InitializeStep = () => {
     }
 
     const getData = async () => {
-      const [userResult, dbResult] = await Promise.all([findAllUsers(), findAllDbSetting()]);
+      const [userResult, dbResult] = await Promise.all([
+        findAllUsers(),
+        findAllDbSetting(),
+      ]);
 
       const dbType =
-        dbResult?.data?.dbType === "SQL" || dbResult?.data?.dbType === "ORACLE" || dbResult?.data?.dbType === "POSTGRES"
+        dbResult?.data?.dbType === "SQL" ||
+        dbResult?.data?.dbType === "ORACLE" ||
+        dbResult?.data?.dbType === "POSTGRES"
           ? dbResult.data.dbType
           : "POSTGRES";
 
@@ -163,7 +171,7 @@ const InitializeStep = () => {
 
       const userResult = await registerUser(user);
 
-      if (!userResult.success) {
+      if (!userResult?.success) {
         setError(extractErrorMessage(userResult, "خطا در ثبت کاربر"));
 
         return;
@@ -198,7 +206,11 @@ const InitializeStep = () => {
         <Steps
           className={`step ${yekan.className}`}
           current={current}
-          items={[{ title: "تعریف کاربر سیستم" }, { title: "تنظیمات اتصال" }, { title: "تایید نهایی" }]}
+          items={[
+            { title: "تعریف کاربر سیستم" },
+            { title: "تنظیمات اتصال" },
+            { title: "تایید نهایی" },
+          ]}
         />
 
         <div className="my-2">
@@ -215,7 +227,12 @@ const InitializeStep = () => {
           )}
 
           {current > 1 && (
-            <Button loading={loading} htmlType="submit" title="تایید نهایی" type="primary">
+            <Button
+              loading={loading}
+              htmlType="submit"
+              title="تایید نهایی"
+              type="primary"
+            >
               <CheckCircleFilled />
             </Button>
           )}

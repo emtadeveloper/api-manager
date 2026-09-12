@@ -20,7 +20,13 @@ export default function NotFound() {
     >
       <div className="flex w-full max-w-xl flex-col items-center justify-center mb-40">
         <div className="relative mb-4 h-48 w-48">
-          <Image src="/images/404.png" alt="صفحه پیدا نشد" fill priority className="object-contain" />
+          <Image
+            src="/images/404.png"
+            alt="صفحه پیدا نشد"
+            fill
+            priority
+            className="object-contain"
+          />
         </div>
 
         <h1

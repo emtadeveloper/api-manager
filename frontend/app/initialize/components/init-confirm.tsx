@@ -15,10 +15,31 @@ const InitConfirm = () => {
     <>
       <SectionCard title="اطلاعات کاربر سیستم">
         <RHFInput control={control} name="firstName" label="نام" required />
-        <RHFInput control={control} name="lastName" label="نام خانوادگی" required />
-        <RHFInput control={control} name="username" label="نام کاربری" required dir="ltr" />
-        <RHFPassword control={control} name="password" label="رمز عبور" required />
-        <RHFPassword control={control} name="password2" label="تکرار رمز عبور" required />
+        <RHFInput
+          control={control}
+          name="lastName"
+          label="نام خانوادگی"
+          required
+        />
+        <RHFInput
+          control={control}
+          name="username"
+          label="نام کاربری"
+          required
+          dir="ltr"
+        />
+        <RHFPassword
+          control={control}
+          name="password"
+          label="رمز عبور"
+          required
+        />
+        <RHFPassword
+          control={control}
+          name="password2"
+          label="تکرار رمز عبور"
+          required
+        />
       </SectionCard>
 
       <SectionCard title="اطلاعات پایگاه داده">
@@ -27,10 +48,25 @@ const InitConfirm = () => {
           <Radio value={DatabaseType.ORACLE}>ORACLE</Radio>
           <Radio value={DatabaseType.POSTGRES}>POSTGRES</Radio>
         </RHFRadioGroup>
-        <RHFInput control={control} name="dbServer" label="آدرس سرور دیتابیس" required />
+        <RHFInput
+          control={control}
+          name="dbServer"
+          label="آدرس سرور دیتابیس"
+          required
+        />
         <RHFInput control={control} name="dbPort" label="پورت" required />
-        <RHFInput control={control} name="dbUsername" label="نام کاربری" required />
-        <RHFPassword control={control} name="dbPassword" label="رمز عبور" required />
+        <RHFInput
+          control={control}
+          name="dbUsername"
+          label="نام کاربری"
+          required
+        />
+        <RHFPassword
+          control={control}
+          name="dbPassword"
+          label="رمز عبور"
+          required
+        />
         <RHFSelect
           control={control}
           name="dbName"

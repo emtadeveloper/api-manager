@@ -19,8 +19,30 @@ type Props = {
 };
 
 const columns: DataTableColumn<RestServiceTableRow>[] = [
-  { title: "نام فارسی", dataIndex: "persianName" },
-  { title: "نام لاتین", dataIndex: "latinName" },
+  {
+    title: "نام فارسی",
+    dataIndex: "persianName",
+    sortable: true,
+    mobileSummary: true,
+  },
+  {
+    title: "نام لاتین",
+    dataIndex: "latinName",
+    sortable: true,
+    mobileSummary: true,
+  },
+  {
+    title: " نوع متد ",
+    dataIndex: "httpMethod",
+    sortable: true,
+    mobileSummary: true,
+  },
+  {
+    title: " نوع اتصال",
+    dataIndex: "restType",
+    sortable: true,
+    mobileSummary: true,
+  },
 ];
 
 export default function CustomTable({ onEdit, onDelete, data }: Props) {
@@ -28,6 +50,7 @@ export default function CustomTable({ onEdit, onDelete, data }: Props) {
     title: "عملیات",
     dataIndex: "id",
     searchable: false,
+    isAction: true,
     width: 90,
     render: (_value, record) => (
       <Dropdown
@@ -35,15 +58,32 @@ export default function CustomTable({ onEdit, onDelete, data }: Props) {
         menu={{
           items: [
             { key: "edit", icon: <EditOutlined />, label: "ویرایش" },
-            { key: "delete", danger: true, icon: <DeleteOutlined />, label: "حذف" },
+            {
+              key: "delete",
+              danger: true,
+              icon: <DeleteOutlined />,
+              label: "حذف",
+            },
           ],
-          onClick: ({ key }) => (key === "edit" ? onEdit(record.id) : onDelete(record)),
+          onClick: ({ key }) =>
+            key === "edit" ? onEdit(record.id) : onDelete(record),
         }}
       >
-        <Button type="text" aria-label={`عملیات ${record.latinName ?? record.id}`} icon={<MoreOutlined />} />
+        <Button
+          type="text"
+          aria-label={`عملیات ${record.latinName ?? record.id}`}
+          icon={<MoreOutlined />}
+        />
       </Dropdown>
     ),
   };
 
-  return <DataTable data={data} columns={[...columns, actionColumn]} rowKey="id" emptyText="سرویسی ثبت نشده است" />;
+  return (
+    <DataTable
+      data={data}
+      columns={[...columns, actionColumn]}
+      rowKey="id"
+      emptyText="سرویسی ثبت نشده است"
+    />
+  );
 }

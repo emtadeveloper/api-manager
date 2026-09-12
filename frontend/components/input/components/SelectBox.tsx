@@ -66,7 +66,11 @@ const SelectBox: React.FC<SelectBoxProps> = ({
               {required && <span className="text-danger font-bold">*</span>}
             </label>
           )}
-          {error && <p className="text-danger text-xs font-medium truncate max-w-[50%]">{error}</p>}
+          {error && (
+            <p className="text-danger text-xs font-medium truncate max-w-[50%]">
+              {error}
+            </p>
+          )}
         </div>
       )}
 
@@ -77,7 +81,12 @@ const SelectBox: React.FC<SelectBoxProps> = ({
         options={allOptions}
         showSearch
         allowClear
-        filterOption={(input, option) => (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())}
+        filterOption={(input, option) =>
+          (option?.label ?? "")
+            .toString()
+            .toLowerCase()
+            .includes(input.toLowerCase())
+        }
         onSearch={onSearchChange}
         status={error ? "error" : undefined}
         className="w-full"

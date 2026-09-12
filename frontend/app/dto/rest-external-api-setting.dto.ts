@@ -3,7 +3,9 @@ import { z } from "zod";
 import { RestExternalApiParamDto } from "./rest-external-api-param.dto";
 
 export const RestExternalApiSettingDto = z.object({
-  baseUrl: z.string({error: "آدرس پایه الزامی است"}).min(1, "آدرس پایه الزامی است"),
+  baseUrl: z
+    .string({ error: "آدرس پایه الزامی است" })
+    .min(1, "آدرس پایه الزامی است"),
   // authServiceUrl: z.string().min(1, "آدرس سرویس احراز هویت الزامی است"),
   // authUsername: z.string().min(1, "نام کاربری الزامی است"),
   // authPassword: z.string().min(1, "رمز عبور الزامی است"),

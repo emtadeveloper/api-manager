@@ -63,7 +63,11 @@ const isValidFontType = (value: string | null): value is FontType => {
 };
 
 const getPreset = (value: string) => {
-  return PRIMARY_PRESETS.find((preset) => preset.value.toLowerCase() === value.toLowerCase()) ?? PRIMARY_PRESETS[0];
+  return (
+    PRIMARY_PRESETS.find(
+      (preset) => preset.value.toLowerCase() === value.toLowerCase(),
+    ) ?? PRIMARY_PRESETS[0]
+  );
 };
 
 const applySettingsToDocument = ({
@@ -145,22 +149,35 @@ const useSettingsStore = create<SettingsState>((set, get) => ({
 
     const savedPrimaryColor = localStorage.getItem("primaryColor");
 
-    const isDark = savedTheme === "light" ? false : savedTheme === "dark" ? true : DEFAULT_THEME;
+    const isDark =
+      savedTheme === "light"
+        ? false
+        : savedTheme === "dark"
+          ? true
+          : DEFAULT_THEME;
 
     const fontType = isValidFontType(savedFont) ? savedFont : DEFAULT_FONT_TYPE;
 
     const parsedFontSize = Number(savedFontSize);
 
     const fontSize =
-      Number.isFinite(parsedFontSize) && parsedFontSize >= FONT_SIZE_MIN && parsedFontSize <= FONT_SIZE_MAX
+      Number.isFinite(parsedFontSize) &&
+      parsedFontSize >= FONT_SIZE_MIN &&
+      parsedFontSize <= FONT_SIZE_MAX
         ? parsedFontSize
         : DEFAULT_FONT_SIZE;
 
     const primaryExists =
       savedPrimaryColor &&
-      PRIMARY_PRESETS.some((preset) => preset.value.toLowerCase() === savedPrimaryColor.toLowerCase());
+      PRIMARY_PRESETS.some(
+        (preset) =>
+          preset.value.toLowerCase() === savedPrimaryColor.toLowerCase(),
+      );
 
-    const primaryColor = primaryExists && savedPrimaryColor ? savedPrimaryColor : DEFAULT_PRIMARY_COLOR;
+    const primaryColor =
+      primaryExists && savedPrimaryColor
+        ? savedPrimaryColor
+        : DEFAULT_PRIMARY_COLOR;
 
     set({
       isDark,

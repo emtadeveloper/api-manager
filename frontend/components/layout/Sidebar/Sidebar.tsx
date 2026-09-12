@@ -14,10 +14,16 @@ interface SidebarContentProps {
   onNavigate?: () => void;
 }
 
-const SidebarContent = ({ collapsed, onToggleCollapse, onNavigate }: SidebarContentProps) => {
+const SidebarContent = ({
+  collapsed,
+  onToggleCollapse,
+  onNavigate,
+}: SidebarContentProps) => {
   const pathname = usePathname();
 
-  const activeKey = navLinks.find((link) => pathname === link.href || pathname.startsWith(`${link.href}/`))?.href;
+  const activeKey = navLinks.find(
+    (link) => pathname === link.href || pathname.startsWith(`${link.href}/`),
+  )?.href;
 
   return (
     <div
@@ -34,7 +40,11 @@ const SidebarContent = ({ collapsed, onToggleCollapse, onNavigate }: SidebarCont
         aria-label={collapsed ? "باز کردن سایدبار" : "بستن سایدبار"}
         className="app-sidebar-collapse-btn"
       >
-        {collapsed ? <LeftOutlined className="text-[10px]" /> : <RightOutlined className="text-[10px]" />}
+        {collapsed ? (
+          <LeftOutlined className="text-[10px]" />
+        ) : (
+          <RightOutlined className="text-[10px]" />
+        )}
       </button>
 
       {/* Header */}
@@ -57,10 +67,14 @@ const SidebarContent = ({ collapsed, onToggleCollapse, onNavigate }: SidebarCont
           <div
             className={cn(
               "flex min-w-0 flex-col overflow-hidden whitespace-nowrap transition-[max-width,transform,opacity] duration-300 ease-in-out",
-              collapsed ? "max-w-0 translate-x-4 opacity-0" : "max-w-[180px] translate-x-0 opacity-100",
+              collapsed
+                ? "max-w-0 translate-x-4 opacity-0"
+                : "max-w-[180px] translate-x-0 opacity-100",
             )}
           >
-            <span className="block w-full whitespace-nowrap text-md font-bold app-text-primary">مدیریت سرویس</span>
+            <span className="block w-full whitespace-nowrap text-md font-bold app-text-primary">
+              مدیریت سرویس
+            </span>
 
             <span className="block w-full whitespace-nowrap font-bold text-[color-mix(in_srgb,var(--app-text)_50%,transparent)]">
               رسان
@@ -91,16 +105,24 @@ const SidebarContent = ({ collapsed, onToggleCollapse, onNavigate }: SidebarCont
                   <Icon
                     className={cn(
                       "app-nav-icon",
-                      collapsed ? "app-nav-icon--collapsed" : "app-nav-icon--expanded",
-                      isActive ? "app-nav-icon--active" : "app-nav-icon--inactive",
+                      collapsed
+                        ? "app-nav-icon--collapsed"
+                        : "app-nav-icon--expanded",
+                      isActive
+                        ? "app-nav-icon--active"
+                        : "app-nav-icon--inactive",
                     )}
                   />
 
                   <span
                     className={cn(
                       "block min-w-0 overflow-hidden whitespace-nowrap transition-[max-width,transform,opacity] duration-300 ease-in-out",
-                      collapsed ? "max-w-0 translate-x-4 opacity-0" : "max-w-[180px] translate-x-0 opacity-100",
-                      isActive ? "font-bold text-[var(--app-primary)]" : "app-text-primary",
+                      collapsed
+                        ? "max-w-0 translate-x-4 opacity-0"
+                        : "max-w-[180px] translate-x-0 opacity-100",
+                      isActive
+                        ? "font-bold text-[var(--app-primary)]"
+                        : "app-text-primary",
                     )}
                   >
                     {link.title}

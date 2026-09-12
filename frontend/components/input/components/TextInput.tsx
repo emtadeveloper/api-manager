@@ -4,7 +4,10 @@ import { Input } from "antd";
 import type { InputProps } from "antd";
 import clsx from "clsx";
 
-interface TextInputProps extends Omit<InputProps, "onChange" | "value" | "status"> {
+interface TextInputProps extends Omit<
+  InputProps,
+  "onChange" | "value" | "status"
+> {
   label?: string;
   required?: boolean;
   error?: string;
@@ -41,7 +44,11 @@ const TextInput: React.FC<TextInputProps> = ({
               {required && <span className="text-red-500 font-bold">*</span>}
             </label>
           )}
-          {error && <p className="text-red-500 text-xs font-medium truncate max-w-[50%]">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-xs font-medium truncate max-w-[50%]">
+              {error}
+            </p>
+          )}
         </div>
       )}
 

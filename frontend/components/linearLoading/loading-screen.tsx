@@ -14,7 +14,8 @@ export function LoadingScreen() {
         <div
           className="h-1 w-full overflow-hidden rounded-full"
           style={{
-            backgroundColor: "color-mix(in srgb, var(--app-primary) 40%, transparent)",
+            backgroundColor:
+              "color-mix(in srgb, var(--app-primary) 40%, transparent)",
           }}
         >
           <div

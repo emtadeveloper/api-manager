@@ -23,7 +23,9 @@ const AmountInput: React.FC<AmountInputProps> = ({
   placeholder = "",
   disabled = false,
 }) => {
-  const formattedValue = value ? new Intl.NumberFormat("en-US").format(Number(value)) : "";
+  const formattedValue = value
+    ? new Intl.NumberFormat("en-US").format(Number(value))
+    : "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const numericValue = e.target.value.replace(/[^\d]/g, "");
@@ -33,7 +35,10 @@ const AmountInput: React.FC<AmountInputProps> = ({
   return (
     <div className="flex flex-col gap-1.5 w-full font-sans">
       <div className="flex flex-row justify-between items-center">
-        <label htmlFor="amount" className="text-xs font-medium app-text-primary flex items-center gap-1">
+        <label
+          htmlFor="amount"
+          className="text-xs font-medium app-text-primary flex items-center gap-1"
+        >
           {label}
           {required && <span className="text-danger font-bold">*</span>}
         </label>

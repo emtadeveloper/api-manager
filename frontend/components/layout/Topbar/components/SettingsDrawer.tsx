@@ -4,7 +4,12 @@ import { useState } from "react";
 
 import { Button, Drawer, Flex, Space, Typography } from "antd";
 
-import { CloseOutlined, ExpandOutlined, ReloadOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  ExpandOutlined,
+  ReloadOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 
 import Settings from "./Settings";
 
@@ -52,9 +57,24 @@ const SettingsDrawer = () => {
             </Text>
 
             <Space size={0}>
-              <Button type="text" icon={<ReloadOutlined />} onClick={resetSettings} aria-label="بازنشانی" />
-              <Button type="text" icon={<ExpandOutlined />} onClick={handleFullscreen} aria-label="تمام‌صفحه" />
-              <Button type="text" icon={<CloseOutlined />} onClick={onClose} aria-label="بستن" />
+              <Button
+                type="text"
+                icon={<ReloadOutlined />}
+                onClick={resetSettings}
+                aria-label="بازنشانی"
+              />
+              <Button
+                type="text"
+                icon={<ExpandOutlined />}
+                onClick={handleFullscreen}
+                aria-label="تمام‌صفحه"
+              />
+              <Button
+                type="text"
+                icon={<CloseOutlined />}
+                onClick={onClose}
+                aria-label="بستن"
+              />
             </Space>
           </Flex>
         }

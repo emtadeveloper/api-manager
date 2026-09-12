@@ -4,7 +4,7 @@ import CustomTable from "@/components/table/custom-table";
 import useNotificationStore from "@/stores/notification";
 import { extractErrorMessage } from "@/utils/extract-error-message";
 import { PlusCircleFilled } from "@ant-design/icons";
-import { Button, Modal } from "antd";
+import { App, Button } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,6 +20,7 @@ export type RestService = {
 
 export default function RestServices() {
   const { setText, setError } = useNotificationStore();
+  const { modal } = App.useApp();
   const router = useRouter();
   const [restServices, setRestServices] = useState<RestService[]>([]);
 
@@ -48,26 +49,28 @@ export default function RestServices() {
   };
 
   return (
-    <section>
-      <Link href="/rest-services/add">
-        <Button type="primary" icon={<PlusCircleFilled />}>
-          افزودن
-        </Button>
-      </Link>
-      <CustomTable
-        data={restServices}
-        onEdit={(id) => router.push(`/rest-services/${id}/edit`)}
-        onDelete={(service) =>
-          Modal.confirm({
-            title: "تأیید حذف",
-            content: `آیا از حذف سرویس ${service.persianName ?? service.latinName ?? ""} مطمئنید؟`,
-            okText: "حذف",
-            cancelText: "انصراف",
-            okButtonProps: { danger: true },
-            onOk: () => handleDelete(service),
-          })
-        }
-      />
-    </section>
+    <>
+      <section>
+        <Link href="/rest-services/add">
+          <Button type="primary" icon={<PlusCircleFilled />} className="my-4">
+            افزودن
+          </Button>
+        </Link>
+        <CustomTable
+          data={restServices}
+          onEdit={(id) => router.push(`/rest-services/${id}/edit`)}
+          onDelete={(service) =>
+            modal.confirm({
+              title: "تأیید حذف",
+              content: `آیا از حذف سرویس ${service.persianName ?? service.latinName ?? ""} مطمئنید؟`,
+              okText: "حذف",
+              cancelText: "انصراف",
+              okButtonProps: { danger: true },
+              onOk: () => handleDelete(service),
+            })
+          }
+        />
+      </section>
+    </>
   );
 }

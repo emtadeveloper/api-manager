@@ -1,5 +1,5 @@
-export enum DatabaseType{
-    SQL = "SQL",
-    ORACLE = "ORACLE",
-    POSTGRES = "POSTGRES",
+export enum DatabaseType {
+  SQL = "SQL",
+  ORACLE = "ORACLE",
+  POSTGRES = "POSTGRES",
 }

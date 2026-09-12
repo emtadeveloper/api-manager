@@ -1,4 +1,7 @@
-export function extractErrorMessage(result: unknown, fallback = "خطایی رخ داد"): string {
+export function extractErrorMessage(
+  result: unknown,
+  fallback = "خطایی رخ داد",
+): string {
   if (!result || typeof result !== "object") return fallback;
 
   const r = result as Record<string, unknown>;
@@ -7,7 +10,9 @@ export function extractErrorMessage(result: unknown, fallback = "خطایی رخ
 
   if (Array.isArray(r.errors)) {
     const messages = r.errors
-      .map((e) => (typeof e === "string" ? e : (e as { message?: string })?.message))
+      .map((e) =>
+        typeof e === "string" ? e : (e as { message?: string })?.message,
+      )
       .filter(Boolean);
 
     if (messages.length) return messages.join(" - ");

@@ -6,8 +6,13 @@ import useSettingsStore from "@/stores/settings";
 import { useEffect } from "react";
 import { Notification } from "@/components/Notification/Notification";
 
-export default function AppProviders({ children }: { children: React.ReactNode }) {
-  const { isDark, fontType, fontSize, primaryColor, hydrate } = useSettingsStore();
+export default function AppProviders({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { isDark, fontType, fontSize, primaryColor, hydrate } =
+    useSettingsStore();
 
   useEffect(() => {
     hydrate();

@@ -1,6 +1,11 @@
 "use client";
 
-import { Controller, type Control, type FieldValues, type Path } from "react-hook-form";
+import {
+  Controller,
+  type Control,
+  type FieldValues,
+  type Path,
+} from "react-hook-form";
 
 import { Input } from "antd";
 import type { InputProps } from "antd";
@@ -31,7 +36,12 @@ export default function RHFPassword<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <RHFFieldWrapper label={label} required={required} error={fieldState.error?.message} full={full}>
+        <RHFFieldWrapper
+          label={label}
+          required={required}
+          error={fieldState.error?.message}
+          full={full}
+        >
           <Input.Password
             {...props}
             {...field}

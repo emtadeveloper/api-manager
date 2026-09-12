@@ -2,7 +2,12 @@
 
 import { Flex, Select, Slider, Switch, Typography } from "antd";
 
-import { CheckOutlined, FontSizeOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  FontSizeOutlined,
+  MoonOutlined,
+  SunOutlined,
+} from "@ant-design/icons";
 
 import useSettingsStore, { PRIMARY_PRESETS } from "@/stores/settings";
 import { cn } from "@/utils/cn";
@@ -10,18 +15,30 @@ import { cn } from "@/utils/cn";
 const { Text } = Typography;
 
 const Settings = () => {
-  const { isDark, fontType, fontSize, primaryColor, toggleTheme, setFontType, setFontSize, setPrimaryColor } =
-    useSettingsStore();
+  const {
+    isDark,
+    fontType,
+    fontSize,
+    primaryColor,
+    toggleTheme,
+    setFontType,
+    setFontSize,
+    setPrimaryColor,
+  } = useSettingsStore();
 
   const selectedPreset =
-    PRIMARY_PRESETS.find((preset) => preset.value.toLowerCase() === primaryColor.toLowerCase()) ?? PRIMARY_PRESETS[0];
+    PRIMARY_PRESETS.find(
+      (preset) => preset.value.toLowerCase() === primaryColor.toLowerCase(),
+    ) ?? PRIMARY_PRESETS[0];
 
   return (
     <Flex vertical gap={20}>
       {/* Theme Card */}
       <div className="app-settings-card">
         <Flex align="center" justify="space-between">
-          <div className="app-settings-icon">{isDark ? <MoonOutlined /> : <SunOutlined />}</div>
+          <div className="app-settings-icon">
+            {isDark ? <MoonOutlined /> : <SunOutlined />}
+          </div>
 
           <Switch
             checked={isDark}
@@ -35,7 +52,9 @@ const Settings = () => {
           <Text strong className="app-settings-title">
             تغییر حالت
           </Text>
-          <Text className="app-settings-subtitle">{isDark ? "حالت تاریک فعال است" : "حالت روشن فعال است"}</Text>
+          <Text className="app-settings-subtitle">
+            {isDark ? "حالت تاریک فعال است" : "حالت روشن فعال است"}
+          </Text>
         </Flex>
       </div>
 
@@ -93,7 +112,9 @@ const Settings = () => {
           <Text strong className="app-settings-title">
             نوع فونت
           </Text>
-          <Text className="app-settings-subtitle">فونت اصلی برنامه را انتخاب کنید</Text>
+          <Text className="app-settings-subtitle">
+            فونت اصلی برنامه را انتخاب کنید
+          </Text>
         </Flex>
       </div>
 
@@ -113,12 +134,15 @@ const Settings = () => {
           <Text strong className="app-settings-title">
             رنگ اصلی / Preset
           </Text>
-          <Text className="app-settings-subtitle">رنگ اصلی رابط کاربری را انتخاب کنید</Text>
+          <Text className="app-settings-subtitle">
+            رنگ اصلی رابط کاربری را انتخاب کنید
+          </Text>
         </Flex>
 
         <Flex wrap gap={10}>
           {PRIMARY_PRESETS.map((preset) => {
-            const active = preset.value.toLowerCase() === primaryColor.toLowerCase();
+            const active =
+              preset.value.toLowerCase() === primaryColor.toLowerCase();
 
             return (
               <button
@@ -129,7 +153,9 @@ const Settings = () => {
                 aria-label={`انتخاب رنگ ${preset.name}`}
                 className={cn(
                   "app-settings-color-swatch",
-                  active ? "app-settings-color-swatch--active" : "app-settings-color-swatch--inactive",
+                  active
+                    ? "app-settings-color-swatch--active"
+                    : "app-settings-color-swatch--inactive",
                 )}
                 style={{
                   backgroundColor: preset.value,

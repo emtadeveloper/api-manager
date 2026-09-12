@@ -23,7 +23,9 @@ function buildMasterConnectionUrl(config: DbConnectionConfig) {
   return `sqlserver://${config.dbServer}:${config.dbPort};database=Master;user=${config.dbUsername};password=${config.dbPassword};trustServerCertificate=true`;
 }
 
-export function buildTargetConnectionUrl(config: DbConnectionConfig & { dbName: string }) {
+export function buildTargetConnectionUrl(
+  config: DbConnectionConfig & { dbName: string },
+) {
   if (config.dbType === DatabaseType.POSTGRES) {
     return `postgresql://${config.dbUsername}:${config.dbPassword}@${config.dbServer}:${config.dbPort}/${config.dbName}`;
   }
@@ -32,7 +34,9 @@ export function buildTargetConnectionUrl(config: DbConnectionConfig & { dbName: 
 
 export default function useDatabaseConnection() {
   const { setError } = useNotificationStore();
-  const [databaseList, setDatabaseList] = useState<Record<string, string>[]>([]);
+  const [databaseList, setDatabaseList] = useState<Record<string, string>[]>(
+    [],
+  );
   const [loading, setLoading] = useState(false);
 
   const connect = useCallback(

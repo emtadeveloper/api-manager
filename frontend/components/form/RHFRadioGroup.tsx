@@ -13,14 +13,30 @@ interface RHFRadioGroupProps {
   children: ReactNode;
 }
 
-export default function RHFRadioGroup({ control, name, label, required, full, children }: RHFRadioGroupProps) {
+export default function RHFRadioGroup({
+  control,
+  name,
+  label,
+  required,
+  full,
+  children,
+}: RHFRadioGroupProps) {
   return (
     <Controller
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <RHFFieldWrapper label={label} required={required} error={fieldState.error?.message} full={full}>
-          <Radio.Group onChange={field.onChange} value={field.value} name={field.name}>
+        <RHFFieldWrapper
+          label={label}
+          required={required}
+          error={fieldState.error?.message}
+          full={full}
+        >
+          <Radio.Group
+            onChange={field.onChange}
+            value={field.value}
+            name={field.name}
+          >
             {children}
           </Radio.Group>
         </RHFFieldWrapper>

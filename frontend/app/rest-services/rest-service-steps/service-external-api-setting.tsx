@@ -1,5 +1,9 @@
 "use client";
-import { CheckOutlined, PlusCircleOutlined, SecurityScanFilled } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  PlusCircleOutlined,
+  SecurityScanFilled,
+} from "@ant-design/icons";
 import { Button, Modal, Radio } from "antd";
 import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -31,7 +35,10 @@ const ServiceExternalApiSetting = () => {
   const handleApiTest = async () => {
     setApiTestLoading(true);
     try {
-      const result = await ApiTest(getValues("restExternalApiSetting"), getValues("latinName"));
+      const result = await ApiTest(
+        getValues("restExternalApiSetting"),
+        getValues("latinName"),
+      );
       if (!result.success) {
         setError(extractErrorMessage(result));
         return;
@@ -71,13 +78,21 @@ const ServiceExternalApiSetting = () => {
         placeholder="آدرس پایه"
       />
 
-      <RHFRadioGroup control={control} name="restExternalApiSetting.hasAuth" label="نیاز به احراز هویت">
+      <RHFRadioGroup
+        control={control}
+        name="restExternalApiSetting.hasAuth"
+        label="نیاز به احراز هویت"
+      >
         <Radio value={false}>ندارد</Radio>
         <Radio value={true}>دارد</Radio>
       </RHFRadioGroup>
 
       <div className="app-form-item--full">
-        <Button htmlType="button" icon={<PlusCircleOutlined />} onClick={() => setExternalApiParamOpen(true)}>
+        <Button
+          htmlType="button"
+          icon={<PlusCircleOutlined />}
+          onClick={() => setExternalApiParamOpen(true)}
+        >
           پارامترهای وب سرویس
         </Button>
 
@@ -116,7 +131,11 @@ const ServiceExternalApiSetting = () => {
       </Modal>
 
       {hasAuth && (
-        <SectionCard nested title="تنظیمات احراز هویت" className="app-form-item--full">
+        <SectionCard
+          nested
+          title="تنظیمات احراز هویت"
+          className="app-form-item--full"
+        >
           <RHFInput
             control={control}
             name="restAuthServiceSetting.authServiceUrl"
@@ -126,13 +145,21 @@ const ServiceExternalApiSetting = () => {
             placeholder="آدرس کامل سرویس احراز هویت"
           />
 
-          <RHFRadioGroup control={control} name="restAuthServiceSetting.authMethod" label="متد اعتبارسنجی">
+          <RHFRadioGroup
+            control={control}
+            name="restAuthServiceSetting.authMethod"
+            label="متد اعتبارسنجی"
+          >
             <Radio.Button value={AuthType.JWT}>JWT</Radio.Button>
             <Radio.Button value={AuthType.API_KEY}>API_KEY</Radio.Button>
           </RHFRadioGroup>
 
           <div className="app-form-item--full">
-            <Button htmlType="button" onClick={() => setAuthParamOpen(true)} icon={<SecurityScanFilled />}>
+            <Button
+              htmlType="button"
+              onClick={() => setAuthParamOpen(true)}
+              icon={<SecurityScanFilled />}
+            >
               پارامترهای سرویس احراز هویت
             </Button>
 

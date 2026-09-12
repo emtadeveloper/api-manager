@@ -16,7 +16,13 @@ export default function SectionCard({
   children,
 }: PropsWithChildren<SectionCardProps>) {
   return (
-    <div className={cn("app-form-section", nested && "app-form-section--nested", className)}>
+    <div
+      className={cn(
+        "app-form-section",
+        nested && "app-form-section--nested",
+        className,
+      )}
+    >
       {(title || extra) && (
         <div className="app-form-section-header">
           {title && <h3 className="app-form-section-title">{title}</h3>}

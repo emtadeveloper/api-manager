@@ -4,7 +4,10 @@ import { Select } from "antd";
 import type { SelectProps } from "antd";
 import { RHFFieldWrapper } from "./RHFField";
 
-interface RHFSelectProps extends Omit<SelectProps, "name" | "value" | "onChange"> {
+interface RHFSelectProps extends Omit<
+  SelectProps,
+  "name" | "value" | "onChange"
+> {
   control: Control<FieldValues>;
   name: string;
   label?: string;
@@ -12,13 +15,25 @@ interface RHFSelectProps extends Omit<SelectProps, "name" | "value" | "onChange"
   full?: boolean;
 }
 
-export default function RHFSelect({ control, name, label, required, full, ...props }: RHFSelectProps) {
+export default function RHFSelect({
+  control,
+  name,
+  label,
+  required,
+  full,
+  ...props
+}: RHFSelectProps) {
   return (
     <Controller
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <RHFFieldWrapper label={label} required={required} error={fieldState.error?.message} full={full}>
+        <RHFFieldWrapper
+          label={label}
+          required={required}
+          error={fieldState.error?.message}
+          full={full}
+        >
           <Select
             {...props}
             value={field.value ?? null}

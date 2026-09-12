@@ -6,7 +6,10 @@ import RHFInput from "@/components/form/RHFInput";
 import RHFPassword from "@/components/form/RHFPassword";
 import useNotificationStore from "@/stores/notification";
 import { extractErrorMessage } from "@/utils/extract-error-message";
-import { UserFormSchema, type UserFormValues } from "@/app/dto/user-form.schema";
+import {
+  UserFormSchema,
+  type UserFormValues,
+} from "@/app/dto/user-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -55,10 +58,31 @@ const UsersAdd = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <SectionCard>
             <RHFInput control={control} name="firstName" label="نام" required />
-            <RHFInput control={control} name="lastName" label="نام خانوادگی" required />
-            <RHFInput control={control} name="username" label="نام کاربری" required dir="ltr" />
-            <RHFPassword control={control} name="password" label="رمز عبور" required />
-            <RHFPassword control={control} name="password2" label="تکرار رمز عبور" required />
+            <RHFInput
+              control={control}
+              name="lastName"
+              label="نام خانوادگی"
+              required
+            />
+            <RHFInput
+              control={control}
+              name="username"
+              label="نام کاربری"
+              required
+              dir="ltr"
+            />
+            <RHFPassword
+              control={control}
+              name="password"
+              label="رمز عبور"
+              required
+            />
+            <RHFPassword
+              control={control}
+              name="password2"
+              label="تکرار رمز عبور"
+              required
+            />
 
             <div className="app-form-item--full">
               <Button htmlType="submit" type="primary" loading={loading} block>

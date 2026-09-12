@@ -7,10 +7,19 @@ import SesrviceDefinition from "@/app/rest-services/rest-service-steps/service-d
 import ServiceDbOrApiSetting from "@/app/rest-services/rest-service-steps/service-db-or-api-setting";
 import ServiceFinalize from "@/app/rest-services/rest-service-steps/service-finalize";
 import { yekan } from "../../../../public/fonts/font";
-import { CheckCircleFilled, FastBackwardOutlined, FastForwardFilled } from "@ant-design/icons";
+import {
+  CheckCircleFilled,
+  FastBackwardOutlined,
+  FastForwardFilled,
+} from "@ant-design/icons";
 import { Button, Steps } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm, FieldPath, type FieldErrors } from "react-hook-form";
+import {
+  FormProvider,
+  useForm,
+  FieldPath,
+  type FieldErrors,
+} from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useNotificationStore from "@/stores/notification";
@@ -46,7 +55,8 @@ const DEFAULT_VALUES: Partial<RestServicesCreateDtoType> = {
 const ServiceIntializeStep = () => {
   const param = useParams();
   const router = useRouter();
-  const { setText: notifySuccess, setError: notifyError } = useNotificationStore();
+  const { setText: notifySuccess, setError: notifyError } =
+    useNotificationStore();
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -69,7 +79,10 @@ const ServiceIntializeStep = () => {
         return;
       }
       if (result.data && !cancelled) {
-        reset({ ...DEFAULT_VALUES, ...result.data } as RestServicesCreateDtoType);
+        reset({
+          ...DEFAULT_VALUES,
+          ...result.data,
+        } as RestServicesCreateDtoType);
       }
     };
 
@@ -112,20 +125,32 @@ const ServiceIntializeStep = () => {
   const onSubmit = async (values: RestServicesCreateDtoType) => {
     setLoading(true);
     try {
-      const externalSetting = values.restExternalApiSetting as { hasAuth?: boolean } | null | undefined;
+      const externalSetting = values.restExternalApiSetting as
+        { hasAuth?: boolean } | null | undefined;
       const payload = {
         ...values,
-        restAuthServiceSetting: externalSetting?.hasAuth ? values.restAuthServiceSetting : null,
-        restDatabaseSetting: values.restType === "DATABASEDIRECT" ? values.restDatabaseSetting : null,
-        restExternalApiSetting: values.restType === "EXTERNALAPI" ? values.restExternalApiSetting : null,
+        restAuthServiceSetting: externalSetting?.hasAuth
+          ? values.restAuthServiceSetting
+          : null,
+        restDatabaseSetting:
+          values.restType === "DATABASEDIRECT"
+            ? values.restDatabaseSetting
+            : null,
+        restExternalApiSetting:
+          values.restType === "EXTERNALAPI"
+            ? values.restExternalApiSetting
+            : null,
       };
       const result = await createRestService(Number(param.id) || 0, payload);
       if (!result.success) {
         if (Array.isArray(result.errors)) {
           result.errors.forEach((issue) => {
-            setError(issue.path.join(".") as FieldPath<RestServicesCreateDtoType>, {
-              message: issue.message,
-            });
+            setError(
+              issue.path.join(".") as FieldPath<RestServicesCreateDtoType>,
+              {
+                message: issue.message,
+              },
+            );
           });
         }
         notifyError("خطا در ثبت اطلاعات");
@@ -146,7 +171,11 @@ const ServiceIntializeStep = () => {
           className={`step ${yekan.className}`}
           current={current}
           onChange={(step) => setCurrent(step)}
-          items={[{ title: "تعاریف اولیه" }, { title: "تنظیمات اتصال" }, { title: "تایید نهایی" }]}
+          items={[
+            { title: "تعاریف اولیه" },
+            { title: "تنظیمات اتصال" },
+            { title: "تایید نهایی" },
+          ]}
         />
 
         <div className="my-2">
@@ -161,7 +190,12 @@ const ServiceIntializeStep = () => {
             </Button>
           )}
           {current > 1 && (
-            <Button loading={loading} htmlType="submit" title="تایید نهایی" type="primary">
+            <Button
+              loading={loading}
+              htmlType="submit"
+              title="تایید نهایی"
+              type="primary"
+            >
               <CheckCircleFilled />
             </Button>
           )}

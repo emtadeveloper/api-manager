@@ -8,7 +8,10 @@ interface PhoneNumberInputProps {
   className?: string;
 }
 
-const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({ setPhoneNumber = () => {}, className = "" }) => {
+const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
+  setPhoneNumber = () => {},
+  className = "",
+}) => {
   const [inputValue, setInputValue] = useState("");
 
   const replacePlusWithZero = (inputString: string) => {
@@ -26,7 +29,10 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({ setPhoneNumber = ()
 
   return (
     <div className="flex flex-col gap-1.5 w-full font-sans">
-      <label htmlFor="phone-number" className="text-xs font-medium app-text-primary">
+      <label
+        htmlFor="phone-number"
+        className="text-xs font-medium app-text-primary"
+      >
         شماره موبایل
       </label>
       <Input

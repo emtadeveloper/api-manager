@@ -10,10 +10,21 @@ interface InputCheckboxProps {
   label?: string;
 }
 
-const InputCheckbox: React.FC<InputCheckboxProps> = ({ title, checked, onChange, onBlur, label }) => {
+const InputCheckbox: React.FC<InputCheckboxProps> = ({
+  title,
+  checked,
+  onChange,
+  onBlur,
+  label,
+}) => {
   return (
     <div className="flex items-center sm:justify-between">
-      <Checkbox name={title} checked={checked} onChange={(e) => onChange?.(e.target.checked)} onBlur={onBlur}>
+      <Checkbox
+        name={title}
+        checked={checked}
+        onChange={(e) => onChange?.(e.target.checked)}
+        onBlur={onBlur}
+      >
         <span className="mr-2 font-normal app-text-primary">{label}</span>
       </Checkbox>
     </div>

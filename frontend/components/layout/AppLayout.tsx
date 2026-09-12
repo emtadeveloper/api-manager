@@ -33,11 +33,18 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const desktopSidebarContent = (
-    <SidebarContent collapsed={collapsed} onToggleCollapse={() => setCollapsed((prev) => !prev)} />
+    <SidebarContent
+      collapsed={collapsed}
+      onToggleCollapse={() => setCollapsed((prev) => !prev)}
+    />
   );
 
   const mobileSidebarContent = (
-    <SidebarContent collapsed={false} onToggleCollapse={() => {}} onNavigate={closeDrawer} />
+    <SidebarContent
+      collapsed={false}
+      onToggleCollapse={() => {}}
+      onNavigate={closeDrawer}
+    />
   );
 
   return (

@@ -15,7 +15,9 @@ const ServiceDbOrApiSetting = () => {
         {restType && (
           <li>
             <strong>نوع ارتباط: </strong>
-            {restType === RestType.DATABASEDIRECT ? "اتصال به دیتابیس" : "فراخوانی وب سرویس خارجی"}
+            {restType === RestType.DATABASEDIRECT
+              ? "اتصال به دیتابیس"
+              : "فراخوانی وب سرویس خارجی"}
           </li>
         )}
         {method && (
@@ -26,7 +28,11 @@ const ServiceDbOrApiSetting = () => {
         )}
       </ul>
 
-      {restType === RestType.DATABASEDIRECT ? <ServiceDbSetting /> : <ServiceExternalApiSetting />}
+      {restType === RestType.DATABASEDIRECT ? (
+        <ServiceDbSetting />
+      ) : (
+        <ServiceExternalApiSetting />
+      )}
     </div>
   );
 };

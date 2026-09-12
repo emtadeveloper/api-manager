@@ -25,12 +25,16 @@ interface SessionState {
 
 const fetchSessionFromAPI = async () => {
   try {
-    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    const response = await fetch(`${apiBaseUrl.replace(/\/$/, "")}/api/auth/session`, {
-      method: "GET",
-      cache: "no-store",
-      credentials: "include",
-    });
+    const apiBaseUrl =
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+    const response = await fetch(
+      `${apiBaseUrl.replace(/\/$/, "")}/api/auth/session`,
+      {
+        method: "GET",
+        cache: "no-store",
+        credentials: "include",
+      },
+    );
 
     if (!response.ok) {
       return {
@@ -43,7 +47,10 @@ const fetchSessionFromAPI = async () => {
 
     return {
       session: data.session ?? null,
-      status: data.status === "authenticated" ? ("authenticated" as const) : ("unauthenticated" as const),
+      status:
+        data.status === "authenticated"
+          ? ("authenticated" as const)
+          : ("unauthenticated" as const),
     };
   } catch (error) {
     console.error("Session fetch error:", error);

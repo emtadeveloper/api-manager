@@ -16,7 +16,12 @@ const MultipleOptionInput: React.FC<MultipleOptionInputProps> = ({
 }) => {
   return (
     <div className={className || "flex flex-col space-y-2"}>
-      <Checkbox.Group value={value} onChange={onChange} options={options} className="flex flex-col space-y-2" />
+      <Checkbox.Group
+        value={value}
+        onChange={onChange}
+        options={options}
+        className="flex flex-col space-y-2"
+      />
     </div>
   );
 };

@@ -8,9 +8,12 @@ export const UserFieldsSchema = z.object({
   password2: z.string().min(1, "لطفا تکرار رمز عبور را وارد کنید"),
 });
 
-export const UserFormSchema = UserFieldsSchema.refine((data) => data.password === data.password2, {
-  message: "رمز عبور و تکرار آن یکسان نیستند",
-  path: ["password2"],
-});
+export const UserFormSchema = UserFieldsSchema.refine(
+  (data) => data.password === data.password2,
+  {
+    message: "رمز عبور و تکرار آن یکسان نیستند",
+    path: ["password2"],
+  },
+);
 
 export type UserFormValues = z.infer<typeof UserFormSchema>;

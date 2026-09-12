@@ -597,7 +597,9 @@ button {
   border-color: var(--app-primary) !important;
 }
 
-.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
+.ant-steps-item-finish
+  > .ant-steps-item-container
+  > .ant-steps-item-tail::after {
   background-color: var(--app-primary) !important;
 }
 
@@ -690,7 +692,11 @@ button {
 }
 
 .ant-table-tbody > tr:hover > td {
-  background-color: color-mix(in srgb, var(--app-primary) 18%, transparent) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--app-primary) 18%,
+    transparent
+  ) !important;
 }
 
 .ant-table-cell-fix-left,
@@ -742,9 +748,11 @@ button {
 .ant-dropdown,
 .ant-select-dropdown,
 .ant-picker-dropdown,
+.ant-modal-container,
 .ant-modal-content,
 .ant-drawer-content {
   background-color: var(--app-surface) !important;
+  color: var(--app-text) !important;
   border: 1px solid var(--app-border-transparent);
 }
 
@@ -756,13 +764,30 @@ button {
 
 .ant-dropdown-menu-item:hover,
 .ant-select-item-option-active {
-  background-color: color-mix(in srgb, var(--app-primary) 20%, transparent) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--app-primary) 20%,
+    transparent
+  ) !important;
 }
 
 .ant-modal-header,
 .ant-drawer-header {
   background-color: transparent !important;
   border-bottom-color: var(--app-border) !important;
+}
+
+.ant-modal-container,
+.ant-modal-content {
+  box-shadow: var(--app-shadow-md) !important;
+}
+
+.ant-modal-wrap {
+  background-color: transparent !important;
+}
+
+.ant-modal-body {
+  color: var(--app-text) !important;
 }
 
 .ant-modal-title,
@@ -939,7 +964,11 @@ button {
   gap: 14px;
   padding: 16px;
   border-radius: 14px;
-  background-color: color-mix(in srgb, var(--app-surface) 90%, var(--app-text) 10%);
+  background-color: color-mix(
+    in srgb,
+    var(--app-surface) 90%,
+    var(--app-text) 10%
+  );
   border: 1px solid var(--app-border);
 }
 

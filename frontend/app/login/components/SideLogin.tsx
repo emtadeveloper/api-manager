@@ -12,9 +12,13 @@ export default function SideLogin() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-white p-12 text-center">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight drop-shadow-lg mb-4">سامانه مدیریت سرویس</h1>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight drop-shadow-lg mb-4">
+          سامانه مدیریت سرویس
+        </h1>
 
-        <p className="mt-3 text-lg md:text-xl text-white/80 font-light max-w-xs drop-shadow">رسان</p>
+        <p className="mt-3 text-lg md:text-xl text-white/80 font-light max-w-xs drop-shadow">
+          رسان
+        </p>
 
         <div className="mt-10 flex items-center gap-3 text-sm text-white/60">
           <span className="h-px w-8 bg-white/30" />

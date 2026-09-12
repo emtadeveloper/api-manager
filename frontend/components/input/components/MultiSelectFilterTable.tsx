@@ -59,11 +59,18 @@ const MultiSelectFilterTable: React.FC<MultiSelectFilterTableProps> = ({
           options={antOptions}
           showSearch
           allowClear
-          filterOption={(input, option) => (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())}
+          filterOption={(input, option) =>
+            (option?.label ?? "")
+              .toString()
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
           status={showError || error ? "error" : undefined}
           className="w-full"
           maxTagCount="responsive"
-          getPopupContainer={(trigger) => trigger.parentElement || document.body}
+          getPopupContainer={(trigger) =>
+            trigger.parentElement || document.body
+          }
         />
       </div>
     </div>

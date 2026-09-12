@@ -8,7 +8,10 @@ type Props = {
   handleSelectedKey: (value: string) => void;
 };
 
-export default function RestDatabaseCallDetails({ handleSelectedKey, data }: Props) {
+export default function RestDatabaseCallDetails({
+  handleSelectedKey,
+  data,
+}: Props) {
   const columns: DataTableColumn<Record<string, unknown>>[] = useMemo(() => {
     if (!data || data.length === 0) return [];
     return Object.keys(data[0]).map((key) => ({ title: key, dataIndex: key }));
